@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelEditor.Database;
 using TravelEditor.Views;
 
 namespace TravelEditor
@@ -54,6 +56,11 @@ namespace TravelEditor
         {
             ReviewView reviewView = new ReviewView();
             reviewView.Show();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Try adding data manually to the database
         }
     }
 }
