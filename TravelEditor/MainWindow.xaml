@@ -7,6 +7,68 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <StackPanel Name="mainStackPanel"  Background="#A4C3B2" Height="450">
+            <Menu>
+                <MenuItem Name="importMenuItem" Header="Import"></MenuItem>
+                <MenuItem Name="exportMenuItem" Header="Export"></MenuItem>
+            </Menu>
 
+            <StackPanel  Name="tabsStackPanel"  Width="740" Height="350" Margin="0, 20, 0, 0">
+                <Border BorderBrush="#6B9080" BorderThickness="2" CornerRadius="2">
+                    <TabControl Background="#A4C3B2" Height="307">
+                        <TabItem Header="Trips">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addTripButton" Content="Add Trip" Click="addTripButton_Click"/>
+                                    <Button Width="120" Name="editTripButton" Content="Edit Trip"/>
+                                    <Button  Width="120" Name="deleteTripButton" Content="Delete Trip" />
+                                </StackPanel>
+                                <ListView Name="tripsListBox" Background="#EAF4F4"  Height="100"/>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Destinations">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addDestinationButton" Content="Add Destination" Click="addDestinationButton_Click"/>
+                                    <Button Width="120" Name="editDestinationButton" Content="Edit Destination"/>
+                                    <Button  Width="120" Name="deleteDestinationButton" Content="Delete Destination" />
+                                </StackPanel>
+                                <ListView Name="destinationsListBox" Background="#EAF4F4"  Height="100"/>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Attractions">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addAttractionButton" Content="Add Attration" Click="addAttractionButton_Click"/>
+                                    <Button Width="120" Name="editAttractionButton" Content="Edit Attration"/>
+                                    <Button  Width="120" Name="deleteAttractionButton" Content="Delete Attration" />
+                                </StackPanel>
+                                <ListView Name="attractionsListBox" Background="#EAF4F4"  Height="100"/>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Travellers">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addTravellerButton" Content="Add Traveller" Click="addTravellerButton_Click"/>
+                                    <Button Width="120" Name="editTravellerButton" Content="Edit Traveller"/>
+                                    <Button  Width="120" Name="deleteTravellerButton" Content="Delete Traveller" />
+                                </StackPanel>
+                                <ListView Name="travellersListBox" Background="#EAF4F4"  Height="100"/>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Reviews">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addReviewButton" Content="Add Review" Click="addReviewButton_Click"/>
+                                    <Button Width="120" Name="editReviewButton" Content="Edit Review"/>
+                                    <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" />
+                                </StackPanel>
+                                <ListView Name="reviewsListBox" Background="#EAF4F4"  Height="100"/>
+                            </StackPanel>
+                        </TabItem>
+                    </TabControl>
+                </Border>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
