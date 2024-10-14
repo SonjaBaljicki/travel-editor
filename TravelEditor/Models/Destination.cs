@@ -19,9 +19,8 @@ namespace TravelEditor.Models
 
         public Destination() { }
 
-        public Destination(int destinationId, string city, string country, string description, string climate, List<Attraction> attractions)
+        public Destination(string city, string country, string description, string climate, List<Attraction> attractions)
         {
-            DestinationId = destinationId;
             City = city;
             Country = country;
             Description = description;

@@ -19,9 +19,8 @@ namespace TravelEditor.Models
 
         public Traveller() { }
 
-        public Traveller(int travellerId, string firstName, string lastName, string email, string phoneNumber, int age)
+        public Traveller(string firstName, string lastName, string email, string phoneNumber, int age)
         {
-            TravellerId = travellerId;
             FirstName = firstName;
             LastName = lastName;
             Email = email;

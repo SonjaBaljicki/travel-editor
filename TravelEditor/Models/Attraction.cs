@@ -18,9 +18,8 @@ namespace TravelEditor.Models
 
         public Attraction() { }
 
-        public Attraction(int attractionId, string name, string description, double price, string location)
+        public Attraction(string name, string description, double price, string location)
         {
-            AttractionId = attractionId;
             Name = name;
             Description = description;
             Price = price;

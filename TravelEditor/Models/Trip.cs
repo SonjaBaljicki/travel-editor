@@ -24,9 +24,8 @@ namespace TravelEditor.Models
 
         public Trip() { }
 
-        public Trip(int tripId, string name, DateTime startDate, DateTime endDate, string description, int destinationId, Destination destination, List<Traveller> travellers, List<Review> reviews)
+        public Trip(string name, DateTime startDate, DateTime endDate, string description, int destinationId, Destination destination, List<Traveller> travellers, List<Review> reviews)
         {
-            TripId = tripId;
             Name = name;
             StartDate = startDate;
             EndDate = endDate;

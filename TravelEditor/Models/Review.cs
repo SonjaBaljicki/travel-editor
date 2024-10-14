@@ -20,9 +20,8 @@ namespace TravelEditor.Models
 
         public Review() { }
 
-        public Review(int reviewId, string comment, int rating, DateTime date, int travellerId, Traveller traveller)
+        public Review(string comment, int rating, DateTime date, int travellerId, Traveller traveller)
         {
-            ReviewId = reviewId;
             Comment = comment;
             Rating = rating;
             Date = date;

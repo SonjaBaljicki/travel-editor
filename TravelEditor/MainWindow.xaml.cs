@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelEditor.Database;
+using TravelEditor.Models;
 using TravelEditor.Views;
 
 namespace TravelEditor
@@ -26,6 +27,16 @@ namespace TravelEditor
         public MainWindow()
         {
             InitializeComponent();
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            using (var db = new DatabaseContext())
+            {
+                destinationsGrid.ItemsSource = db.destinations.ToList();
+                attractionsGrid.ItemsSource = db.attractions.ToList();
+            }
         }
 
         private void addTripButton_Click(object sender, RoutedEventArgs e)
@@ -56,11 +67,6 @@ namespace TravelEditor
         {
             ReviewView reviewView = new ReviewView();
             reviewView.Show();
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Try adding data manually to the database
         }
     }
 }
