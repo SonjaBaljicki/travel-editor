@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelEditor.Views;
 
 namespace TravelEditor
 {
@@ -23,6 +24,36 @@ namespace TravelEditor
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void addTripButton_Click(object sender, RoutedEventArgs e)
+        {
+            TripView tripView = new TripView();
+            tripView.Show();
+        }
+
+        private void addDestinationButton_Click(object sender, RoutedEventArgs e)
+        {
+            DestinationView destinationView = new DestinationView();
+            destinationView.Show();
+        }
+
+        private void addAttractionButton_Click(object sender, RoutedEventArgs e)
+        {
+            AttractionView attractionView = new AttractionView();
+            attractionView.Show();
+        }
+
+        private void addTravellerButton_Click(object sender, RoutedEventArgs e)
+        {
+            TravellerView travellerView = new TravellerView();
+            travellerView.Show();
+        }
+
+        private void addReviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            ReviewView reviewView = new ReviewView();
+            reviewView.Show();
         }
     }
 }

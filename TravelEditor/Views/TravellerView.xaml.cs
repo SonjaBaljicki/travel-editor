@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace TravelEditor.Views
 {
     /// <summary>
-    /// Interaction logic for TabsView.xaml
+    /// Interaction logic for TravellerView.xaml
     /// </summary>
-    public partial class TabsView : Window
+    public partial class TravellerView : Window
     {
-        public TabsView()
+        public TravellerView()
         {
             InitializeComponent();
         }
