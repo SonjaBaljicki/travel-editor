@@ -11,16 +11,16 @@
 
             <StackPanel Margin="20" HorizontalAlignment="Center">
                 <Label Content="Trip Name:"/>
-                <TextBox Name="tripNameTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+                <TextBox Name="tripNameTextBox" Text="{Binding Trip.Name}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
 
                 <Label Content="Start Date:"/>
-                <DatePicker Name="startDatePicker" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left" />
+                <DatePicker Name="startDatePicker" Text="{Binding Trip.StartDate}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <Label Content="End Date:"/>
-                <DatePicker Name="endDatePicker" Width="200"  Margin="5,0,0,10" HorizontalAlignment="Left" />
+                <DatePicker Name="endDatePicker" Text="{Binding Trip.EndDate}" Width="200"  Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <Label Content="Description:"/>
-                <TextBox Name="descriptionTextBox" Width="200" Height="60" Margin="5,0,0,10" HorizontalAlignment="Left" />
+                <TextBox Name="descriptionTextBox" Text="{Binding Trip.Description}" Width="200" Height="60" Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Name="saveTripButton" Content="Save" Width="100" Margin="5"/>
