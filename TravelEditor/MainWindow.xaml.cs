@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelEditor.Database;
 using TravelEditor.Models;
+using TravelEditor.ViewModels;
 using TravelEditor.Views;
 
 namespace TravelEditor
@@ -27,16 +28,8 @@ namespace TravelEditor
         public MainWindow()
         {
             InitializeComponent();
-            LoadData();
-        }
-
-        private void LoadData()
-        {
-            using (var db = new DatabaseContext())
-            {
-                destinationsGrid.ItemsSource = db.destinations.ToList();
-                attractionsGrid.ItemsSource = db.attractions.ToList();
-            }
+            MainViewModel mainViewModel = new MainViewModel();
+            this.DataContext = mainViewModel;
         }
 
         private void addTripButton_Click(object sender, RoutedEventArgs e)
