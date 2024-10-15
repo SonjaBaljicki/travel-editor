@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TravelEditor.Database;
+using TravelEditor.Models;
 using TravelEditor.Views;
 
 namespace TravelEditor
@@ -24,6 +27,16 @@ namespace TravelEditor
         public MainWindow()
         {
             InitializeComponent();
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            using (var db = new DatabaseContext())
+            {
+                destinationsGrid.ItemsSource = db.destinations.ToList();
+                attractionsGrid.ItemsSource = db.attractions.ToList();
+            }
         }
 
         private void addTripButton_Click(object sender, RoutedEventArgs e)

@@ -23,7 +23,14 @@
                                     <Button Width="120" Name="editTripButton" Content="Edit Trip"/>
                                     <Button  Width="120" Name="deleteTripButton" Content="Delete Trip" />
                                 </StackPanel>
-                                <ListView Name="tripsListBox" Background="#EAF4F4"  Height="100"/>
+                                <DataGrid AutoGenerateColumns="False" Name="tripsGrid" Background="#EAF4F4"  Height="100">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
+                                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="120"/>
+                                        <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate}" Width="200"/>
+                                        <DataGridTextColumn Header="End Date" Binding="{Binding EndDate}" Width="200"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Destinations">
@@ -33,7 +40,14 @@
                                     <Button Width="120" Name="editDestinationButton" Content="Edit Destination"/>
                                     <Button  Width="120" Name="deleteDestinationButton" Content="Delete Destination" />
                                 </StackPanel>
-                                <ListView Name="destinationsListBox" Background="#EAF4F4"  Height="100"/>
+                                <DataGrid AutoGenerateColumns="False" Name="destinationsGrid" Background="#EAF4F4"  Height="100">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="City" Binding="{Binding City}" Width="120"/>
+                                        <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="120"/>
+                                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200"/>
+                                        <DataGridTextColumn Header="Climate" Binding="{Binding Climate}" Width="200"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Attractions">
@@ -43,7 +57,14 @@
                                     <Button Width="120" Name="editAttractionButton" Content="Edit Attration"/>
                                     <Button  Width="120" Name="deleteAttractionButton" Content="Delete Attration" />
                                 </StackPanel>
-                                <ListView Name="attractionsListBox" Background="#EAF4F4"  Height="100"/>
+                                <DataGrid AutoGenerateColumns="False" Name="attractionsGrid" Background="#EAF4F4"  Height="100">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
+                                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="120"/>
+                                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="200"/>
+                                        <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="200"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Travellers">
@@ -53,7 +74,15 @@
                                     <Button Width="120" Name="editTravellerButton" Content="Edit Traveller"/>
                                     <Button  Width="120" Name="deleteTravellerButton" Content="Delete Traveller" />
                                 </StackPanel>
-                                <ListView Name="travellersListBox" Background="#EAF4F4"  Height="100"/>
+                                <DataGrid AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4"  Height="100">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="120"/>
+                                        <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="120"/>
+                                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
+                                        <DataGridTextColumn Header="Phone number" Binding="{Binding PhoneNumber}" Width="200"/>
+                                        <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="200"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Reviews">
@@ -63,7 +92,12 @@
                                     <Button Width="120" Name="editReviewButton" Content="Edit Review"/>
                                     <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" />
                                 </StackPanel>
-                                <ListView Name="reviewsListBox" Background="#EAF4F4"  Height="100"/>
+                                <DataGrid AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4"  Height="100">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" Width="120"/>
+                                        <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="120"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </StackPanel>
                         </TabItem>
                     </TabControl>
