@@ -11,10 +11,10 @@
             <StackPanel Margin="20" HorizontalAlignment="Center">
            
                 <Label Content="Rating:"/>
-                <TextBox Name="ratingTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+                <TextBox Name="ratingTextBox" Text="{Binding Review.Rating}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
 
                 <Label Content="Comment:"/>
-                <TextBox Name="commentTextBox" Width="200" Height="60"  Margin="5,0,0,10" HorizontalAlignment="Left" />
+                <TextBox Name="commentTextBox" Text="{Binding Review.Comment}" Width="200" Height="60"  Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <Label Content="Date:"/>
                 <DatePicker Name="reviewDatePicker" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left" />

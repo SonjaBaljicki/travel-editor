@@ -10,19 +10,19 @@
         <Border Width="400" Height="400" BorderBrush="#6B9080" BorderThickness="2" CornerRadius="2">
             <StackPanel Margin="20" HorizontalAlignment="Center">
                 <Label Content="First Name:"/>
-                <TextBox Name="firstNameTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+                <TextBox Name="firstNameTextBox" Text="{Binding Traveller.FirstName}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
 
                 <Label Content="Last Name"/>
-                <TextBox Name="lastNameTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+                <TextBox Name="lastNameTextBox" Text="{Binding Traveller.LastName}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
 
                 <Label Content="Email:"/>
-                <TextBox Name="emailTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+                <TextBox Name="emailTextBox" Text="{Binding Traveller.Email}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
 
                 <Label Content="Phone number:"/>
-                <TextBox Name="phoneNumberTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left" />
+                <TextBox Name="phoneNumberTextBox" Text="{Binding Traveller.PhoneNumber}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <Label Content="Age"/>
-                <TextBox Name="ageTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left" />
+                <TextBox Name="ageTextBox" Width="200" Text="{Binding Traveller.Age}" Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Name="saveTravellerButton" Content="Save" Width="100" Margin="5"/>

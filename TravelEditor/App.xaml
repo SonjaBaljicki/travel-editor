@@ -1,8 +1,7 @@
 ﻿<Application x:Class="TravelEditor.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:TravelEditor"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:TravelEditor">
     <Application.Resources>
          
     </Application.Resources>

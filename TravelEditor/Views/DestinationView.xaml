@@ -10,16 +10,16 @@
         <Border Width="400" Height="400" BorderBrush="#6B9080" BorderThickness="2" CornerRadius="2">
             <StackPanel Margin="20" HorizontalAlignment="Center">
                 <Label Content="City:"/>
-                <TextBox Name="cityTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+                <TextBox Name="cityTextBox" Text="{Binding Destination.City}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
 
                 <Label Content="Country"/>
-                <TextBox Name="countryTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+                <TextBox Name="countryTextBox" Text="{Binding Destination.Country}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
 
                 <Label Content="Climate:"/>
-                <TextBox Name="climateTextBox" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
-                
+                <TextBox Name="climateTextBox" Text="{Binding Destination.Climate}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+
                 <Label Content="Description:"/>
-                <TextBox Name="descriptionTextBox" Width="200" Height="60"  Margin="5,0,0,10" HorizontalAlignment="Left" />
+                <TextBox Name="descriptionTextBox" Text="{Binding Destination.Description}" Width="200" Height="60"  Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Name="saveDestinationButton" Content="Save" Width="100" Margin="5"/>
