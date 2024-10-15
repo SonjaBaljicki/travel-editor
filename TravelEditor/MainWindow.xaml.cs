@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelEditor.Database;
 using TravelEditor.Models;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 using TravelEditor.Views;
 
@@ -25,10 +26,27 @@ namespace TravelEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ITripService tripService;
+        private IDestinationService destinationService;
+        private IAttractionService attractionService;
+        private IReviewService reviewService;
+        private ITravellerService travellerService;
+
         public MainWindow()
         {
+        }
+
+        public MainWindow(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService, IReviewService reviewService, ITravellerService travellerService)
+        {
             InitializeComponent();
-            MainViewModel mainViewModel = new MainViewModel();
+
+            this.tripService = tripService;
+            this.destinationService = destinationService;
+            this.attractionService = attractionService;
+            this.reviewService = reviewService;
+            this.travellerService = travellerService;
+
+            MainViewModel mainViewModel = new MainViewModel(tripService,destinationService,attractionService,reviewService,travellerService);
             this.DataContext = mainViewModel;
         }
 

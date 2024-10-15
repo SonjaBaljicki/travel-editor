@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TravelEditor.Models
 {
-    internal class Attraction
+    public class Attraction
     {
         [Key]
         public int AttractionId { get; set; }
