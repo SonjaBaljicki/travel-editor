@@ -139,5 +139,17 @@ namespace TravelEditor
                 MessageBox.Show("Pleas select a review you want to edit.");
             }
         }
+
+        private void viewAttractionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Destination destination = button.DataContext as Destination;
+            if (destination != null)
+            {
+                AttractionsGridView attractionsGridView = new AttractionsGridView(destination.Attractions);
+                attractionsGridView.Show();
+            }
+         
+        }
     }
 }

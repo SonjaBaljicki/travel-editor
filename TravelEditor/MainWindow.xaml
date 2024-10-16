@@ -46,6 +46,13 @@
                                         <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="120"/>
                                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200"/>
                                         <DataGridTextColumn Header="Climate" Binding="{Binding Climate}" Width="200"/>
+                                        <DataGridTemplateColumn Header="Attractions" Width="200">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Name="viewAttractionsButton" Content="View Attractions" Click="viewAttractionsButton_Click"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </StackPanel>
