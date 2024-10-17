@@ -94,14 +94,25 @@ namespace TravelEditor
         }
         private void editDestinationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (destinationsGrid.SelectedItem != null)
+            Button button = sender as Button;
+            //if we the editing is done from the destinations tab
+            if (button!=null && button.Name== "editDestinationButton")
             {
-                DestinationView destinationView = new DestinationView((Destination)destinationsGrid.SelectedItem);
-                destinationView.Show();
+                if (destinationsGrid.SelectedItem != null)
+                {
+                    DestinationView destinationView = new DestinationView((Destination)destinationsGrid.SelectedItem);
+                    destinationView.Show();
+                }
             }
-            else
+            //if the destination is referenced from the trips tab
+            if (button != null && button.Name == "viewDestinationButton")
             {
-                MessageBox.Show("Pleas select a destination you want to edit.");
+                if (tripsGrid.SelectedItem != null)
+                {
+                    Trip trip = (Trip)tripsGrid.SelectedItem;
+                    DestinationView destinationView = new DestinationView(trip.Destination);
+                    destinationView.Show();
+                }
             }
         }
         private void editAttractionButton_Click(object sender, RoutedEventArgs e)
