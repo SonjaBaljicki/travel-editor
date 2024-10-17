@@ -129,14 +129,25 @@ namespace TravelEditor
         }
         private void editTravellerButton_Click(object sender, RoutedEventArgs e)
         {
-            if (travellersGrid.SelectedItem != null)
+            Button button = sender as Button;
+            //if we the editing is done from the travellers tab
+            if (button != null && button.Name == "editTravellerButton")
             {
-                TravellerView travellerView = new TravellerView((Traveller)travellersGrid.SelectedItem);
-                travellerView.Show();
+                if (travellersGrid.SelectedItem != null)
+                {
+                    TravellerView travellerView = new TravellerView((Traveller)travellersGrid.SelectedItem);
+                    travellerView.Show();
+                }
             }
-            else
+            //if the traveller is referenced from the reviews tab
+            if (button != null && button.Name == "viewTravellerButton")
             {
-                MessageBox.Show("Pleas select a traveller you want to edit.");
+                if (reviewsGrid.SelectedItem != null)
+                {
+                    Review review = (Review)reviewsGrid.SelectedItem;
+                    TravellerView travellerView = new TravellerView((Traveller)review.Traveller);
+                    travellerView.Show();
+                }
             }
         }
         private void editReviewButton_Click(object sender, RoutedEventArgs e)

@@ -124,7 +124,13 @@
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" Width="120"/>
                                         <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="120"/>
-                                        <!--add traveller column-->
+                                        <DataGridTemplateColumn Header="Traveller" Width="200">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Name="viewTravellerButton" Content="View Traveller" Click="editTravellerButton_Click"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </StackPanel>
