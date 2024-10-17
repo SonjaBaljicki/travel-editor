@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,11 @@ namespace TravelEditor.ViewModels
 {
     internal class AttractionsGridViewModel
     {
-        public List<Attraction> Attractions { get; set; }
+        public ObservableCollection<Attraction> Attractions { get; set; }
 
         public AttractionsGridViewModel(List<Attraction> attractions)
         {
-            Attractions = attractions;
+            Attractions = new ObservableCollection<Attraction>(attractions);
         }
     }
 }

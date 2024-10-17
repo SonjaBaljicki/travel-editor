@@ -48,6 +48,7 @@ namespace TravelEditor
 
             MainViewModel mainViewModel = new MainViewModel(tripService, destinationService, attractionService, reviewService, travellerService);
             this.DataContext = mainViewModel;
+
         }
 
         private void addTripButton_Click(object sender, RoutedEventArgs e)
@@ -150,6 +151,28 @@ namespace TravelEditor
                 attractionsGridView.Show();
             }
          
+        }
+
+        private void viewTravellersButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Trip trip = button.DataContext as Trip;
+            if (trip != null)
+            {
+                TravellersGridView travellersGridView = new TravellersGridView(trip.Travellers);
+                travellersGridView.Show();
+            }
+        }
+
+        private void viewReviewsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Trip trip = button.DataContext as Trip;
+            if (trip != null)
+            {
+                ReviewsGridView reviewsGridView = new ReviewsGridView(trip.Reviews);
+                reviewsGridView.Show();
+            }
         }
     }
 }

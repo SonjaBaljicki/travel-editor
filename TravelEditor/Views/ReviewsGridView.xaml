@@ -1,0 +1,24 @@
+﻿<Window x:Class="TravelEditor.Views.ReviewsGridView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelEditor.Views"
+        mc:Ignorable="d"
+        Title="ReviewsGridView"  Height="350" Width="800"  Background="#A4C3B2" >
+    <Grid>
+        <StackPanel Background="#A4C3B2" Margin="20, 10, 20, 0">
+            <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                <Button Width="120" Name="addReviewButton" Content="Add Review"/>
+                <Button Width="120" Name="editReviewButton" Content="Edit Review"/>
+                <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" />
+            </StackPanel>
+            <DataGrid AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" Width="120"/>
+                    <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="120"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>
