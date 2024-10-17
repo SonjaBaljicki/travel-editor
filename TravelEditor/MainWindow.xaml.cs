@@ -48,6 +48,7 @@ namespace TravelEditor
 
             MainViewModel mainViewModel = new MainViewModel(tripService, destinationService, attractionService, reviewService, travellerService);
             this.DataContext = mainViewModel;
+
         }
 
         private void addTripButton_Click(object sender, RoutedEventArgs e)
@@ -93,14 +94,25 @@ namespace TravelEditor
         }
         private void editDestinationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (destinationsGrid.SelectedItem != null)
+            Button button = sender as Button;
+            //if we the editing is done from the destinations tab
+            if (button!=null && button.Name== "editDestinationButton")
             {
-                DestinationView destinationView = new DestinationView((Destination)destinationsGrid.SelectedItem);
-                destinationView.Show();
+                if (destinationsGrid.SelectedItem != null)
+                {
+                    DestinationView destinationView = new DestinationView((Destination)destinationsGrid.SelectedItem);
+                    destinationView.Show();
+                }
             }
-            else
+            //if the destination is referenced from the trips tab
+            if (button != null && button.Name == "viewDestinationButton")
             {
-                MessageBox.Show("Pleas select a destination you want to edit.");
+                if (tripsGrid.SelectedItem != null)
+                {
+                    Trip trip = (Trip)tripsGrid.SelectedItem;
+                    DestinationView destinationView = new DestinationView(trip.Destination);
+                    destinationView.Show();
+                }
             }
         }
         private void editAttractionButton_Click(object sender, RoutedEventArgs e)
@@ -117,14 +129,25 @@ namespace TravelEditor
         }
         private void editTravellerButton_Click(object sender, RoutedEventArgs e)
         {
-            if (travellersGrid.SelectedItem != null)
+            Button button = sender as Button;
+            //if we the editing is done from the travellers tab
+            if (button != null && button.Name == "editTravellerButton")
             {
-                TravellerView travellerView = new TravellerView((Traveller)travellersGrid.SelectedItem);
-                travellerView.Show();
+                if (travellersGrid.SelectedItem != null)
+                {
+                    TravellerView travellerView = new TravellerView((Traveller)travellersGrid.SelectedItem);
+                    travellerView.Show();
+                }
             }
-            else
+            //if the traveller is referenced from the reviews tab
+            if (button != null && button.Name == "viewTravellerButton")
             {
-                MessageBox.Show("Pleas select a traveller you want to edit.");
+                if (reviewsGrid.SelectedItem != null)
+                {
+                    Review review = (Review)reviewsGrid.SelectedItem;
+                    TravellerView travellerView = new TravellerView((Traveller)review.Traveller);
+                    travellerView.Show();
+                }
             }
         }
         private void editReviewButton_Click(object sender, RoutedEventArgs e)
@@ -137,6 +160,40 @@ namespace TravelEditor
             else
             {
                 MessageBox.Show("Pleas select a review you want to edit.");
+            }
+        }
+
+        private void viewAttractionsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Destination destination = button.DataContext as Destination;
+            if (destination != null)
+            {
+                AttractionsGridView attractionsGridView = new AttractionsGridView(destination.Attractions);
+                attractionsGridView.Show();
+            }
+         
+        }
+
+        private void viewTravellersButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Trip trip = button.DataContext as Trip;
+            if (trip != null)
+            {
+                TravellersGridView travellersGridView = new TravellersGridView(trip.Travellers);
+                travellersGridView.Show();
+            }
+        }
+
+        private void viewReviewsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Trip trip = button.DataContext as Trip;
+            if (trip != null)
+            {
+                ReviewsGridView reviewsGridView = new ReviewsGridView(trip.Reviews);
+                reviewsGridView.Show();
             }
         }
     }
