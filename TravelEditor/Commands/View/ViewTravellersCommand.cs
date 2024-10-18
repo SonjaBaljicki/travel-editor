@@ -4,47 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows;
-using TravelEditor.Models;
 using TravelEditor.ViewModels;
+using TravelEditor.Views;
 
-namespace TravelEditor.Commands
+namespace TravelEditor.Commands.View
 {
-    internal class DeleteReviewCommand : ICommand
+    internal class ViewTravellersCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 
         public MainViewModel viewModel;
-
-        public DeleteReviewCommand(MainViewModel viewModel)
+        public ViewTravellersCommand(MainViewModel viewModel)
         {
             this.viewModel = viewModel;
             this.viewModel.PropertyChanged += (sender, e) =>
             {
-                if (e.PropertyName == nameof(MainViewModel.SelectedReview))
+                if (e.PropertyName == nameof(MainViewModel.SelectedTrip))
                 {
                     CanExecuteChanged?.Invoke(this, EventArgs.Empty);
                 }
             };
         }
-
         public bool CanExecute(object? parameter)
         {
-            return viewModel.SelectedReview != null;
+            return viewModel.SelectedTrip != null;
         }
 
         public void Execute(object? parameter)
         {
-            Review review = (Review)viewModel.SelectedReview;
-            if (review != null)
+            if (viewModel.SelectedTrip != null)
             {
-                MessageBox.Show(review.Comment);
-            }
-            else
-            {
-                MessageBox.Show("Please select the review");
+                TravellersGridView travellersGridView = new TravellersGridView(viewModel.SelectedTrip.Travellers);
+                travellersGridView.Show();
             }
         }
     }
-
 }

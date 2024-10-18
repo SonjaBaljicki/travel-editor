@@ -4,19 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows;
-using TravelEditor.Models;
 using TravelEditor.ViewModels;
+using TravelEditor.Views;
 
-namespace TravelEditor.Commands
+namespace TravelEditor.Commands.Edit
 {
-    internal class DeleteDestinationCommand : ICommand
+    internal class EditDestinationCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-
         public MainViewModel viewModel;
 
-        public DeleteDestinationCommand(MainViewModel viewModel)
+        public EditDestinationCommand(MainViewModel viewModel)
         {
             this.viewModel = viewModel;
             this.viewModel.PropertyChanged += (sender, e) =>
@@ -35,16 +33,12 @@ namespace TravelEditor.Commands
 
         public void Execute(object? parameter)
         {
-            Destination destination = (Destination)viewModel.SelectedDestination;
-            if (destination != null)
+            if (viewModel.SelectedDestination != null)
             {
-                MessageBox.Show(destination.City);
-            }
-            else
-            {
-                MessageBox.Show("Please select the destination");
+                DestinationView destinationView = new DestinationView(viewModel.SelectedDestination);
+                destinationView.Show();
             }
         }
     }
-
 }
+

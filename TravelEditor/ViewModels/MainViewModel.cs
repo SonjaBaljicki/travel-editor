@@ -6,7 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using TravelEditor.Commands;
+using TravelEditor.Commands.Add;
+using TravelEditor.Commands.Delete;
+using TravelEditor.Commands.Edit;
+using TravelEditor.Commands.View;
 using TravelEditor.Database;
 using TravelEditor.Models;
 using TravelEditor.Services;
@@ -80,17 +83,44 @@ namespace TravelEditor.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        //grid views lists
         public ObservableCollection<Trip> Trips { get; set; }
         public ObservableCollection<Destination> Destinations { get; set; }
         public ObservableCollection<Attraction> Attractions { get; set; }
         public ObservableCollection<Review> Reviews { get; set; }
         public ObservableCollection<Traveller> Travellers { get; set; }
 
+
+        //trips commands
+        public AddTripCommand AddTripCommand {get;}
+        public EditTripCommand EditTripCommand { get; }
         public DeleteTripCommand DeleteTripCommand { get; }
+        public ViewDestinationCommand ViewDestinationCommand { get; }
+        public ViewTravellersCommand ViewTravellersCommand { get; }
+        public ViewReviewsCommand ViewReviewsCommand { get; }
+
+        //destinations commands
+        public AddDestinationCommand AddDestinationCommand { get; }
+        public EditDestinationCommand EditDestinationCommand { get; }
         public DeleteDestinationCommand DeleteDestinationCommand { get; }
+        public ViewAttractionsCommand ViewAttractionsCommand { get; }
+
+        //attractions commands
+        public AddAttractionCommand AddAttractionCommand { get; }
+        public EditAttractionCommand EditAttractionCommand { get; }
         public DeleteAttractionCommand DeleteAttractionCommand { get; set; }
+
+        //travellers commands
+        public AddTravellerCommand AddTravellerCommand { get; }
+        public EditTravellerCommand EditTravellerCommand { get; }
         public DeleteTravellerCommand DeleteTravellerCommand { get; }
+
+        //reviews command
+        public AddReviewCommand AddReviewCommand { get; }
+        public EditReviewCommand EditReviewCommand { get; }
         public DeleteReviewCommand DeleteReviewCommand { get; }
+        public ViewTravellerCommand ViewTravellerCommand { get; }
+
 
         public MainViewModel(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService, IReviewService reviewService, ITravellerService travellerService)
         {
@@ -99,12 +129,33 @@ namespace TravelEditor.ViewModels
             _attractionService = attractionService;
             _reviewService = reviewService;
             _travellerService = travellerService;
+
             LoadData();
+           
+            AddTripCommand = new AddTripCommand(this);
+            EditTripCommand = new EditTripCommand(this);
             DeleteTripCommand = new DeleteTripCommand(this);
+            ViewDestinationCommand = new ViewDestinationCommand(this);
+            ViewTravellersCommand = new ViewTravellersCommand(this);
+            ViewReviewsCommand = new ViewReviewsCommand(this);
+
+            AddDestinationCommand = new AddDestinationCommand(this);
+            EditDestinationCommand = new EditDestinationCommand(this);
             DeleteDestinationCommand = new DeleteDestinationCommand(this);
+            ViewAttractionsCommand = new ViewAttractionsCommand(this);
+
+            AddAttractionCommand = new AddAttractionCommand(this);
+            EditAttractionCommand = new EditAttractionCommand(this);
             DeleteAttractionCommand = new DeleteAttractionCommand(this);
+
+            AddTravellerCommand = new AddTravellerCommand(this);
+            EditTravellerCommand = new EditTravellerCommand(this);
             DeleteTravellerCommand = new DeleteTravellerCommand(this);
+
+            AddReviewCommand = new AddReviewCommand(this);
+            EditReviewCommand = new EditReviewCommand(this);
             DeleteReviewCommand = new DeleteReviewCommand(this);
+            ViewTravellerCommand = new ViewTravellerCommand(this);
 
         }
 

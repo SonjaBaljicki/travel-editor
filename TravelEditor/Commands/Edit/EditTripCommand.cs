@@ -4,47 +4,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows;
-using TravelEditor.Models;
 using TravelEditor.ViewModels;
+using TravelEditor.Views;
 
-namespace TravelEditor.Commands
+namespace TravelEditor.Commands.Edit
 {
-    internal class DeleteTravellerCommand : ICommand
+    internal class EditTripCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-
         public MainViewModel viewModel;
 
-        public DeleteTravellerCommand(MainViewModel viewModel)
+        public EditTripCommand(MainViewModel viewModel)
         {
             this.viewModel = viewModel;
             this.viewModel.PropertyChanged += (sender, e) =>
             {
-                if (e.PropertyName == nameof(MainViewModel.SelectedTraveller))
+                if (e.PropertyName == nameof(MainViewModel.SelectedTrip))
                 {
                     CanExecuteChanged?.Invoke(this, EventArgs.Empty);
                 }
             };
-        }
+        }   
 
         public bool CanExecute(object? parameter)
         {
-            return viewModel.SelectedTraveller != null;
+            return viewModel.SelectedTrip!=null;
         }
 
         public void Execute(object? parameter)
         {
-            Traveller traveler = (Traveller)viewModel.SelectedTraveller;
-            if (traveler != null)
+            if (viewModel.SelectedTrip != null) 
             {
-                MessageBox.Show(traveler.FirstName);
+                TripView tripView = new TripView(viewModel.SelectedTrip);
+                tripView.Show();
             }
-            else
-            {
-                MessageBox.Show("Please select the traveler");
-            }
+           
         }
     }
-
 }

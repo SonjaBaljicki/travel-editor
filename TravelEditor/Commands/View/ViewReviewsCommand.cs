@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
-using TravelEditor.Models;
 using TravelEditor.ViewModels;
+using TravelEditor.Views;
 
-namespace TravelEditor.Commands
+namespace TravelEditor.Commands.View
 {
-    internal class DeleteAttractionCommand : ICommand
+    internal class ViewReviewsCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
         public MainViewModel viewModel;
 
-        public DeleteAttractionCommand(MainViewModel viewModel)
+        public ViewReviewsCommand(MainViewModel viewModel)
         {
             this.viewModel = viewModel;
             this.viewModel.PropertyChanged += (sender, e) =>
             {
-                if (e.PropertyName == nameof(MainViewModel.SelectedAttraction))
+                if (e.PropertyName == nameof(MainViewModel.SelectedTrip))
                 {
                     CanExecuteChanged?.Invoke(this, EventArgs.Empty);
                 }
@@ -29,20 +28,15 @@ namespace TravelEditor.Commands
 
         public bool CanExecute(object? parameter)
         {
-            return viewModel.SelectedAttraction!=null;
+            return viewModel.SelectedTrip != null;
         }
 
         public void Execute(object? parameter)
         {
-            Attraction attraction = (Attraction)viewModel.SelectedAttraction;
-            if(attraction != null)
+            if (viewModel.SelectedTrip != null)
             {
-                MessageBox.Show(attraction.Name);
-
-            }
-            else
-            {
-                MessageBox.Show("Please select the attraction");
+                ReviewsGridView reviewsGridView = new ReviewsGridView(viewModel.SelectedTrip.Reviews);
+                reviewsGridView.Show();
             }
         }
     }

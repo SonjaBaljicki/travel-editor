@@ -7,14 +7,14 @@ using System.Windows;
 using System.Windows.Input;
 using TravelEditor.ViewModels;
 
-namespace TravelEditor.Commands
+namespace TravelEditor.Commands.Save
 {
-    internal class SaveAttractionCommand : ICommand
+    internal class SaveTravellerCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        public AttractionViewModel viewModel;
+        public TravellerViewModel viewModel;
 
-        public SaveAttractionCommand(AttractionViewModel viewModel)
+        public SaveTravellerCommand(TravellerViewModel viewModel)
         {
             this.viewModel = viewModel;
         }
@@ -26,7 +26,7 @@ namespace TravelEditor.Commands
 
         public void Execute(object? parameter)
         {
-            if (viewModel.Attraction != null)
+            if (viewModel.Traveller != null)
             {
                 MessageBox.Show("Saving edit");
             }
