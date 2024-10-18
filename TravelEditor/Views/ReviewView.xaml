@@ -20,7 +20,7 @@
                 <DatePicker Name="reviewDatePicker" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Name="saveReviewButton" Content="Save" Width="100" Margin="5"/>
+                    <Button Name="saveReviewButton" Command="{Binding SaveReviewCommand}" Content="Save" Width="100" Margin="5"/>
                 </StackPanel>
             </StackPanel>
         </Border>

@@ -53,31 +53,31 @@ namespace TravelEditor
 
         private void addTripButton_Click(object sender, RoutedEventArgs e)
         {
-            TripView tripView = new TripView(new Trip());
+            TripView tripView = new TripView(null);
             tripView.Show();
         }
 
         private void addDestinationButton_Click(object sender, RoutedEventArgs e)
         {
-            DestinationView destinationView = new DestinationView(new Destination());
+            DestinationView destinationView = new DestinationView(null);
             destinationView.Show();
         }
 
         private void addAttractionButton_Click(object sender, RoutedEventArgs e)
         {
-            AttractionView attractionView = new AttractionView(new Attraction());
+            AttractionView attractionView = new AttractionView(null);
             attractionView.Show();
         }
 
         private void addTravellerButton_Click(object sender, RoutedEventArgs e)
         {
-            TravellerView travellerView = new TravellerView(new Traveller());
+            TravellerView travellerView = new TravellerView(null);
             travellerView.Show();
         }
 
         private void addReviewButton_Click(object sender, RoutedEventArgs e)
         {
-            ReviewView reviewView = new ReviewView(new Review());
+            ReviewView reviewView = new ReviewView(null);
             reviewView.Show();
         }
         private void editTripButton_Click(object sender, RoutedEventArgs e)

@@ -25,7 +25,7 @@
                 <TextBox Name="ageTextBox" Width="200" Text="{Binding Traveller.Age}" Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Name="saveTravellerButton" Content="Save" Width="100" Margin="5"/>
+                    <Button Name="saveTravellerButton" Command="{Binding SaveTravellerCommand}" Content="Save" Width="100" Margin="5"/>
                 </StackPanel>
             </StackPanel>
         </Border>

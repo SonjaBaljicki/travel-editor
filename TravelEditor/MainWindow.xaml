@@ -23,7 +23,7 @@
                                     <Button Width="120" Name="editTripButton" Content="Edit Trip" Click="editTripButton_Click"/>
                                     <Button  Width="120" Name="deleteTripButton" Content="Delete Trip" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="tripsGrid" Background="#EAF4F4" ItemsSource="{Binding Trips}" Height="300">
+                                <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" Name="tripsGrid" Background="#EAF4F4" ItemsSource="{Binding Trips}" Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
                                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="120"/>
@@ -61,7 +61,7 @@
                                     <Button Width="120" Name="editDestinationButton" Content="Edit Destination" Click="editDestinationButton_Click"/>
                                     <Button  Width="120" Name="deleteDestinationButton" Content="Delete Destination" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="destinationsGrid" Background="#EAF4F4" ItemsSource="{Binding Destinations}"  Height="300">
+                                <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" Name="destinationsGrid" Background="#EAF4F4" ItemsSource="{Binding Destinations}"  Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="City" Binding="{Binding City}" Width="120"/>
                                         <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="120"/>
@@ -85,7 +85,7 @@
                                     <Button Width="120" Name="editAttractionButton" Content="Edit Attration" Click="editAttractionButton_Click"/>
                                     <Button  Width="120" Name="deleteAttractionButton" Content="Delete Attration" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="attractionsGrid" Background="#EAF4F4" ItemsSource="{Binding Attractions}" Height="300">
+                                <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" Name="attractionsGrid" Background="#EAF4F4" ItemsSource="{Binding Attractions}" Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
                                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="120"/>
@@ -102,7 +102,7 @@
                                     <Button Width="120" Name="editTravellerButton" Content="Edit Traveller" Click="editTravellerButton_Click"/>
                                     <Button  Width="120" Name="deleteTravellerButton" Content="Delete Traveller" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}" Height="300">
+                                <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}" Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="120"/>
                                         <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="120"/>
@@ -120,7 +120,7 @@
                                     <Button Width="120" Name="editReviewButton" Content="Edit Review" Click="editReviewButton_Click"/>
                                     <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
+                                <DataGrid CanUserAddRows="False" AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" Width="120"/>
                                         <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="120"/>

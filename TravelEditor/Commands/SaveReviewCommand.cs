@@ -9,12 +9,12 @@ using TravelEditor.ViewModels;
 
 namespace TravelEditor.Commands
 {
-    internal class SaveAttractionCommand : ICommand
+    internal class SaveReviewCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        public AttractionViewModel viewModel;
+        public ReviewViewModel viewModel;
 
-        public SaveAttractionCommand(AttractionViewModel viewModel)
+        public SaveReviewCommand(ReviewViewModel viewModel)
         {
             this.viewModel = viewModel;
         }
@@ -26,7 +26,7 @@ namespace TravelEditor.Commands
 
         public void Execute(object? parameter)
         {
-            if (viewModel.Attraction != null)
+            if (viewModel.Review != null)
             {
                 MessageBox.Show("Saving edit");
             }
