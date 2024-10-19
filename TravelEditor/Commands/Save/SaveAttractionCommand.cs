@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TravelEditor.Models;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
 namespace TravelEditor.Commands.Save
@@ -14,10 +15,12 @@ namespace TravelEditor.Commands.Save
     {
         public event EventHandler? CanExecuteChanged;
         public AttractionViewModel viewModel;
+        public IDestinationService destinationService;
 
-        public SaveAttractionCommand(AttractionViewModel viewModel)
+        public SaveAttractionCommand(AttractionViewModel viewModel,IDestinationService destinationService)
         {
             this.viewModel = viewModel;
+            this.destinationService = destinationService;
         }
 
         public bool CanExecute(object? parameter)
@@ -34,7 +37,17 @@ namespace TravelEditor.Commands.Save
                 double price = viewModel.Attraction.Price;
                 string location = viewModel.Attraction.Location;
                 Attraction attraction=new Attraction(name, description, price, location);
-                viewModel.DestinationViewModel.Destination.Attractions.Add(attraction);
+                //opened separately, not from destination
+                if (viewModel.DestinationViewModel == null)
+                {
+                    destinationService.UpdateDestinationAttractions((Destination)viewModel.SelectedDestination,attraction);
+                }
+                //adding attractions when adding a new destination
+                else
+                {
+                    viewModel.DestinationViewModel.Destination.Attractions.Add(attraction);
+
+                }
 
                 MessageBox.Show("Saving add");
             }

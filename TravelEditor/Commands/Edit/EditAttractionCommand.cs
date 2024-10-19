@@ -35,7 +35,7 @@ namespace TravelEditor.Commands.Edit
         {
             if (viewModel.SelectedAttraction != null)
             {
-                AttractionView attractionView = new AttractionView(viewModel.SelectedAttraction,null);
+                AttractionView attractionView = new AttractionView(viewModel.SelectedAttraction,null,null,null);
                 attractionView.Show();
             }
         }

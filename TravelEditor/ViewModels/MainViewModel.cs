@@ -144,7 +144,7 @@ namespace TravelEditor.ViewModels
             DeleteDestinationCommand = new DeleteDestinationCommand(this, _destinationService);
             ViewAttractionsCommand = new ViewAttractionsCommand(this);
 
-            AddAttractionCommand = new AddAttractionCommand(this);
+            AddAttractionCommand = new AddAttractionCommand(this, _destinationService, _attractionService);
             EditAttractionCommand = new EditAttractionCommand(this);
             //DeleteAttractionCommand = new DeleteAttractionCommand(this);
 

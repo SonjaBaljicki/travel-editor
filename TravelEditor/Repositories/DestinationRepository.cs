@@ -34,11 +34,21 @@ namespace TravelEditor.Repositories
         {
             if(_context.destinations.Find(destination.DestinationId)!=null)
             {
-                Destination existingDestination = _context.destinations.Find(destination);
+                Destination existingDestination = _context.destinations.Find(destination.DestinationId);
                 existingDestination.City = destination.City;
                 existingDestination.Country = destination.Country;
                 existingDestination.Description = destination.Description;
                 existingDestination.Climate = destination.Climate;
+                _context.SaveChanges();
+            }
+        }
+        //adding an attraction after a destinations has already been added
+        public void UpdateDestinationAttractions(Destination destination, Attraction attraction)
+        {
+            if (_context.destinations.Find(destination.DestinationId) != null)
+            {
+                Destination existingDestination = _context.destinations.Find(destination.DestinationId);
+                existingDestination.Attractions.Add(attraction);
                 _context.SaveChanges();
             }
         }

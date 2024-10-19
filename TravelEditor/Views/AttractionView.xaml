@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TravelEditor.Views"
         mc:Ignorable="d"
-        Title="AttractionView" Height="450" Width="800" Background="#A4C3B2">
+        Title="AttractionView" Height="650" Width="800" Background="#A4C3B2">
     <Grid>
-        <Border Width="400" Height="400" BorderBrush="#6B9080" BorderThickness="2" CornerRadius="2">
+        <Border Width="400" Height="500" BorderBrush="#6B9080" BorderThickness="2" CornerRadius="2">
             <StackPanel Margin="20" HorizontalAlignment="Center">
                 <Label Content="Name:"/>
                 <TextBox Name="attractionNameTextBox" Text="{Binding Attraction.Name}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
@@ -20,6 +20,15 @@
 
                 <Label Content="Description:"/>
                 <TextBox Name="descriptionTextBox" Text="{Binding Attraction.Description}" Width="200" Height="60"  Margin="5,0,0,10" HorizontalAlignment="Left" />
+
+                <StackPanel>
+                    <DataGrid SelectedItem="{Binding SelectedDestination}" CanUserAddRows="False" AutoGenerateColumns="False" Name="destinationsGrid" Background="#EAF4F4" ItemsSource="{Binding Destinations}"  Height="150" Width="276">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="City" Binding="{Binding City}" Width="120"/>
+                            <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="120"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Name="saveAttractionButton" Command="{Binding SaveAttractionCommand}"  Content="Save" Width="100" Margin="5"/>
