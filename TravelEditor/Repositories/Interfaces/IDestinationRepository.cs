@@ -11,6 +11,10 @@ namespace TravelEditor.Repositories.Interfaces
     {
         void AddDestination(Destination destination);
         List<Destination> LoadAll();
+        void UpdateDestination(Destination destination);
+        void Delete(Destination destination);
+        bool HasAssociatedTrips(Destination destination);
+
 
     }
 }

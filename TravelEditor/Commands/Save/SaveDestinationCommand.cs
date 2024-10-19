@@ -22,8 +22,10 @@ namespace TravelEditor.Commands.Save
         {
             this.viewModel = viewModel;
             this.destinationService = destinationService;
-            this.viewModel.Destination.Attractions = new List<Attraction>();
-
+            if (viewModel.Destination.Attractions == null)
+            {
+                viewModel.Destination.Attractions = new List<Attraction>();
+            }
         }
 
         public bool CanExecute(object? parameter)
@@ -39,8 +41,7 @@ namespace TravelEditor.Commands.Save
                 string country = viewModel.Destination.Country;
                 string description = viewModel.Destination.Description;
                 string climate = viewModel.Destination.Climate;
-              
-                MessageBox.Show(viewModel.Destination.Attractions.Count.ToString());
+
                 Destination destination = new Destination(city, country, description, climate, viewModel.Destination.Attractions);
                 destinationService.AddDestination(destination);
                 MessageBox.Show("Saving add");
@@ -48,7 +49,13 @@ namespace TravelEditor.Commands.Save
             }
             else
             {
-                MessageBox.Show("Saving edit");
+                string city = viewModel.Destination.City;
+                string country = viewModel.Destination.Country;
+                string description = viewModel.Destination.Description;
+                string climate = viewModel.Destination.Climate;
+                Destination destination = new Destination(city, country, description, climate, viewModel.Destination.Attractions);
+                destinationService.UpdateDestination(destination);
+                MessageBox.Show("Saving update");
             }
         }
         protected void OnCanExecutedChanged()
