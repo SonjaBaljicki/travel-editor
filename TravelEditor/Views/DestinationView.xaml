@@ -22,7 +22,7 @@
                 <TextBox Name="descriptionTextBox" Text="{Binding Destination.Description}" Width="200" Height="60"  Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Name="saveDestinationButton" Content="Save" Width="100" Margin="5"/>
+                    <Button Name="saveDestinationButton" Command="{Binding SaveDestinationCommand}" Content="Save" Width="100" Margin="5"/>
                 </StackPanel>
             </StackPanel>
         </Border>

@@ -19,11 +19,11 @@
                         <TabItem Header="Trips">
                             <StackPanel Margin="0, 5, 0, 0">
                                 <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
-                                    <Button Width="120" Name="addTripButton" Content="Add Trip" Click="addTripButton_Click"/>
-                                    <Button Width="120" Name="editTripButton" Content="Edit Trip" Click="editTripButton_Click"/>
-                                    <Button  Width="120" Name="deleteTripButton" Content="Delete Trip" />
+                                    <Button Width="120" Name="addTripButton" Content="Add Trip" Command="{Binding AddTripCommand}"/>
+                                    <Button Width="120" Name="editTripButton" Content="Edit Trip" Command="{Binding EditTripCommand}"/>
+                                    <Button  Width="120" Name="deleteTripButton" Command="{Binding DeleteTripCommand}" Content="Delete Trip" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="tripsGrid" Background="#EAF4F4" ItemsSource="{Binding Trips}" Height="300">
+                                <DataGrid SelectedItem="{Binding SelectedTrip}" CanUserAddRows="False" AutoGenerateColumns="False" Name="tripsGrid" Background="#EAF4F4" ItemsSource="{Binding Trips}" Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
                                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="120"/>
@@ -32,21 +32,21 @@
                                         <DataGridTemplateColumn Header="Travellers" Width="200">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Name="viewTravellersButton" Content="View Travellers" Click="viewTravellersButton_Click"/>
+                                                    <Button Name="viewTravellersButton" Content="View Travellers" Command="{Binding DataContext.ViewTravellersCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
                                         <DataGridTemplateColumn Header="Reviews" Width="200">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Name="viewReviewsButton" Content="View Reviews" Click="viewReviewsButton_Click"/>
+                                                    <Button Name="viewReviewsButton" Content="View Reviews" Command="{Binding DataContext.ViewReviewsCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
                                         <DataGridTemplateColumn Header="Destination" Width="200">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Name="viewDestinationButton" Content="View Destination" Click="editDestinationButton_Click"/>
+                                                    <Button Name="viewDestinationButton" Content="View Destination" Command="{Binding DataContext.ViewDestinationCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
@@ -57,11 +57,11 @@
                         <TabItem Header="Destinations">
                             <StackPanel Margin="0, 5, 0, 0">
                                 <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
-                                    <Button Width="120" Name="addDestinationButton" Content="Add Destination" Click="addDestinationButton_Click"/>
-                                    <Button Width="120" Name="editDestinationButton" Content="Edit Destination" Click="editDestinationButton_Click"/>
-                                    <Button  Width="120" Name="deleteDestinationButton" Content="Delete Destination" />
+                                    <Button Width="120" Name="addDestinationButton" Content="Add Destination" Command="{Binding AddDestinationCommand}"/>
+                                    <Button Width="120" Name="editDestinationButton" Content="Edit Destination" Command="{Binding EditDestinationCommand}"/>
+                                    <Button  Width="120" Name="deleteDestinationButton" Command="{Binding DeleteDestinationCommand}" Content="Delete Destination" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="destinationsGrid" Background="#EAF4F4" ItemsSource="{Binding Destinations}"  Height="300">
+                                <DataGrid SelectedItem="{Binding SelectedDestination}" CanUserAddRows="False" AutoGenerateColumns="False" Name="destinationsGrid" Background="#EAF4F4" ItemsSource="{Binding Destinations}"  Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="City" Binding="{Binding City}" Width="120"/>
                                         <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="120"/>
@@ -70,7 +70,7 @@
                                         <DataGridTemplateColumn Header="Attractions" Width="200">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Name="viewAttractionsButton" Content="View Attractions" Click="viewAttractionsButton_Click"/>
+                                                    <Button Name="viewAttractionsButton" Content="View Attractions" Command="{Binding DataContext.ViewAttractionsCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
@@ -81,11 +81,11 @@
                         <TabItem Header="Attractions">
                             <StackPanel Margin="0, 5, 0, 0">
                                 <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
-                                    <Button Width="120" Name="addAttractionButton" Content="Add Attration" Click="addAttractionButton_Click"/>
-                                    <Button Width="120" Name="editAttractionButton" Content="Edit Attration" Click="editAttractionButton_Click"/>
-                                    <Button  Width="120" Name="deleteAttractionButton" Content="Delete Attration" />
+                                    <Button Width="120" Name="addAttractionButton" Content="Add Attration" Command="{Binding AddAttractionCommand}"/>
+                                    <Button Width="120" Name="editAttractionButton" Content="Edit Attration" Command="{Binding EditAttractionCommand}"/>
+                                    <Button  Width="120" Name="deleteAttractionButton" Command="{Binding DeleteAttractionCommand}" Content="Delete Attration" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="attractionsGrid" Background="#EAF4F4" ItemsSource="{Binding Attractions}" Height="300">
+                                <DataGrid  SelectedItem="{Binding SelectedAttraction}" CanUserAddRows="False" AutoGenerateColumns="False" Name="attractionsGrid" Background="#EAF4F4" ItemsSource="{Binding Attractions}" Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
                                         <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="120"/>
@@ -98,11 +98,11 @@
                         <TabItem Header="Travellers">
                             <StackPanel Margin="0, 5, 0, 0">
                                 <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
-                                    <Button Width="120" Name="addTravellerButton" Content="Add Traveller" Click="addTravellerButton_Click"/>
-                                    <Button Width="120" Name="editTravellerButton" Content="Edit Traveller" Click="editTravellerButton_Click"/>
-                                    <Button  Width="120" Name="deleteTravellerButton" Content="Delete Traveller" />
+                                    <Button Width="120" Name="addTravellerButton" Content="Add Traveller" Command="{Binding AddTravellerCommand}"/>
+                                    <Button Width="120" Name="editTravellerButton" Content="Edit Traveller" Command="{Binding EditTravellerCommand}"/>
+                                    <Button  Width="120" Name="deleteTravellerButton" Command="{Binding DeleteTravellerCommand}" Content="Delete Traveller" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}" Height="300">
+                                <DataGrid SelectedItem="{Binding SelectedTraveller}" CanUserAddRows="False" AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}" Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="120"/>
                                         <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="120"/>
@@ -116,18 +116,18 @@
                         <TabItem Header="Reviews">
                             <StackPanel Margin="0, 5, 0, 0">
                                 <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
-                                    <Button Width="120" Name="addReviewButton" Content="Add Review" Click="addReviewButton_Click"/>
-                                    <Button Width="120" Name="editReviewButton" Content="Edit Review" Click="editReviewButton_Click"/>
-                                    <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" />
+                                    <Button Width="120" Name="addReviewButton" Content="Add Review" Command="{Binding AddReviewCommand}"/>
+                                    <Button Width="120" Name="editReviewButton" Content="Edit Review" Command="{Binding EditReviewCommand}"/>
+                                    <Button  Width="120" Name="deleteReviewButton" Command="{Binding DeleteReviewCommand}" Content="Delete Review" />
                                 </StackPanel>
-                                <DataGrid AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
+                                <DataGrid SelectedItem="{Binding SelectedReview}" CanUserAddRows="False" AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" Width="120"/>
                                         <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="120"/>
                                         <DataGridTemplateColumn Header="Traveller" Width="200">
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button Name="viewTravellerButton" Content="View Traveller" Click="editTravellerButton_Click"/>
+                                                    <Button Name="viewTravellerButton" Content="View Traveller" Command="{Binding DataContext.ViewTravellerCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                                                 </DataTemplate>
                                             </DataGridTemplateColumn.CellTemplate>
                                         </DataGridTemplateColumn>
