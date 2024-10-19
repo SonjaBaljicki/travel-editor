@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TravelEditor.ViewModels;
 using TravelEditor.Views;
 
 namespace TravelEditor.Commands.View
 {
-    internal class ViewAttractionsCommand : ICommand
+    public class ViewAttractionsCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
         public MainViewModel viewModel;

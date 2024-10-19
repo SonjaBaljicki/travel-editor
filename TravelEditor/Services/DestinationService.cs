@@ -18,9 +18,28 @@ namespace TravelEditor.Services
         {
             _destinationRepository = destinationRepository; 
         }
+        //Loading all destinations
         public List<Destination> LoadAll()
         {
             return _destinationRepository.LoadAll();
+        }
+        //add new destination
+        public void AddDestination(Destination destination)
+        {
+            _destinationRepository.AddDestination(destination);
+        }
+        //update an existing destiantion
+        public void UpdateDestination(Destination destination)
+        {
+            _destinationRepository.UpdateDestination(destination);   
+        }
+        //delete a destination if it doesnt have trips
+        public void Delete(Destination destination)
+        {
+            if (!_destinationRepository.HasAssociatedTrips(destination))
+            {
+                _destinationRepository.Delete(destination);
+            }
         }
     }
 }

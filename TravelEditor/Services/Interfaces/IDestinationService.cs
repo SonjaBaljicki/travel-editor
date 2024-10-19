@@ -10,6 +10,8 @@ namespace TravelEditor.Services.Interfaces
     public interface IDestinationService
     {
         List<Destination> LoadAll();
-
+        void AddDestination(Destination destination);
+        void UpdateDestination(Destination destination);
+        void Delete(Destination destination);
     }
 }

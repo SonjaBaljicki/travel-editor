@@ -7,18 +7,22 @@ using System.Windows.Input;
 using System.Windows;
 using TravelEditor.Models;
 using TravelEditor.ViewModels;
+using TravelEditor.Services;
+using TravelEditor.Services.Interfaces;
 
 namespace TravelEditor.Commands.Delete
 {
-    internal class DeleteDestinationCommand : ICommand
+    public class DeleteDestinationCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 
         public MainViewModel viewModel;
+        public IDestinationService destinationService;
 
-        public DeleteDestinationCommand(MainViewModel viewModel)
+        public DeleteDestinationCommand(MainViewModel viewModel, IDestinationService destinationService)
         {
             this.viewModel = viewModel;
+            this.destinationService = destinationService;
             this.viewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == nameof(MainViewModel.SelectedDestination))
@@ -38,7 +42,8 @@ namespace TravelEditor.Commands.Delete
             Destination destination = viewModel.SelectedDestination;
             if (destination != null)
             {
-                MessageBox.Show(destination.City);
+                destinationService.Delete(destination);
+                MessageBox.Show("Deleting destination");
             }
             else
             {

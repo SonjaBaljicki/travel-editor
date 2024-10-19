@@ -20,7 +20,11 @@
 
                 <Label Content="Description:"/>
                 <TextBox Name="descriptionTextBox" Text="{Binding Destination.Description}" Width="200" Height="60"  Margin="5,0,0,10" HorizontalAlignment="Left" />
-
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="addAttractionsButton" Command="{Binding AddAttractionCommand}" Content="Add Attractions" Width="100" Margin="5"/>
+                </StackPanel>
+                
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Name="saveDestinationButton" Command="{Binding SaveDestinationCommand}" Content="Save" Width="100" Margin="5"/>
                 </StackPanel>

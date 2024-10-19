@@ -9,7 +9,7 @@ using TravelEditor.Views;
 
 namespace TravelEditor.Commands.Edit
 {
-    internal class EditTravellerCommand : ICommand
+    public class EditTravellerCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
         public MainViewModel viewModel;

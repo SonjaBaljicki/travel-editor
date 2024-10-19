@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 using TravelEditor.Models;
 
 namespace TravelEditor.Database
@@ -16,5 +11,14 @@ namespace TravelEditor.Database
         public DbSet<Traveller> travellers { get; set; }
         public DbSet<Attraction> attractions { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Destination>()
+                .HasMany(d => d.Attractions)
+                .WithRequired() 
+                .WillCascadeOnDelete(true); 
+        }
+
     }
+
 }

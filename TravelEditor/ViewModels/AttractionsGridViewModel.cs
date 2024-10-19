@@ -8,7 +8,7 @@ using TravelEditor.Models;
 
 namespace TravelEditor.ViewModels
 {
-    internal class AttractionsGridViewModel
+    public class AttractionsGridViewModel
     {
         public ObservableCollection<Attraction> Attractions { get; set; }
 

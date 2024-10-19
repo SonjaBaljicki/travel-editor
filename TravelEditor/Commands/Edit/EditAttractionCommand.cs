@@ -9,7 +9,7 @@ using TravelEditor.Views;
 
 namespace TravelEditor.Commands.Edit
 {
-    internal class EditAttractionCommand : ICommand
+    public class EditAttractionCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
         public MainViewModel viewModel;
@@ -35,7 +35,7 @@ namespace TravelEditor.Commands.Edit
         {
             if (viewModel.SelectedAttraction != null)
             {
-                AttractionView attractionView = new AttractionView(viewModel.SelectedAttraction);
+                AttractionView attractionView = new AttractionView(viewModel.SelectedAttraction,null);
                 attractionView.Show();
             }
         }

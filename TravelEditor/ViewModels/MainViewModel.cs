@@ -17,7 +17,7 @@ using TravelEditor.Services.Interfaces;
 
 namespace TravelEditor.ViewModels
 {
-    internal class MainViewModel
+    public class MainViewModel
     {
         private readonly ITripService _tripService;
         private readonly IDestinationService _destinationService;
@@ -94,7 +94,7 @@ namespace TravelEditor.ViewModels
         //trips commands
         public AddTripCommand AddTripCommand {get;}
         public EditTripCommand EditTripCommand { get; }
-        public DeleteTripCommand DeleteTripCommand { get; }
+        //public DeleteTripCommand DeleteTripCommand { get; }
         public ViewDestinationCommand ViewDestinationCommand { get; }
         public ViewTravellersCommand ViewTravellersCommand { get; }
         public ViewReviewsCommand ViewReviewsCommand { get; }
@@ -108,17 +108,17 @@ namespace TravelEditor.ViewModels
         //attractions commands
         public AddAttractionCommand AddAttractionCommand { get; }
         public EditAttractionCommand EditAttractionCommand { get; }
-        public DeleteAttractionCommand DeleteAttractionCommand { get; set; }
+        //public DeleteAttractionCommand DeleteAttractionCommand { get; set; }
 
-        //travellers commands
+        ////travellers commands
         public AddTravellerCommand AddTravellerCommand { get; }
         public EditTravellerCommand EditTravellerCommand { get; }
-        public DeleteTravellerCommand DeleteTravellerCommand { get; }
+        //public DeleteTravellerCommand DeleteTravellerCommand { get; }
 
-        //reviews command
+        ////reviews command
         public AddReviewCommand AddReviewCommand { get; }
         public EditReviewCommand EditReviewCommand { get; }
-        public DeleteReviewCommand DeleteReviewCommand { get; }
+        //public DeleteReviewCommand DeleteReviewCommand { get; }
         public ViewTravellerCommand ViewTravellerCommand { get; }
 
 
@@ -134,27 +134,27 @@ namespace TravelEditor.ViewModels
            
             AddTripCommand = new AddTripCommand(this);
             EditTripCommand = new EditTripCommand(this);
-            DeleteTripCommand = new DeleteTripCommand(this);
-            ViewDestinationCommand = new ViewDestinationCommand(this);
+            //DeleteTripCommand = new DeleteTripCommand(this);
+            ViewDestinationCommand = new ViewDestinationCommand(this, _destinationService);
             ViewTravellersCommand = new ViewTravellersCommand(this);
             ViewReviewsCommand = new ViewReviewsCommand(this);
 
-            AddDestinationCommand = new AddDestinationCommand(this);
-            EditDestinationCommand = new EditDestinationCommand(this);
-            DeleteDestinationCommand = new DeleteDestinationCommand(this);
+            AddDestinationCommand = new AddDestinationCommand(this, _destinationService);
+            EditDestinationCommand = new EditDestinationCommand(this, _destinationService);
+            DeleteDestinationCommand = new DeleteDestinationCommand(this, _destinationService);
             ViewAttractionsCommand = new ViewAttractionsCommand(this);
 
             AddAttractionCommand = new AddAttractionCommand(this);
             EditAttractionCommand = new EditAttractionCommand(this);
-            DeleteAttractionCommand = new DeleteAttractionCommand(this);
+            //DeleteAttractionCommand = new DeleteAttractionCommand(this);
 
             AddTravellerCommand = new AddTravellerCommand(this);
             EditTravellerCommand = new EditTravellerCommand(this);
-            DeleteTravellerCommand = new DeleteTravellerCommand(this);
+            //DeleteTravellerCommand = new DeleteTravellerCommand(this);
 
             AddReviewCommand = new AddReviewCommand(this);
             EditReviewCommand = new EditReviewCommand(this);
-            DeleteReviewCommand = new DeleteReviewCommand(this);
+            //DeleteReviewCommand = new DeleteReviewCommand(this);
             ViewTravellerCommand = new ViewTravellerCommand(this);
 
         }

@@ -9,7 +9,7 @@ using TravelEditor.ViewModels;
 
 namespace TravelEditor.Commands.Save
 {
-    internal class SaveReviewCommand : ICommand
+    public class SaveReviewCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
         public ReviewViewModel viewModel;

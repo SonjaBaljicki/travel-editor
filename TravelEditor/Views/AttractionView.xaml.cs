@@ -21,11 +21,23 @@ namespace TravelEditor.Views
     /// </summary>
     public partial class AttractionView : Window
     {
-        public AttractionView(Attraction attraction)
+        public AttractionView(Attraction attraction, DestinationViewModel destinationViewModel)
         {
             InitializeComponent();
-            AttractionViewModel attractionViewModel = new AttractionViewModel(attraction);
+            AttractionViewModel attractionViewModel = new AttractionViewModel(attraction, destinationViewModel);
             this.DataContext = attractionViewModel;
         }
+
+        //public AttractionView(Attraction attraction)
+        //{
+        //    InitializeComponent();
+        //    AttractionViewModel attractionViewModel = new AttractionViewModel(attraction);
+        //    this.DataContext = attractionViewModel;
+        //}
+
+        //public AttractionView(Attraction attraction, DestinationViewModel destinationViewModel) : this(attraction)
+        //{
+        //    this.destinationViewModel = destinationViewModel;
+        //}
     }
 }
