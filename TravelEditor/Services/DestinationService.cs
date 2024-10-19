@@ -22,5 +22,10 @@ namespace TravelEditor.Services
         {
             return _destinationRepository.LoadAll();
         }
+
+        public void AddDestination(Destination destination)
+        {
+            _destinationRepository.AddDestination(destination);
+        }
     }
 }

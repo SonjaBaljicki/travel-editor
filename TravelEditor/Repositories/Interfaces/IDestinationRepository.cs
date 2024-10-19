@@ -9,6 +9,7 @@ namespace TravelEditor.Repositories.Interfaces
 {
     public interface IDestinationRepository
     {
+        void AddDestination(Destination destination);
         List<Destination> LoadAll();
 
     }

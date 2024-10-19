@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelEditor.Models;
+using TravelEditor.Services;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
 namespace TravelEditor.Views
@@ -21,10 +23,10 @@ namespace TravelEditor.Views
     /// </summary>
     public partial class DestinationView : Window
     {
-        public DestinationView(Destination destination)
+        public DestinationView(Destination destination, IDestinationService destinationService)
         {
             InitializeComponent();
-            DestinationViewModel destinationViewModel = new DestinationViewModel(destination);
+            DestinationViewModel destinationViewModel = new DestinationViewModel(destination, destinationService);
             this.DataContext = destinationViewModel;
         }
     }

@@ -9,7 +9,7 @@ using TravelEditor.Models;
 
 namespace TravelEditor.ViewModels
 {
-    internal class TripViewModel
+    public class TripViewModel
     {
         public Trip Trip { get; set; }
         public SaveTripCommand SaveTripCommand { get; }

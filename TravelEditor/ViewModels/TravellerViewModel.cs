@@ -8,7 +8,7 @@ using TravelEditor.Models;
 
 namespace TravelEditor.ViewModels
 {
-    internal class TravellerViewModel
+    public class TravellerViewModel
     {
         public Traveller Traveller { get; set; }
         public SaveTravellerCommand SaveTravellerCommand { get; }

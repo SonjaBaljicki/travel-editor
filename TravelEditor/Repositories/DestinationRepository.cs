@@ -17,9 +17,15 @@ namespace TravelEditor.Repositories
         {
             _context = context;
         }
+
         public List<Destination> LoadAll()
         {
             return _context.destinations.ToList();
+        }
+        public void AddDestination(Destination destination)
+        {
+            _context.destinations.Add(destination);
+            _context.SaveChanges();
         }
     }
 }

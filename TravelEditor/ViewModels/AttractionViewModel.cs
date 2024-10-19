@@ -8,14 +8,17 @@ using TravelEditor.Models;
 
 namespace TravelEditor.ViewModels
 {
-    internal class AttractionViewModel
+    public class AttractionViewModel
     {
         public Attraction Attraction { get; set; }
         public SaveAttractionCommand SaveAttractionCommand { get;}
+        public DestinationViewModel DestinationViewModel { get; }
 
-        public AttractionViewModel(Attraction attraction)
+
+        public AttractionViewModel(Attraction attraction, DestinationViewModel destinationViewModel)
         {
             Attraction = attraction;
+            DestinationViewModel = destinationViewModel;
             SaveAttractionCommand = new SaveAttractionCommand(this);
         }
     }

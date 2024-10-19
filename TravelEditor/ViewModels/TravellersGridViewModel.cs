@@ -7,7 +7,7 @@ using TravelEditor.Models;
 
 namespace TravelEditor.ViewModels
 {
-    internal class TravellersGridViewModel
+    public class TravellersGridViewModel
     {
         public List<Traveller> Travellers { get; set; }
 
