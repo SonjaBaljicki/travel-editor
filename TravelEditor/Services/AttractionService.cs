@@ -22,5 +22,17 @@ namespace TravelEditor.Services
         {
             return _attractionRepository.LoadAll();
         }
+        public void UpdateAttraction(Attraction attraction)
+        {
+            _attractionRepository.UpdateAttraction(attraction);
+        }
+        public void DeleteAttraction(Attraction attraction)
+        {
+            if (_attractionRepository.FindOne(attraction))
+            {
+                _attractionRepository.DeleteAttraction(attraction);
+            }
+        }
+
     }
 }

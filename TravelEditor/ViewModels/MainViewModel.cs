@@ -108,7 +108,7 @@ namespace TravelEditor.ViewModels
         //attractions commands
         public AddAttractionCommand AddAttractionCommand { get; }
         public EditAttractionCommand EditAttractionCommand { get; }
-        //public DeleteAttractionCommand DeleteAttractionCommand { get; set; }
+        public DeleteAttractionCommand DeleteAttractionCommand { get; set; }
 
         ////travellers commands
         public AddTravellerCommand AddTravellerCommand { get; }
@@ -142,11 +142,11 @@ namespace TravelEditor.ViewModels
             AddDestinationCommand = new AddDestinationCommand(this, _destinationService);
             EditDestinationCommand = new EditDestinationCommand(this, _destinationService);
             DeleteDestinationCommand = new DeleteDestinationCommand(this, _destinationService);
-            ViewAttractionsCommand = new ViewAttractionsCommand(this);
+            ViewAttractionsCommand = new ViewAttractionsCommand(this, _destinationService, _attractionService);
 
-            AddAttractionCommand = new AddAttractionCommand(this);
-            EditAttractionCommand = new EditAttractionCommand(this);
-            //DeleteAttractionCommand = new DeleteAttractionCommand(this);
+            AddAttractionCommand = new AddAttractionCommand(this, _destinationService, _attractionService);
+            EditAttractionCommand = new EditAttractionCommand(this, _destinationService, _attractionService);
+            DeleteAttractionCommand = new DeleteAttractionCommand(this,_attractionService);
 
             AddTravellerCommand = new AddTravellerCommand(this);
             EditTravellerCommand = new EditTravellerCommand(this);

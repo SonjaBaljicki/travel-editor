@@ -4,6 +4,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using TravelEditor.Database;
 using TravelEditor.Models;
 using TravelEditor.Repositories.Interfaces;
@@ -34,11 +35,21 @@ namespace TravelEditor.Repositories
         {
             if(_context.destinations.Find(destination.DestinationId)!=null)
             {
-                Destination existingDestination = _context.destinations.Find(destination);
+                Destination existingDestination = _context.destinations.Find(destination.DestinationId);
                 existingDestination.City = destination.City;
                 existingDestination.Country = destination.Country;
                 existingDestination.Description = destination.Description;
                 existingDestination.Climate = destination.Climate;
+                _context.SaveChanges();
+            }
+        }
+        //adding an attraction after a destinations has already been added
+        public void AddDestinationAttractions(Destination destination, Attraction attraction)
+        {
+            if (_context.destinations.Find(destination.DestinationId) != null)
+            {
+                Destination existingDestination = _context.destinations.Find(destination.DestinationId);
+                existingDestination.Attractions.Add(attraction);
                 _context.SaveChanges();
             }
         }
@@ -57,6 +68,19 @@ namespace TravelEditor.Repositories
         {
             _context.destinations.Remove(destination);
             _context.SaveChanges();
+        }
+        //for an attraction find which destination it belongs to
+        public Destination FindDestinationWithAttraction(Attraction attraction)
+        {
+            Destination destination = _context.destinations
+                                   .Where(d => d.Attractions.Contains(attraction))
+                                   .Select(d => d) as Destination;
+            return destination;
+        }
+
+        public bool FindOne(Destination destination)
+        {
+            return _context.destinations.Find(destination.DestinationId)!=null;
         }
     }
 }

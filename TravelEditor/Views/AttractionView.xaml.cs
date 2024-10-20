@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelEditor.Models;
+using TravelEditor.Services;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
 namespace TravelEditor.Views
@@ -21,23 +23,23 @@ namespace TravelEditor.Views
     /// </summary>
     public partial class AttractionView : Window
     {
-        public AttractionView(Attraction attraction, DestinationViewModel destinationViewModel)
+        public AttractionView(Attraction attraction, DestinationViewModel destinationViewModel, IDestinationService destinationService,IAttractionService attractionService)
         {
             InitializeComponent();
-            AttractionViewModel attractionViewModel = new AttractionViewModel(attraction, destinationViewModel);
+            AttractionViewModel attractionViewModel = new AttractionViewModel(attraction, destinationViewModel, destinationService, attractionService);
             this.DataContext = attractionViewModel;
         }
-
-        //public AttractionView(Attraction attraction)
-        //{
-        //    InitializeComponent();
-        //    AttractionViewModel attractionViewModel = new AttractionViewModel(attraction);
-        //    this.DataContext = attractionViewModel;
-        //}
-
-        //public AttractionView(Attraction attraction, DestinationViewModel destinationViewModel) : this(attraction)
-        //{
-        //    this.destinationViewModel = destinationViewModel;
-        //}
+        public AttractionView(Attraction attraction, Destination destination, IDestinationService destinationService, IAttractionService attractionService)
+        {
+            InitializeComponent();
+            AttractionViewModel attractionViewModel = new AttractionViewModel(attraction, destination, destinationService, attractionService);
+            this.DataContext = attractionViewModel;
+        }
+        public AttractionView(Attraction attraction,IDestinationService destinationService, IAttractionService attractionService)
+        {
+            InitializeComponent();
+            AttractionViewModel attractionViewModel = new AttractionViewModel(attraction, destinationService, attractionService);
+            this.DataContext = attractionViewModel;
+        }
     }
 }
