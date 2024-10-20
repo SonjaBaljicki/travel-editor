@@ -42,7 +42,7 @@ namespace TravelEditor.Commands.View
         {
             if (viewModel.SelectedDestination != null)
             {
-                AttractionsGridView attractionsGridView = new AttractionsGridView(viewModel.SelectedDestination.Attractions, destinationService, attractionService);
+                AttractionsGridView attractionsGridView = new AttractionsGridView(viewModel.SelectedDestination, destinationService, attractionService);
                 attractionsGridView.Show();
             }
         }

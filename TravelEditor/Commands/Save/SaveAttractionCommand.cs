@@ -24,7 +24,6 @@ namespace TravelEditor.Commands.Save
             this.destinationService = destinationService;
             this.attractionService = attractionService;
         }
-
         public bool CanExecute(object? parameter)
         {
             return true;
@@ -39,17 +38,22 @@ namespace TravelEditor.Commands.Save
                 double price = viewModel.Attraction.Price;
                 string location = viewModel.Attraction.Location;
                 Attraction attraction=new Attraction(name, description, price, location);
-                //opened separately, not from destination
-                if (viewModel.DestinationViewModel == null)
-                {
-                    destinationService.AddDestinationAttractions((Destination)viewModel.SelectedDestination,attraction);
-                }
                 //adding attractions when adding a new destination
-                else
+                if (viewModel.DestinationViewModel != null)
                 {
                     viewModel.DestinationViewModel.Destination.Attractions.Add(attraction);
                     //saves in destination window
+                }
+                //adding from destination attractions grid view
+                else if (viewModel.Destination != null)
+                {
+                    destinationService.AddDestinationAttractions(viewModel.Destination, attraction);
 
+                }
+                //opened separately, not from destination
+                else
+                {
+                    destinationService.AddDestinationAttractions((Destination)viewModel.SelectedDestination, attraction);
                 }
                 MessageBox.Show("Saving add");
             }

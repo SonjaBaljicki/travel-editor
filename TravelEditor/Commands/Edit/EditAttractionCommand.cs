@@ -60,15 +60,13 @@ namespace TravelEditor.Commands.Edit
 
         public void Execute(object? parameter)
         {
-            //null for destination view model
-
             if (mainViewModel!=null && mainViewModel.SelectedAttraction != null)
             {
-                AttractionView attractionView = new AttractionView(mainViewModel.SelectedAttraction,null,destinationService,attractionService);
+                AttractionView attractionView = new AttractionView(mainViewModel.SelectedAttraction,destinationService,attractionService);
                 attractionView.Show();
             }else if(attractionsGridViewModel!=null && attractionsGridViewModel.SelectedAttraction != null)
             {
-                AttractionView attractionView = new AttractionView(attractionsGridViewModel.SelectedAttraction, null, destinationService, attractionService);
+                AttractionView attractionView = new AttractionView(attractionsGridViewModel.SelectedAttraction, destinationService, attractionService);
                 attractionView.Show();
             }
         }

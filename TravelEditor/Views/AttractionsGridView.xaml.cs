@@ -22,11 +22,11 @@ namespace TravelEditor.Views
     /// </summary>
     public partial class AttractionsGridView : Window
     {
-        public AttractionsGridView(List<Attraction> attractions,IDestinationService destinationService
+        public AttractionsGridView(Destination destination,IDestinationService destinationService
             , IAttractionService attractionService)
         {
             InitializeComponent();
-            AttractionsGridViewModel attractionsGridViewModel = new AttractionsGridViewModel(attractions,destinationService,attractionService);
+            AttractionsGridViewModel attractionsGridViewModel = new AttractionsGridViewModel(destination,destinationService,attractionService);
             this.DataContext = attractionsGridViewModel;
         }
     }
