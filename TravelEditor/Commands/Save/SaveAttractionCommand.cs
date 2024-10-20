@@ -58,12 +58,7 @@ namespace TravelEditor.Commands.Save
             }
             else
             {
-                string name = viewModel.Attraction.Name;
-                string description = viewModel.Attraction.Description;
-                double price = viewModel.Attraction.Price;
-                string location = viewModel.Attraction.Location;
-                Attraction attraction = new Attraction(name, description, price, location);
-                attractionService.UpdateAttraction(attraction);
+                attractionService.UpdateAttraction(viewModel.Attraction);
                 MessageBox.Show("Saving edit");
             }
         }

@@ -11,6 +11,6 @@ namespace TravelEditor.Repositories.Interfaces
     {
         void AddTrip(Trip trip);
         List<Trip> LoadAll();
-
+        void UpdateTrip(Trip trip);
     }
 }

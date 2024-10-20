@@ -44,6 +44,11 @@ namespace TravelEditor.Commands.Save
             }
             else
             {
+                Destination destination = viewModel.SelectedDestination;
+                viewModel.Trip.DestinationId = destination.DestinationId;
+                viewModel.Trip.Destination = destination;
+                
+                tripService.UpdateTrip(viewModel.Trip);
                 MessageBox.Show("Saving edit");
             }
         }

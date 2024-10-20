@@ -41,5 +41,17 @@ namespace TravelEditor.Services
             DateTime now = DateTime.Now;
             return startDate > now && endDate > now && startDate<endDate;
         }
+
+        public void UpdateTrip(Trip trip)
+        {
+            if(ValidateDates(trip.StartDate, trip.EndDate))
+            {
+                _tripRepository.UpdateTrip(trip);
+            }
+            else
+            {
+                MessageBox.Show("Dates are not valid");
+            }
+        }
     }
 }

@@ -133,7 +133,7 @@ namespace TravelEditor.ViewModels
             LoadData();
            
             AddTripCommand = new AddTripCommand(this, _tripService, _destinationService);
-            EditTripCommand = new EditTripCommand(this);
+            EditTripCommand = new EditTripCommand(this, _tripService, _destinationService);
             //DeleteTripCommand = new DeleteTripCommand(this);
             ViewDestinationCommand = new ViewDestinationCommand(this, _destinationService);
             ViewTravellersCommand = new ViewTravellersCommand(this);
