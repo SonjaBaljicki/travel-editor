@@ -35,8 +35,8 @@ namespace TravelEditor.Commands.Edit
         {
             if (viewModel.SelectedTrip != null) 
             {
-                TripView tripView = new TripView(viewModel.SelectedTrip);
-                tripView.Show();
+                //TripView tripView = new TripView(viewModel.SelectedTrip);
+                //tripView.Show();
             }
            
         }

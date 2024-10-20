@@ -22,7 +22,7 @@ namespace TravelEditor.ViewModels
         {
             Destination = destination;
             SaveDestinationCommand = new SaveDestinationCommand(this,destinationService);
-            AddAttractionCommand = new AddAttractionCommand(this);
+            AddAttractionCommand = new AddAttractionCommand(this, destinationService);
         }
     }
 }

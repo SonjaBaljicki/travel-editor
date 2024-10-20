@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelEditor.Database;
 using TravelEditor.Models;
 using TravelEditor.Repositories.Interfaces;
@@ -41,9 +42,16 @@ namespace TravelEditor.Services
         //delete a destination if it doesnt have trips
         public void Delete(Destination destination)
         {
-            if (_destinationRepository.FindOne(destination) && !_destinationRepository.HasAssociatedTrips(destination))
+            if (_destinationRepository.FindOne(destination))
             {
-                _destinationRepository.Delete(destination);
+                if (!_destinationRepository.HasAssociatedTrips(destination))
+                {
+                    _destinationRepository.Delete(destination);
+                }
+                else
+                {
+                    MessageBox.Show("Cant delete destination");
+                }
             }
         }
     }

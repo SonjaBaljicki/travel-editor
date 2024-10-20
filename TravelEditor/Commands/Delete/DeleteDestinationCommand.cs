@@ -42,8 +42,8 @@ namespace TravelEditor.Commands.Delete
             Destination destination = viewModel.SelectedDestination;
             if (destination != null)
             {
-                destinationService.Delete(destination);
                 MessageBox.Show("Deleting destination");
+                destinationService.Delete(destination);
             }
             else
             {

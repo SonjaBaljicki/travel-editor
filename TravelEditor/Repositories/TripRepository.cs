@@ -17,9 +17,16 @@ namespace TravelEditor.Repositories
         {
             _context = context;
         }
+
         public List<Trip> LoadAll()
         {
             return _context.trips.ToList();
+        }
+        //adding a trip to database
+        public void AddTrip(Trip trip)
+        {
+            _context.trips.Add(trip);
+            _context.SaveChanges();
         }
     }
 }
