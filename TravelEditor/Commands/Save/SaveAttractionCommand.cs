@@ -39,16 +39,15 @@ namespace TravelEditor.Commands.Save
                 string location = viewModel.Attraction.Location;
                 Attraction attraction=new Attraction(name, description, price, location);
                 //adding attractions when adding a new destination
-                if (viewModel.DestinationViewModel != null)
+                if (viewModel.Destination != null && viewModel.Destination.DestinationId==0)
                 {
-                    viewModel.DestinationViewModel.Destination.Attractions.Add(attraction);
+                    viewModel.Destination.Attractions.Add(attraction);
                     //saves in destination window
                 }
                 //adding from destination attractions grid view
                 else if (viewModel.Destination != null)
                 {
                     destinationService.AddDestinationAttractions(viewModel.Destination, attraction);
-
                 }
                 //opened separately, not from destination
                 else

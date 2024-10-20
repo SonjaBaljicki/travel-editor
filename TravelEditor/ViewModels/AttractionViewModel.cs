@@ -17,7 +17,6 @@ namespace TravelEditor.ViewModels
         public Attraction Attraction { get; set; }
         public Destination Destination { get; set; }
         public ObservableCollection<Destination> Destinations { get; set; }
-        public DestinationViewModel DestinationViewModel { get; }
         public SaveAttractionCommand SaveAttractionCommand { get;}
 
 
@@ -41,17 +40,7 @@ namespace TravelEditor.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        //adding attraction when adding a new destination
-        public AttractionViewModel(Attraction attraction, DestinationViewModel destinationViewModel, IDestinationService destinationService,
-            IAttractionService attractionService)
-        {
-            Attraction = attraction;
-            DestinationViewModel = destinationViewModel;
-            _destinationService = destinationService;
-            _attractionService = attractionService;
-            SaveAttractionCommand = new SaveAttractionCommand(this,_destinationService,_attractionService);
-        }
-        //adding attraction from destination attractions grid view 
+        //adding attraction from destination attractions grid view or when creating a new destination
         public AttractionViewModel(Attraction attraction, Destination destination, IDestinationService destinationService,
            IAttractionService attractionService)
         {
