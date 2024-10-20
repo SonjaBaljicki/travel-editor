@@ -47,8 +47,12 @@ namespace TravelEditor.ViewModels
             DestinationViewModel = destinationViewModel;
             _destinationService = destinationService;
             _attractionService = attractionService;
-            SaveAttractionCommand = new SaveAttractionCommand(this,_destinationService);
-            Destinations = new ObservableCollection<Destination>(_destinationService.LoadAll());
+            SaveAttractionCommand = new SaveAttractionCommand(this,_destinationService,_attractionService);
+            //if adding attraction, view all destinations
+            if (attraction.AttractionId == 0) 
+            {
+                Destinations = new ObservableCollection<Destination>(_destinationService.LoadAll());
+            }
 
         }
     }

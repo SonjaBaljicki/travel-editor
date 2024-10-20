@@ -14,8 +14,8 @@ namespace TravelEditor.Repositories.Interfaces
         void UpdateDestination(Destination destination);
         void Delete(Destination destination);
         bool HasAssociatedTrips(Destination destination);
-        void UpdateDestinationAttractions(Destination destination, Attraction attraction);
-
-
+        void AddDestinationAttractions(Destination destination, Attraction attraction);
+        Destination FindDestinationWithAttraction(Attraction attraction);
+        bool FindOne(Destination destination);
     }
 }

@@ -12,7 +12,7 @@ namespace TravelEditor.Services.Interfaces
         List<Destination> LoadAll();
         void AddDestination(Destination destination);
         void UpdateDestination(Destination destination);
-        void UpdateDestinationAttractions(Destination destination, Attraction attraction);
+        void AddDestinationAttractions(Destination destination, Attraction attraction);
 
         void Delete(Destination destination);
     }

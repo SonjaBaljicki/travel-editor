@@ -30,17 +30,5 @@ namespace TravelEditor.Views
             AttractionViewModel attractionViewModel = new AttractionViewModel(attraction, destinationViewModel, destinationService, attractionService);
             this.DataContext = attractionViewModel;
         }
-
-        //public AttractionView(Attraction attraction)
-        //{
-        //    InitializeComponent();
-        //    AttractionViewModel attractionViewModel = new AttractionViewModel(attraction);
-        //    this.DataContext = attractionViewModel;
-        //}
-
-        //public AttractionView(Attraction attraction, DestinationViewModel destinationViewModel) : this(attraction)
-        //{
-        //    this.destinationViewModel = destinationViewModel;
-        //}
     }
 }

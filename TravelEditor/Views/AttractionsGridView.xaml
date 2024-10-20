@@ -10,10 +10,10 @@
         <StackPanel Background="#A4C3B2" Margin="20, 10, 20, 0">
             <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
                 <Button Width="120" Name="addAttractionButton" Content="Add Attration" />
-                <Button Width="120" Name="editAttractionButton" Content="Edit Attration"/>
-                <Button  Width="120" Name="deleteAttractionButton" Content="Delete Attration" />
+                <Button Width="120" Name="editAttractionButton" Content="Edit Attration" Command="{Binding EditAttractionCommand}"/>
+                <Button  Width="120" Name="deleteAttractionButton" Content="Delete Attration" Command="{Binding DeleteAttractionCommand}" />
             </StackPanel>
-            <DataGrid AutoGenerateColumns="False" Name="attractionsGrid" Background="#EAF4F4" ItemsSource="{Binding Attractions}" Height="200">
+            <DataGrid SelectedItem="{Binding SelectedAttraction}" AutoGenerateColumns="False" Name="attractionsGrid" Background="#EAF4F4" ItemsSource="{Binding Attractions}" Height="200">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="120"/>

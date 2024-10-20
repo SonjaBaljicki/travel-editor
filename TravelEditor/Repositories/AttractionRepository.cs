@@ -22,5 +22,28 @@ namespace TravelEditor.Repositories
         {
             return _context.attractions.ToList();
         }
+        //update an attraction
+        public void UpdateAttraction(Attraction attraction)
+        {
+            if (_context.attractions.Find(attraction.AttractionId) != null)
+            {
+                Attraction existingAttraction = _context.attractions.Find(attraction.AttractionId);
+                existingAttraction.Name = attraction.Name;
+                existingAttraction.Description = attraction.Description;
+                existingAttraction.Location = attraction.Location;
+                existingAttraction.Price = attraction.Price;
+                _context.SaveChanges();
+            }
+        }
+        //deleting a existing attraction
+        public void DeleteAttraction(Attraction attraction)
+        {
+            _context.attractions.Remove(attraction);
+            _context.SaveChanges();
+        }
+        public bool FindOne(Attraction attraction)
+        {
+            return _context.attractions.Find(attraction.AttractionId) != null;
+        }
     }
 }

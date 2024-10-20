@@ -4,6 +4,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using TravelEditor.Database;
 using TravelEditor.Models;
 using TravelEditor.Repositories.Interfaces;
@@ -43,7 +44,7 @@ namespace TravelEditor.Repositories
             }
         }
         //adding an attraction after a destinations has already been added
-        public void UpdateDestinationAttractions(Destination destination, Attraction attraction)
+        public void AddDestinationAttractions(Destination destination, Attraction attraction)
         {
             if (_context.destinations.Find(destination.DestinationId) != null)
             {
@@ -67,6 +68,19 @@ namespace TravelEditor.Repositories
         {
             _context.destinations.Remove(destination);
             _context.SaveChanges();
+        }
+        //for an attraction find which destination it belongs to
+        public Destination FindDestinationWithAttraction(Attraction attraction)
+        {
+            Destination destination = _context.destinations
+                                   .Where(d => d.Attractions.Contains(attraction))
+                                   .Select(d => d) as Destination;
+            return destination;
+        }
+
+        public bool FindOne(Destination destination)
+        {
+            return _context.destinations.Find(destination.DestinationId)!=null;
         }
     }
 }

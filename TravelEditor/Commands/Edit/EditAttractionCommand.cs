@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 using TravelEditor.Views;
 
@@ -12,12 +13,30 @@ namespace TravelEditor.Commands.Edit
     public class EditAttractionCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        public MainViewModel viewModel;
+        public MainViewModel mainViewModel;
+        public AttractionsGridViewModel attractionsGridViewModel;
+        public IDestinationService destinationService;
+        public IAttractionService attractionService;
 
-        public EditAttractionCommand(MainViewModel viewModel)
+        public EditAttractionCommand(MainViewModel viewModel, IDestinationService destinationService, IAttractionService attractionService)
         {
-            this.viewModel = viewModel;
-            this.viewModel.PropertyChanged += (sender, e) =>
+            this.mainViewModel = viewModel;
+            this.destinationService = destinationService;
+            this.attractionService = attractionService;
+            this.mainViewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(MainViewModel.SelectedAttraction))
+                {
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                }
+            };
+        }
+        public EditAttractionCommand(AttractionsGridViewModel viewModel, IDestinationService destinationService, IAttractionService attractionService)
+        {
+            this.attractionsGridViewModel = viewModel;
+            this.destinationService = destinationService;
+            this.attractionService = attractionService;
+            this.attractionsGridViewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == nameof(MainViewModel.SelectedAttraction))
                 {
@@ -28,14 +47,28 @@ namespace TravelEditor.Commands.Edit
 
         public bool CanExecute(object? parameter)
         {
-            return viewModel.SelectedAttraction != null;
+            if(mainViewModel!=null && mainViewModel.SelectedAttraction != null)
+            {
+                return true;
+            }
+            else if(attractionsGridViewModel!=null && attractionsGridViewModel.SelectedAttraction != null)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void Execute(object? parameter)
         {
-            if (viewModel.SelectedAttraction != null)
+            //null for destination view model
+
+            if (mainViewModel!=null && mainViewModel.SelectedAttraction != null)
             {
-                AttractionView attractionView = new AttractionView(viewModel.SelectedAttraction,null,null,null);
+                AttractionView attractionView = new AttractionView(mainViewModel.SelectedAttraction,null,destinationService,attractionService);
+                attractionView.Show();
+            }else if(attractionsGridViewModel!=null && attractionsGridViewModel.SelectedAttraction != null)
+            {
+                AttractionView attractionView = new AttractionView(attractionsGridViewModel.SelectedAttraction, null, destinationService, attractionService);
                 attractionView.Show();
             }
         }

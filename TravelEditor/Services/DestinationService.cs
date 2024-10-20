@@ -33,15 +33,15 @@ namespace TravelEditor.Services
         {
             _destinationRepository.UpdateDestination(destination);   
         }
-        //updates an extisting destinations attractions
-        public void UpdateDestinationAttractions(Destination destination, Attraction attraction)
+        //adds an attractio to an extisting destination
+        public void AddDestinationAttractions(Destination destination, Attraction attraction)
         {
-            _destinationRepository.UpdateDestinationAttractions(destination, attraction);
+            _destinationRepository.AddDestinationAttractions(destination, attraction);
         }
         //delete a destination if it doesnt have trips
         public void Delete(Destination destination)
         {
-            if (!_destinationRepository.HasAssociatedTrips(destination))
+            if (_destinationRepository.FindOne(destination) && !_destinationRepository.HasAssociatedTrips(destination))
             {
                 _destinationRepository.Delete(destination);
             }
