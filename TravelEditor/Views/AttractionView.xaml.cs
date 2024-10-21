@@ -23,12 +23,6 @@ namespace TravelEditor.Views
     /// </summary>
     public partial class AttractionView : Window
     {
-        //public AttractionView(Attraction attraction, DestinationViewModel destinationViewModel, IDestinationService destinationService,IAttractionService attractionService)
-        //{
-        //    InitializeComponent();
-        //    AttractionViewModel attractionViewModel = new AttractionViewModel(attraction, destinationViewModel, destinationService, attractionService);
-        //    this.DataContext = attractionViewModel;
-        //}
         public AttractionView(Attraction attraction, Destination destination, IDestinationService destinationService, IAttractionService attractionService)
         {
             InitializeComponent();

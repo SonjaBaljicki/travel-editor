@@ -18,8 +18,6 @@ namespace TravelEditor.Commands.Add
         public MainViewModel viewModel;
         public IDestinationService destinationService;
 
-
-
         public AddDestinationCommand(MainViewModel viewModel, IDestinationService destinationService)
         {
             this.viewModel = viewModel;

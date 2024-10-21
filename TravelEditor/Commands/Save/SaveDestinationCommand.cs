@@ -49,12 +49,7 @@ namespace TravelEditor.Commands.Save
             }
             else
             {
-                string city = viewModel.Destination.City;
-                string country = viewModel.Destination.Country;
-                string description = viewModel.Destination.Description;
-                string climate = viewModel.Destination.Climate;
-                Destination destination = new Destination(city, country, description, climate, viewModel.Destination.Attractions);
-                destinationService.UpdateDestination(destination);
+                destinationService.UpdateDestination(viewModel.Destination);
                 MessageBox.Show("Saving update");
             }
         }

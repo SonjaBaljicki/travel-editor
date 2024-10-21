@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 using TravelEditor.Views;
 
@@ -13,10 +14,13 @@ namespace TravelEditor.Commands.Edit
     {
         public event EventHandler? CanExecuteChanged;
         public MainViewModel viewModel;
-
-        public EditTripCommand(MainViewModel viewModel)
+        public ITripService tripService;
+        public IDestinationService destinationService;
+        public EditTripCommand(MainViewModel viewModel, ITripService tripService, IDestinationService destinationService)
         {
             this.viewModel = viewModel;
+            this.tripService = tripService;
+            this.destinationService = destinationService;
             this.viewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == nameof(MainViewModel.SelectedTrip))
@@ -35,7 +39,7 @@ namespace TravelEditor.Commands.Edit
         {
             if (viewModel.SelectedTrip != null) 
             {
-                TripView tripView = new TripView(viewModel.SelectedTrip);
+                TripView tripView = new TripView(viewModel.SelectedTrip, tripService, destinationService);
                 tripView.Show();
             }
            

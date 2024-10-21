@@ -25,19 +25,20 @@ namespace TravelEditor.Commands.Add
         //when adding an attraction separately
         public AddAttractionCommand(MainViewModel viewModel, IDestinationService destinationService, IAttractionService attractionService)
         {
-            this.mainViewModel = viewModel;
+            mainViewModel = viewModel;
             this.destinationService = destinationService;
             this.attractionService = attractionService;
         }
         //adding attraction when creating a destination, doesnt need services
-        public AddAttractionCommand(DestinationViewModel destinationViewModel)
+        public AddAttractionCommand(DestinationViewModel viewModel, IDestinationService destinationService)
         {
-            this.destinationViewModel = destinationViewModel;
+            destinationViewModel = viewModel;
+            this.destinationService = destinationService;
         }
         //adding from attractions grid for a certain destination
         public AddAttractionCommand(AttractionsGridViewModel viewModel, IDestinationService destinationService, IAttractionService attractionService)
         {
-            this.attractionsGridViewModel = viewModel;
+            attractionsGridViewModel = viewModel;
             this.destinationService = destinationService;
             this.attractionService = attractionService;
         }
