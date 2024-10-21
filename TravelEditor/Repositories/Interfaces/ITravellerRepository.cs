@@ -11,6 +11,8 @@ namespace TravelEditor.Repositories.Interfaces
     {
         void AddTraveller(Traveller traveller);
         List<Traveller> LoadAll();
+        void UpdateTraveller(Traveller traveller);
+        Traveller FindTravellerByEmail(string email);
 
     }
 }

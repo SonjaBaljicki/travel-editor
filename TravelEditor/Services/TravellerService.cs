@@ -44,5 +44,18 @@ namespace TravelEditor.Services
             }
          
         }
+
+        public void UpdateTraveller(Traveller traveller)
+        {
+            Traveller travellerByEmail = _travellerRepository.FindTravellerByEmail(traveller.Email);
+            if(travellerByEmail == null || travellerByEmail.TravellerId==traveller.TravellerId) 
+            {
+                _travellerRepository.UpdateTraveller(traveller);
+            }
+            else
+            {
+                MessageBox.Show("Email not unique");
+            }
+        }
     }
 }

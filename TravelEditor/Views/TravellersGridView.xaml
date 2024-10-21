@@ -10,10 +10,10 @@
         <StackPanel Background="#A4C3B2" Margin="20, 10, 20, 0">
             <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
                 <Button Width="120" Name="addTravellerButton" Content="Add Traveller" Command="{Binding ViewTravellersCommand}"/>
-                <Button Width="120" Name="editTravellerButton" Content="Edit Traveller"/>
-                <Button  Width="120" Name="deleteTravellerButton" Content="Delete Traveller" />
+                <Button Width="120" Name="editTravellerButton" Content="Edit Traveller" Command="{Binding EditTravellerCommand}"/>
+                <Button  Width="120" Name="deleteTravellerButton" Content="Delete Traveller"  Command="{Binding DeleteTravellerCommand}" />
             </StackPanel>
-            <DataGrid AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}" Height="300">
+            <DataGrid SelectedItem="{Binding SelectedTraveller}" AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}" Height="300">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="120"/>
                     <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="120"/>

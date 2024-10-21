@@ -37,6 +37,7 @@ namespace TravelEditor.Commands.Save
             }
             else
             {
+                travellerService.UpdateTraveller(viewModel.Traveller);
                 MessageBox.Show("Saving edit");
             }
         }

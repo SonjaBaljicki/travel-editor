@@ -29,5 +29,22 @@ namespace TravelEditor.Repositories
             _context.travellers.Add(traveller);
             _context.SaveChanges();
         }
+        public void UpdateTraveller(Traveller traveller)
+        {
+            if (_context.travellers.Find(traveller.TravellerId) != null)
+            {
+                Traveller existingTraveller=_context.travellers.Find(traveller.TravellerId);
+                existingTraveller.FirstName = traveller.FirstName;
+                existingTraveller.LastName = traveller.LastName;
+                existingTraveller.Email = traveller.Email;
+                existingTraveller.PhoneNumber = traveller.PhoneNumber;
+                existingTraveller.Age = traveller.Age;
+                _context.SaveChanges();
+            }
+        }
+        public Traveller FindTravellerByEmail(string email)
+        {
+            return _context.travellers.FirstOrDefault(t => t.Email == email);
+        }
     }
 }

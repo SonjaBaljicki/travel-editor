@@ -13,16 +13,29 @@ namespace TravelEditor.Commands.Edit
     public class EditTravellerCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        public MainViewModel viewModel;
+        public MainViewModel mainViewModel;
+        public TravellersGridViewModel travellersViewModel;
         public ITravellerService travellerService;
 
         public EditTravellerCommand(MainViewModel viewModel, ITravellerService travellerService)
         {
-            this.viewModel = viewModel;
+            mainViewModel = viewModel;
             this.travellerService = travellerService;
-            this.viewModel.PropertyChanged += (sender, e) =>
+            mainViewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == nameof(MainViewModel.SelectedTraveller))
+                {
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                }
+            };
+        }
+        public EditTravellerCommand(TravellersGridViewModel viewModel,ITravellerService travellerService)
+        {
+            travellersViewModel = viewModel;
+            this.travellerService = travellerService;
+            travellersViewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(TravellersGridViewModel.SelectedTraveller))
                 {
                     CanExecuteChanged?.Invoke(this, EventArgs.Empty);
                 }
@@ -31,14 +44,20 @@ namespace TravelEditor.Commands.Edit
 
         public bool CanExecute(object? parameter)
         {
-            return viewModel.SelectedTraveller != null;
+            return (mainViewModel!=null && mainViewModel.SelectedTraveller != null)
+                || (travellersViewModel != null && travellersViewModel.SelectedTraveller != null);
         }
 
         public void Execute(object? parameter)
         {
-            if (viewModel.SelectedTraveller != null)
+            if (mainViewModel != null && mainViewModel.SelectedTraveller != null)
             {
-                TravellerView travellerView = new TravellerView(viewModel.SelectedTraveller, travellerService);
+                TravellerView travellerView = new TravellerView(mainViewModel.SelectedTraveller, travellerService);
+                travellerView.Show();
+            }
+            else if (travellersViewModel != null && travellersViewModel.SelectedTraveller != null)
+            {
+                TravellerView travellerView = new TravellerView(travellersViewModel.SelectedTraveller, travellerService);
                 travellerView.Show();
             }
         }

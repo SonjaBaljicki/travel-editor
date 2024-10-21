@@ -12,6 +12,6 @@ namespace TravelEditor.Services.Interfaces
         void AddTraveller(Traveller traveller);
         void AddTravellerToTrip(Traveller selectedTraveller, Trip trip);
         List<Traveller> LoadAll();
-
+        void UpdateTraveller(Traveller traveller);
     }
 }
