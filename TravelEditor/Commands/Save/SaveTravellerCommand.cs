@@ -31,7 +31,6 @@ namespace TravelEditor.Commands.Save
         {
             if (viewModel.Traveller.TravellerId == 0)
             {
-                //for now only from main view
                 travellerService.AddTraveller(viewModel.Traveller);
                 MessageBox.Show("Saving add");
             }

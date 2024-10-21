@@ -46,5 +46,11 @@ namespace TravelEditor.Repositories
         {
             return _context.travellers.FirstOrDefault(t => t.Email == email);
         }
+
+        public void DeleteTraveller(Traveller? selectedTraveller)
+        {
+            _context.travellers.Remove(selectedTraveller);
+            _context.SaveChanges();
+        }
     }
 }

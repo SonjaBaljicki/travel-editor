@@ -54,5 +54,12 @@ namespace TravelEditor.Repositories
                 _context.SaveChanges();
             }
         }
+        public List<Trip> FindTravellersTrips(Traveller? selectedTraveller)
+        {
+            return _context.trips
+                .Where(trip => trip.Travellers.Any(t => t.TravellerId == selectedTraveller.TravellerId))
+                .Select(trip => trip)
+                .ToList();
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace TravelEditor.Services.Interfaces
     {
         void AddTraveller(Traveller traveller);
         void AddTravellerToTrip(Traveller selectedTraveller, Trip trip);
+        void DeleteTraveller(Traveller? selectedTraveller);
+        void DeleteTravellerFromTrip(Trip trip, Traveller selectedTraveller);
         List<Traveller> LoadAll();
         void UpdateTraveller(Traveller traveller);
     }

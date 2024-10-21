@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelEditor.Commands.Add;
+using TravelEditor.Commands.Delete;
 using TravelEditor.Commands.Edit;
 using TravelEditor.Commands.View;
 using TravelEditor.Models;
@@ -18,6 +19,7 @@ namespace TravelEditor.ViewModels
         public Trip Trip { get; set; }
         public ViewTravellersCommand ViewTravellersCommand { get;}
         public EditTravellerCommand EditTravellerCommand { get; }
+        public DeleteTravellerCommand DeleteTravellerCommand { get; }
 
         private readonly ITravellerService _travellerService;
 
@@ -44,6 +46,7 @@ namespace TravelEditor.ViewModels
             _travellerService = travellerService;
             ViewTravellersCommand = new ViewTravellersCommand(this, _travellerService);
             EditTravellerCommand = new EditTravellerCommand(this, _travellerService);
+            DeleteTravellerCommand = new DeleteTravellerCommand(this, _travellerService);
         }
 
     }

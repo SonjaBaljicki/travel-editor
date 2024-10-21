@@ -13,6 +13,6 @@ namespace TravelEditor.Repositories.Interfaces
         List<Traveller> LoadAll();
         void UpdateTraveller(Traveller traveller);
         Traveller FindTravellerByEmail(string email);
-
+        void DeleteTraveller(Traveller? selectedTraveller);
     }
 }
