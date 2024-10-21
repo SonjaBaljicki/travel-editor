@@ -31,6 +31,7 @@ namespace TravelEditor.Commands.Save
 
         public void Execute(object? parameter)
         {
+            //add
             if (viewModel.Attraction.AttractionId == 0)
             {
                 string name = viewModel.Attraction.Name;
@@ -38,28 +39,26 @@ namespace TravelEditor.Commands.Save
                 double price = viewModel.Attraction.Price;
                 string location = viewModel.Attraction.Location;
                 Attraction attraction=new Attraction(name, description, price, location);
-                //adding attractions when adding a new destination
-                if (viewModel.Destination != null && viewModel.Destination.DestinationId==0)
+              
+                if (viewModel.SelectedDestination != null)
                 {
-                    viewModel.Destination.Attractions.Add(attraction);
-                    //saves in destination window
+                    destinationService.AddDestinationAttractions(viewModel.SelectedDestination, attraction);
+                    MessageBox.Show("Saving add");
                 }
-                //adding from destination attractions grid view
-                else if (viewModel.Destination != null)
-                {
-                    destinationService.AddDestinationAttractions(viewModel.Destination, attraction);
-                }
-                //opened separately, not from destination
                 else
                 {
-                    destinationService.AddDestinationAttractions((Destination)viewModel.SelectedDestination, attraction);
+                    MessageBox.Show("Please select a destination");
                 }
-                MessageBox.Show("Saving add");
             }
+            //edit
             else
             {
-                attractionService.UpdateAttraction(viewModel.Attraction);
-                MessageBox.Show("Saving edit");
+                if (viewModel.SelectedDestination != null)
+                {
+                    attractionService.UpdateAttraction(viewModel.Attraction, viewModel.SelectedDestination);
+                    MessageBox.Show("Saving edit");
+                }
+          
             }
         }
         protected void OnCanExecutedChanged()

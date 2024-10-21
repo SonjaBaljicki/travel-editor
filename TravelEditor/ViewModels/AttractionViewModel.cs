@@ -40,7 +40,7 @@ namespace TravelEditor.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        //adding attraction from destination attractions grid view or when creating a new destination
+        //add and edit of attraction from destination attractions grid view
         public AttractionViewModel(Attraction attraction, Destination destination, IDestinationService destinationService,
            IAttractionService attractionService)
         {
@@ -49,19 +49,19 @@ namespace TravelEditor.ViewModels
             _destinationService = destinationService;
             _attractionService = attractionService;
             SaveAttractionCommand = new SaveAttractionCommand(this, _destinationService, _attractionService);
+            //since its opend from destination tab have only that destination in the grid
+            Destinations = new ObservableCollection<Destination>{Destination};
+            SelectedDestination = Destination;
         }
-        //for edit or adding separately from main view
+        //add and edit separately from main view
         public AttractionViewModel(Attraction attraction, IDestinationService destinationService, IAttractionService attractionService)
         {
             Attraction = attraction;
             _destinationService = destinationService;
             _attractionService = attractionService;
             SaveAttractionCommand = new SaveAttractionCommand(this, _destinationService, _attractionService);
-            //if adding view all destinations
-            if (Attraction.AttractionId == 0)
-            {
-                Destinations = new ObservableCollection<Destination>(_destinationService.LoadAll());
-            }
+            Destinations = new ObservableCollection<Destination>(_destinationService.LoadAll());
+            SelectedDestination=_destinationService.FindDestinationWithAttraction(attraction);
         }
     }
 }

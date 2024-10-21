@@ -42,9 +42,9 @@ namespace TravelEditor.ViewModels
             Trip = trip;
             _tripService = tripService;
             _destinationService = destinationService;
-            Destinations = new ObservableCollection<Destination>(_destinationService.LoadAll());
+            Destinations = new ObservableCollection<Destination>(_destinationService.LoadAll());           
             //if editing initiali select the destination
-            if (Trip.TripId != 0) 
+            if (Trip.TripId != 0)
             {
                 SelectedDestination = Trip.Destination;
             }

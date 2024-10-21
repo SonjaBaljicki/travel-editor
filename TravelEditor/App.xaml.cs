@@ -31,7 +31,7 @@ namespace TravelEditor
             DatabaseContext dbContext = new DatabaseContext();
             TripService = new TripService(new TripRepository(dbContext));
             DestinationService = new DestinationService(new DestinationRepository(dbContext));
-            AttractionService = new AttractionService(new AttractionRepository(dbContext));
+            AttractionService = new AttractionService(new AttractionRepository(dbContext),DestinationService);
             ReviewService = new ReviewService(new ReviewRepository(dbContext));
             TravellerService = new TravellerService(new TravellerRepository(dbContext));
 
