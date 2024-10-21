@@ -10,6 +10,7 @@ namespace TravelEditor.Repositories.Interfaces
     public interface ITripRepository
     {
         void AddTrip(Trip trip);
+        void DeleteTrip(Trip trip);
         List<Trip> LoadAll();
         void UpdateTrip(Trip trip);
     }

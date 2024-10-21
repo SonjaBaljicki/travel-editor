@@ -44,5 +44,14 @@ namespace TravelEditor.Repositories
                 _context.SaveChanges();
             }
         }
+        //delete a trip
+        public void DeleteTrip(Trip trip)
+        {
+            if (_context.trips.Find(trip.TripId) != null)
+            {
+                _context.trips.Remove(trip);
+                _context.SaveChanges();
+            }
+        }
     }
 }

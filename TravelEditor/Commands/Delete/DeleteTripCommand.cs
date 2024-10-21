@@ -6,19 +6,22 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using TravelEditor.Models;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
 namespace TravelEditor.Commands.Delete
 {
-    internal class DeleteTripCommand : ICommand
+    public class DeleteTripCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 
         public MainViewModel viewModel;
+        public ITripService tripService;
 
-        public DeleteTripCommand(MainViewModel viewModel)
+        public DeleteTripCommand(MainViewModel viewModel, ITripService tripService)
         {
             this.viewModel = viewModel;
+            this.tripService= tripService;
             this.viewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == nameof(MainViewModel.SelectedTrip))
@@ -38,7 +41,8 @@ namespace TravelEditor.Commands.Delete
             Trip trip = viewModel.SelectedTrip;
             if (trip != null)
             {
-                MessageBox.Show(trip.Name);
+                MessageBox.Show("Deleting trip");
+                tripService.DeleteTrip(trip);
             }
             else
             {

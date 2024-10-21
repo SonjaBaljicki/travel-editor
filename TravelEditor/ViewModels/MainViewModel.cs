@@ -94,7 +94,7 @@ namespace TravelEditor.ViewModels
         //trips commands
         public AddTripCommand AddTripCommand {get;}
         public EditTripCommand EditTripCommand { get; }
-        //public DeleteTripCommand DeleteTripCommand { get; }
+        public DeleteTripCommand DeleteTripCommand { get; }
         public ViewDestinationCommand ViewDestinationCommand { get; }
         public ViewTravellersCommand ViewTravellersCommand { get; }
         public ViewReviewsCommand ViewReviewsCommand { get; }
@@ -134,7 +134,7 @@ namespace TravelEditor.ViewModels
            
             AddTripCommand = new AddTripCommand(this, _tripService, _destinationService);
             EditTripCommand = new EditTripCommand(this, _tripService, _destinationService);
-            //DeleteTripCommand = new DeleteTripCommand(this);
+            DeleteTripCommand = new DeleteTripCommand(this, _tripService);
             ViewDestinationCommand = new ViewDestinationCommand(this, _destinationService);
             ViewTravellersCommand = new ViewTravellersCommand(this);
             ViewReviewsCommand = new ViewReviewsCommand(this);

@@ -10,6 +10,7 @@ namespace TravelEditor.Services.Interfaces
     public interface ITripService
     {
         void AddTrip(Trip trip);
+        void DeleteTrip(Trip trip);
         List<Trip> LoadAll();
         void UpdateTrip(Trip trip);
         bool ValidateDates(DateTime startDate, DateTime endDate);

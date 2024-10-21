@@ -41,7 +41,7 @@ namespace TravelEditor.Services
             DateTime now = DateTime.Now;
             return startDate > now && endDate > now && startDate<endDate;
         }
-
+        //update trip after checking dates
         public void UpdateTrip(Trip trip)
         {
             if(ValidateDates(trip.StartDate, trip.EndDate))
@@ -52,6 +52,24 @@ namespace TravelEditor.Services
             {
                 MessageBox.Show("Dates are not valid");
             }
+        }
+        //delete a trip
+        public void DeleteTrip(Trip trip)
+        {
+            if(!IsTripNow(trip.StartDate, trip.EndDate))
+            {
+                _tripRepository.DeleteTrip(trip);
+            }
+            else
+            {
+                MessageBox.Show("Trip is currently in progress");
+            }
+        }
+        //is the trip currently in progress
+        public bool IsTripNow(DateTime startDate, DateTime endDate)
+        {
+            DateTime now = DateTime.Now;
+            return startDate >= now && endDate <= now;
         }
     }
 }

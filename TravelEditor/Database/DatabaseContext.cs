@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using TravelEditor.Models;
 
 namespace TravelEditor.Database
@@ -16,7 +17,16 @@ namespace TravelEditor.Database
             modelBuilder.Entity<Destination>()
                 .HasMany(d => d.Attractions)
                 .WithRequired() 
-                .WillCascadeOnDelete(true); 
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Trip>()
+               .HasMany(t => t.Reviews)
+               .WithRequired()
+               .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Trip>()
+                .HasMany(t => t.Travellers)
+                .WithMany();
         }
 
     }
