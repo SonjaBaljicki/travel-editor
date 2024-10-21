@@ -66,7 +66,7 @@ namespace TravelEditor.Commands.Edit
                 attractionView.Show();
             }else if(attractionsGridViewModel!=null && attractionsGridViewModel.SelectedAttraction != null)
             {
-                AttractionView attractionView = new AttractionView(attractionsGridViewModel.SelectedAttraction, destinationService, attractionService);
+                AttractionView attractionView = new AttractionView(attractionsGridViewModel.SelectedAttraction,attractionsGridViewModel.Destination, destinationService, attractionService);
                 attractionView.Show();
             }
         }

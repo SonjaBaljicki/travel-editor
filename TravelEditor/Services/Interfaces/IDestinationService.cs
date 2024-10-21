@@ -13,7 +13,8 @@ namespace TravelEditor.Services.Interfaces
         void AddDestination(Destination destination);
         void UpdateDestination(Destination destination);
         void AddDestinationAttractions(Destination destination, Attraction attraction);
-
         void Delete(Destination destination);
+        Destination FindDestinationWithAttraction(Attraction attraction);
+
     }
 }

@@ -16,13 +16,10 @@ namespace TravelEditor.ViewModels
     {
         public Destination Destination { get; set; }
         public SaveDestinationCommand SaveDestinationCommand { get; }
-        public AddAttractionCommand AddAttractionCommand { get; }
-
         public DestinationViewModel(Destination destination, IDestinationService destinationService)
         {
             Destination = destination;
             SaveDestinationCommand = new SaveDestinationCommand(this,destinationService);
-            AddAttractionCommand = new AddAttractionCommand(this, destinationService);
         }
     }
 }

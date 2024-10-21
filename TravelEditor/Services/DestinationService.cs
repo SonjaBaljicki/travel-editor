@@ -54,5 +54,9 @@ namespace TravelEditor.Services
                 }
             }
         }
+        public Destination FindDestinationWithAttraction(Attraction attraction)
+        {
+            return _destinationRepository.FindDestinationWithAttraction(attraction);
+        }
     }
 }

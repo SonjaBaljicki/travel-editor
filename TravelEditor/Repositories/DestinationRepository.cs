@@ -73,8 +73,8 @@ namespace TravelEditor.Repositories
         public Destination FindDestinationWithAttraction(Attraction attraction)
         {
             Destination destination = _context.destinations
-                                   .Where(d => d.Attractions.Contains(attraction))
-                                   .Select(d => d) as Destination;
+                                   .Where(d => d.Attractions.Any(a => a.AttractionId==attraction.AttractionId))
+                                   .Select(d => d).FirstOrDefault();
             return destination;
         }
 

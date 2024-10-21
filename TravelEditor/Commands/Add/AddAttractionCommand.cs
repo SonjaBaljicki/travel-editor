@@ -29,12 +29,6 @@ namespace TravelEditor.Commands.Add
             this.destinationService = destinationService;
             this.attractionService = attractionService;
         }
-        //adding attraction when creating a destination, doesnt need services
-        public AddAttractionCommand(DestinationViewModel viewModel, IDestinationService destinationService)
-        {
-            destinationViewModel = viewModel;
-            this.destinationService = destinationService;
-        }
         //adding from attractions grid for a certain destination
         public AddAttractionCommand(AttractionsGridViewModel viewModel, IDestinationService destinationService, IAttractionService attractionService)
         {
@@ -50,12 +44,6 @@ namespace TravelEditor.Commands.Add
 
         public void Execute(object? parameter)
         {
-            //adding when creating destination
-            if (destinationViewModel != null)
-            {
-                AttractionView attractionView = new AttractionView(new Attraction(), destinationViewModel.Destination, destinationService, attractionService);
-                attractionView.Show();
-            }
             //adding separately in main view
             if (mainViewModel != null)
             {
