@@ -40,6 +40,7 @@ namespace TravelEditor.Repositories
                 existingTrip.Description = trip.Description;
                 existingTrip.Destination= trip.Destination;
                 existingTrip.DestinationId = trip.DestinationId;
+                existingTrip.Travellers = trip.Travellers;
                 //update travellers and reviews separately
                 _context.SaveChanges();
             }

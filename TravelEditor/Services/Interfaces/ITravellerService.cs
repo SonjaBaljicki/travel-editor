@@ -9,6 +9,8 @@ namespace TravelEditor.Services.Interfaces
 {
     public interface ITravellerService
     {
+        void AddTraveller(Traveller traveller);
+        void AddTravellerToTrip(Traveller selectedTraveller, Trip trip);
         List<Traveller> LoadAll();
 
     }

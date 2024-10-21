@@ -18,15 +18,15 @@ using TravelEditor.ViewModels;
 namespace TravelEditor.Views
 {
     /// <summary>
-    /// Interaction logic for TravellerView.xaml
+    /// Interaction logic for ExistingTravellersGridView.xaml
     /// </summary>
-    public partial class TravellerView : Window
+    public partial class ExistingTravellersGridView : Window
     {
-        public TravellerView(Traveller traveller, ITravellerService travellerService)
+        public ExistingTravellersGridView(Trip trip,ITravellerService travellerService)
         {
             InitializeComponent();
-            TravellerViewModel travellerViewModel = new TravellerViewModel(traveller, travellerService);
-            this.DataContext = travellerViewModel;
+            ExistingTravellersGridViewModel travellersGridViewModel = new ExistingTravellersGridViewModel(trip,travellerService);
+            this.DataContext = travellersGridViewModel;
         }
     }
 }

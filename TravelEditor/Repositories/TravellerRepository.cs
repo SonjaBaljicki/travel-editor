@@ -18,9 +18,16 @@ namespace TravelEditor.Repositories
         {
             _context = context;
         }
+        //loads all travellers
         public List<Traveller> LoadAll()
         {
             return _context.travellers.ToList();
+        }
+        //adds a new traveller
+        public void AddTraveller(Traveller traveller)
+        {
+            _context.travellers.Add(traveller);
+            _context.SaveChanges();
         }
     }
 }

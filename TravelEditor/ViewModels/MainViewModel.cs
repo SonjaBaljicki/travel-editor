@@ -136,7 +136,7 @@ namespace TravelEditor.ViewModels
             EditTripCommand = new EditTripCommand(this, _tripService, _destinationService);
             DeleteTripCommand = new DeleteTripCommand(this, _tripService);
             ViewDestinationCommand = new ViewDestinationCommand(this, _destinationService);
-            ViewTravellersCommand = new ViewTravellersCommand(this);
+            ViewTravellersCommand = new ViewTravellersCommand(this, _travellerService);
             ViewReviewsCommand = new ViewReviewsCommand(this);
 
             AddDestinationCommand = new AddDestinationCommand(this, _destinationService);
@@ -148,14 +148,14 @@ namespace TravelEditor.ViewModels
             EditAttractionCommand = new EditAttractionCommand(this, _destinationService, _attractionService);
             DeleteAttractionCommand = new DeleteAttractionCommand(this,_attractionService);
 
-            AddTravellerCommand = new AddTravellerCommand(this);
-            EditTravellerCommand = new EditTravellerCommand(this);
+            AddTravellerCommand = new AddTravellerCommand(this, _travellerService);
+            EditTravellerCommand = new EditTravellerCommand(this, _travellerService);
             //DeleteTravellerCommand = new DeleteTravellerCommand(this);
 
             AddReviewCommand = new AddReviewCommand(this);
             EditReviewCommand = new EditReviewCommand(this);
             //DeleteReviewCommand = new DeleteReviewCommand(this);
-            ViewTravellerCommand = new ViewTravellerCommand(this);
+            ViewTravellerCommand = new ViewTravellerCommand(this, _travellerService);
 
         }
 
