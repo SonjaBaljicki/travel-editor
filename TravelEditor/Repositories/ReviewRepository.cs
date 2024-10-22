@@ -21,5 +21,16 @@ namespace TravelEditor.Repositories
         {
             return _context.reviews.ToList();
         }
+        public bool TravellerHasReviews(Traveller? selectedTraveller)
+        {
+            foreach (Review review in _context.reviews)
+            {
+                if (review.TravellerId == selectedTraveller.TravellerId)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

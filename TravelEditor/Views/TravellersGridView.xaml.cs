@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelEditor.Models;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
 namespace TravelEditor.Views
@@ -21,10 +22,10 @@ namespace TravelEditor.Views
     /// </summary>
     public partial class TravellersGridView : Window
     {
-        public TravellersGridView(List<Traveller> travellers)
+        public TravellersGridView(Trip trip, ITravellerService travellerService)
         {
             InitializeComponent();
-            TravellersGridViewModel travellersGridViewModel = new TravellersGridViewModel(travellers);
+            TravellersGridViewModel travellersGridViewModel = new TravellersGridViewModel(trip, travellerService);
             this.DataContext = travellersGridViewModel;
         }
     }

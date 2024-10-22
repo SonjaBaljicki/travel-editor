@@ -12,6 +12,7 @@ namespace TravelEditor.Services.Interfaces
         void AddTrip(Trip trip);
         void DeleteTrip(Trip trip);
         List<Trip> LoadAll();
+        bool TravellerHasTrips(Traveller? selectedTraveller);
         void UpdateTrip(Trip trip);
         bool ValidateDates(DateTime startDate, DateTime endDate);
 

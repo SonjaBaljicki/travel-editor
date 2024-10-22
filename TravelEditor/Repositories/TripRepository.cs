@@ -40,7 +40,8 @@ namespace TravelEditor.Repositories
                 existingTrip.Description = trip.Description;
                 existingTrip.Destination= trip.Destination;
                 existingTrip.DestinationId = trip.DestinationId;
-                //update travellers and reviews separately
+                existingTrip.Travellers = trip.Travellers;
+                //update reviews
                 _context.SaveChanges();
             }
         }
@@ -52,6 +53,13 @@ namespace TravelEditor.Repositories
                 _context.trips.Remove(trip);
                 _context.SaveChanges();
             }
+        }
+        public List<Trip> FindTravellersTrips(Traveller? selectedTraveller)
+        {
+            return _context.trips
+                .Where(trip => trip.Travellers.Any(t => t.TravellerId == selectedTraveller.TravellerId))
+                .Select(trip => trip)
+                .ToList();
         }
     }
 }

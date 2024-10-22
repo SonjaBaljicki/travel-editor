@@ -7,21 +7,37 @@ using System.Windows.Input;
 using System.Windows;
 using TravelEditor.Models;
 using TravelEditor.ViewModels;
+using TravelEditor.Services.Interfaces;
+using TravelEditor.Views;
 
 namespace TravelEditor.Commands.Delete
 {
-    internal class DeleteTravellerCommand : ICommand
+    public class DeleteTravellerCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
+        public MainViewModel mainViewModel;
+        public TravellersGridViewModel travellersViewModel;
+        public ITravellerService travellerService;
 
-        public MainViewModel viewModel;
-
-        public DeleteTravellerCommand(MainViewModel viewModel)
+        public DeleteTravellerCommand(MainViewModel viewModel, ITravellerService travellerService)
         {
-            this.viewModel = viewModel;
-            this.viewModel.PropertyChanged += (sender, e) =>
+            mainViewModel = viewModel;
+            this.travellerService = travellerService;
+            mainViewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == nameof(MainViewModel.SelectedTraveller))
+                {
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                }
+            };
+        }
+        public DeleteTravellerCommand(TravellersGridViewModel viewModel, ITravellerService travellerService)
+        {
+            travellersViewModel = viewModel;
+            this.travellerService = travellerService;
+            travellersViewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(TravellersGridViewModel.SelectedTraveller))
                 {
                     CanExecuteChanged?.Invoke(this, EventArgs.Empty);
                 }
@@ -30,19 +46,22 @@ namespace TravelEditor.Commands.Delete
 
         public bool CanExecute(object? parameter)
         {
-            return viewModel.SelectedTraveller != null;
+            return (mainViewModel != null && mainViewModel.SelectedTraveller != null)
+                || (travellersViewModel != null && travellersViewModel.SelectedTraveller != null);
         }
 
         public void Execute(object? parameter)
         {
-            Traveller traveler = viewModel.SelectedTraveller;
-            if (traveler != null)
+            if (mainViewModel != null && mainViewModel.SelectedTraveller != null)
             {
-                MessageBox.Show(traveler.FirstName);
+                travellerService.DeleteTraveller(mainViewModel.SelectedTraveller);
+                MessageBox.Show("Deleted traveller");
+
             }
-            else
+            else if (travellersViewModel != null && travellersViewModel.SelectedTraveller != null)
             {
-                MessageBox.Show("Please select the traveler");
+                travellerService.DeleteTravellerFromTrip(travellersViewModel.Trip, travellersViewModel.SelectedTraveller);
+                MessageBox.Show("Removed traveller from selected trip");
             }
         }
     }

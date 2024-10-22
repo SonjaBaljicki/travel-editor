@@ -33,7 +33,7 @@ namespace TravelEditor
             DestinationService = new DestinationService(new DestinationRepository(dbContext));
             AttractionService = new AttractionService(new AttractionRepository(dbContext),DestinationService);
             ReviewService = new ReviewService(new ReviewRepository(dbContext));
-            TravellerService = new TravellerService(new TravellerRepository(dbContext));
+            TravellerService = new TravellerService(new TravellerRepository(dbContext),TripService, ReviewService);
 
             MainWindow mainWindow = new MainWindow(TripService, DestinationService, AttractionService, ReviewService, TravellerService);
             mainWindow.Show();

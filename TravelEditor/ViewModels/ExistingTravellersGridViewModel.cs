@@ -5,23 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TravelEditor.Commands.Add;
-using TravelEditor.Commands.Delete;
-using TravelEditor.Commands.Edit;
 using TravelEditor.Commands.View;
 using TravelEditor.Models;
 using TravelEditor.Services.Interfaces;
 
 namespace TravelEditor.ViewModels
 {
-    public class TravellersGridViewModel
+    public class ExistingTravellersGridViewModel
     {
         public List<Traveller> Travellers { get; set; }
-        public Trip Trip { get; set; }
-        public ViewTravellersCommand ViewTravellersCommand { get;}
-        public EditTravellerCommand EditTravellerCommand { get; }
-        public DeleteTravellerCommand DeleteTravellerCommand { get; }
+        public Trip Trip { get; set; }  
 
         private readonly ITravellerService _travellerService;
+        public AddTravellerToTripCommand AddTravellerToTripCommand { get; }
 
         private Traveller? _selectedTraveller;
         public Traveller? SelectedTraveller
@@ -33,21 +29,19 @@ namespace TravelEditor.ViewModels
                 OnPropertyChanged(nameof(SelectedTraveller));
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public TravellersGridViewModel(Trip trip, ITravellerService travellerService)
+        public ExistingTravellersGridViewModel(Trip trip,ITravellerService travellerService)
         {
             Trip = trip;
-            Travellers = trip.Travellers;
             _travellerService = travellerService;
-            ViewTravellersCommand = new ViewTravellersCommand(this, _travellerService);
-            EditTravellerCommand = new EditTravellerCommand(this, _travellerService);
-            DeleteTravellerCommand = new DeleteTravellerCommand(this, _travellerService);
+            Travellers = _travellerService.LoadAll();
+            AddTravellerToTripCommand = new AddTravellerToTripCommand(this, travellerService);
         }
-
     }
 }

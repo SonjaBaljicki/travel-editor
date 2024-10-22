@@ -21,5 +21,10 @@ namespace TravelEditor.Services
         {
             return _reviewRepository.LoadAll();
         }
+
+        public bool TravellerHasReviews(Traveller? selectedTraveller)
+        {
+            return _reviewRepository.TravellerHasReviews(selectedTraveller);
+        }
     }
 }

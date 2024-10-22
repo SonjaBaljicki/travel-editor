@@ -71,5 +71,18 @@ namespace TravelEditor.Services
             DateTime now = DateTime.Now;
             return startDate >= now && endDate <= now;
         }
+        //does traveller have ongoing trips
+        public bool TravellerHasTrips(Traveller? selectedTraveller)
+        {
+            List<Trip> trips = _tripRepository.FindTravellersTrips(selectedTraveller);
+            foreach(Trip trip in trips)
+            {
+                if (IsTripNow(trip.StartDate, trip.EndDate))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

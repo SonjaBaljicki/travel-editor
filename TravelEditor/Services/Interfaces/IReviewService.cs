@@ -10,6 +10,6 @@ namespace TravelEditor.Services.Interfaces
     public interface IReviewService
     {
         List<Review> LoadAll();
-
+        bool TravellerHasReviews(Traveller? selectedTraveller);
     }
 }
