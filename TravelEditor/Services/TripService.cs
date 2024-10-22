@@ -84,5 +84,32 @@ namespace TravelEditor.Services
             }
             return false;
         }
+        //check if trip has happened
+        public bool HasTripHappened(DateTime startDate, DateTime endDate)
+        {
+            DateTime now = DateTime.Now;
+            return endDate<now && startDate < endDate;
+        }
+        //first check if the trip has happened, then check if the traveller who is leaving a review
+        //was on that trip
+        public void AddTripReview(Trip trip, Review review)
+        {
+            if (HasTripHappened(trip.StartDate, trip.EndDate))
+            {
+                if(trip.Travellers.Any(t=> t.TravellerId == review.Traveller.TravellerId))
+                {
+                    trip.Reviews.Add(review);
+                    _tripRepository.UpdateTrip(trip);
+                }
+                else
+                {
+                    MessageBox.Show("Traveller wasnt on the trip");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Trip hasnt happened yet");
+            }
+        }
     }
 }

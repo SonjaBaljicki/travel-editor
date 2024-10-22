@@ -152,7 +152,7 @@ namespace TravelEditor.ViewModels
             EditTravellerCommand = new EditTravellerCommand(this, _travellerService);
             DeleteTravellerCommand = new DeleteTravellerCommand(this,_travellerService);
 
-            AddReviewCommand = new AddReviewCommand(this);
+            AddReviewCommand = new AddReviewCommand(this, _reviewService, _travellerService, _tripService);
             EditReviewCommand = new EditReviewCommand(this);
             //DeleteReviewCommand = new DeleteReviewCommand(this);
             ViewTravellerCommand = new ViewTravellerCommand(this, _travellerService);

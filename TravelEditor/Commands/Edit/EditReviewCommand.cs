@@ -35,8 +35,8 @@ namespace TravelEditor.Commands.Edit
         {
             if (viewModel.SelectedReview != null)
             {
-                ReviewView reviewView = new ReviewView(viewModel.SelectedReview);
-                reviewView.Show();
+                //ReviewView reviewView = new ReviewView(viewModel.SelectedReview);
+                //reviewView.Show();
             }
         }
     }

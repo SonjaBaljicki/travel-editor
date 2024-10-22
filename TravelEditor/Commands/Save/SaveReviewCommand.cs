@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
 namespace TravelEditor.Commands.Save
@@ -13,10 +14,14 @@ namespace TravelEditor.Commands.Save
     {
         public event EventHandler? CanExecuteChanged;
         public ReviewViewModel viewModel;
+        public IReviewService reviewService;
+        public ITripService tripService;
 
-        public SaveReviewCommand(ReviewViewModel viewModel)
+        public SaveReviewCommand(ReviewViewModel viewModel, IReviewService reviewService, ITripService tripService)
         {
             this.viewModel = viewModel;
+            this.reviewService = reviewService;
+            this.tripService = tripService;
         }
 
         public bool CanExecute(object? parameter)
@@ -26,13 +31,19 @@ namespace TravelEditor.Commands.Save
 
         public void Execute(object? parameter)
         {
-            if (viewModel.Review != null)
+            if (viewModel.Review.ReviewId == 0)
             {
-                MessageBox.Show("Saving edit");
+                if(viewModel.SelectedTraveller!=null && viewModel.SelectedTrip != null)
+                {
+                    viewModel.Review.Traveller = viewModel.SelectedTraveller;
+                    viewModel.Review.TravellerId = viewModel.SelectedTraveller.TravellerId;
+                    tripService.AddTripReview(viewModel.SelectedTrip, viewModel.Review);
+                    MessageBox.Show("Saving add");
+                }
             }
             else
             {
-                MessageBox.Show("Saving add");
+                MessageBox.Show("Saving edit");
             }
         }
         protected void OnCanExecutedChanged()

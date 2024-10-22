@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TravelEditor.Models;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 using TravelEditor.Views;
 
@@ -14,10 +15,16 @@ namespace TravelEditor.Commands.Add
     {
         public event EventHandler? CanExecuteChanged;
         public MainViewModel viewModel { get; }
+        public IReviewService reviewService; 
+        public ITripService tripService; 
+        public ITravellerService travellerService; 
 
-        public AddReviewCommand(MainViewModel viewModel)
+        public AddReviewCommand(MainViewModel viewModel, IReviewService reviewService, ITravellerService travellerService, ITripService tripService)
         {
             this.viewModel = viewModel;
+            this.reviewService = reviewService;
+            this.tripService = tripService;
+            this.travellerService = travellerService;
         }
 
         public bool CanExecute(object? parameter)
@@ -27,7 +34,7 @@ namespace TravelEditor.Commands.Add
 
         public void Execute(object? parameter)
         {
-            ReviewView reviewView = new ReviewView(null);
+            ReviewView reviewView = new ReviewView(new Review(), reviewService, travellerService, tripService);
             reviewView.Show();
         }
     }

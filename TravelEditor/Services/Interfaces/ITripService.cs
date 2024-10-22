@@ -10,6 +10,7 @@ namespace TravelEditor.Services.Interfaces
     public interface ITripService
     {
         void AddTrip(Trip trip);
+        void AddTripReview(Trip selectedTrip, Review review);
         void DeleteTrip(Trip trip);
         List<Trip> LoadAll();
         bool TravellerHasTrips(Traveller? selectedTraveller);
