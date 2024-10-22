@@ -61,5 +61,13 @@ namespace TravelEditor.Repositories
                 .Select(trip => trip)
                 .ToList();
         }
+
+        public Trip FindTripWithReview(Review review)
+        {
+            Trip trip = _context.trips
+                                  .Where(t => t.Reviews.Any(r => r.ReviewId == review.ReviewId))
+                                  .Select(d => d).FirstOrDefault();
+            return trip;
+        }
     }
 }

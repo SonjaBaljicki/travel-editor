@@ -16,7 +16,8 @@ namespace TravelEditor.Services.Interfaces
         bool TravellerHasTrips(Traveller? selectedTraveller);
         void UpdateTrip(Trip trip);
         bool ValidateDates(DateTime startDate, DateTime endDate);
-
+        Trip FindTripWithReview(Review review);
+        bool HasTripHappened(DateTime startDate, DateTime endDate);
 
     }
 }

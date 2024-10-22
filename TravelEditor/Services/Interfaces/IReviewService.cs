@@ -11,5 +11,6 @@ namespace TravelEditor.Services.Interfaces
     {
         List<Review> LoadAll();
         bool TravellerHasReviews(Traveller? selectedTraveller);
+        bool UpdateReview(Trip selectedTrip, Review review);
     }
 }

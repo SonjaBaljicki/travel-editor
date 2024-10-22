@@ -62,7 +62,7 @@ namespace TravelEditor.ViewModels
             if (Review.ReviewId != 0)  //if editing
             {
                 SelectedTraveller = Review.Traveller;
-                //SelectedTrip = tripService.FindTripForReview();
+                SelectedTrip = tripService.FindTripWithReview(review);
             }
         }
         //add and edit review from trips reviews grid

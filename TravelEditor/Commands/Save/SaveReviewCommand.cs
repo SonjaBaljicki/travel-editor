@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using TravelEditor.Models;
 using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
@@ -43,7 +44,21 @@ namespace TravelEditor.Commands.Save
             }
             else
             {
-                MessageBox.Show("Saving edit");
+                if (viewModel.SelectedTraveller != null && viewModel.SelectedTrip != null)
+                {
+                    Traveller originalTraveller = viewModel.Review.Traveller;
+
+                    viewModel.Review.Traveller = viewModel.SelectedTraveller;
+                    bool success=reviewService.UpdateReview(viewModel.SelectedTrip, viewModel.Review);
+                    if (!success)
+                    {
+                        viewModel.Review.Traveller = originalTraveller;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Saving edit");
+                    }
+                }
             }
         }
         protected void OnCanExecutedChanged()

@@ -32,7 +32,6 @@ namespace TravelEditor.Services
             //destination has changed, this destination doesnt have this attraction
             if (!destination.Attractions.Any(a => a.AttractionId == attraction.AttractionId))
             {
-                //Destination oldDestination = _destinationService.FindDestinationWithAttraction(attraction);
                 _attractionRepository.DeleteAttraction(attraction);
                 _destinationService.AddDestinationAttractions(destination, attraction);
             }

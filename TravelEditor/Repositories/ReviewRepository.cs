@@ -32,5 +32,26 @@ namespace TravelEditor.Repositories
             }
             return false;
         }
+        //u[dating basic review info
+        public void UpdateReview(Review review)
+        {
+            if (_context.reviews.Find(review.ReviewId) != null)
+            {
+                Review existingReview = _context.reviews.Find(review.ReviewId);
+                existingReview.Comment = review.Comment;
+                existingReview.Date = review.Date;
+                existingReview.Rating = review.Rating;
+                existingReview.Traveller = review.Traveller;
+                existingReview.TravellerId = review.TravellerId;
+                _context.SaveChanges();
+            }
+        }
+        //deleting a review
+        public void DeleteReview(Review review)
+        {
+            Review reviewToDelete = _context.reviews.Find(review.ReviewId);
+            _context.reviews.Remove(reviewToDelete);
+            _context.SaveChanges();
+        }
     }
 }

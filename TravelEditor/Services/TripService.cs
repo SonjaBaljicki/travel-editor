@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TravelEditor.Models;
+using TravelEditor.Repositories;
 using TravelEditor.Repositories.Interfaces;
 using TravelEditor.Services.Interfaces;
 
@@ -110,6 +111,10 @@ namespace TravelEditor.Services
             {
                 MessageBox.Show("Trip hasnt happened yet");
             }
+        }
+        public Trip FindTripWithReview(Review review)
+        {
+            return _tripRepository.FindTripWithReview(review);
         }
     }
 }
