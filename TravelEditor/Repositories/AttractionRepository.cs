@@ -38,7 +38,8 @@ namespace TravelEditor.Repositories
         //deleting a existing attraction
         public void DeleteAttraction(Attraction attraction)
         {
-            _context.attractions.Remove(attraction);
+            Attraction attractionToDelete = _context.attractions.Find(attraction.AttractionId);
+            _context.attractions.Remove(attractionToDelete);
             _context.SaveChanges();
         }
         public bool FindOne(Attraction attraction)

@@ -35,14 +35,15 @@ namespace TravelEditor.Services
         //adds a traveller to trip then updates it
         public void AddTravellerToTrip(Traveller selectedTraveller, Trip trip)
         {
-            if (!trip.Travellers.Any(t => t.TravellerId == selectedTraveller.TravellerId))
+            if (!trip.Travellers.Any(t => t.TravellerId == selectedTraveller.TravellerId)
+                && _tripService.ValidateDates(trip.StartDate,trip.EndDate))
             {
                 trip.Travellers.Add(selectedTraveller);
                 _tripService.UpdateTrip(trip);
             }
             else
             {
-                MessageBox.Show("Already has this traveller");
+                MessageBox.Show("Already has this traveller or dates are not valid");
             }
 
         }
@@ -61,8 +62,15 @@ namespace TravelEditor.Services
         //removes traveller from chosen trip
         public void DeleteTravellerFromTrip(Trip trip, Traveller selectedTraveller)
         {
-            trip.Travellers.Remove(selectedTraveller);
-            _tripService.UpdateTrip(trip);
+            if(_tripService.ValidateDates(trip.StartDate, trip.EndDate))
+            {
+                trip.Travellers.Remove(selectedTraveller);
+                _tripService.UpdateTrip(trip);
+            }
+            else
+            {
+                MessageBox.Show("Can't delete");
+            }
         }
         //delete a traveller
         public void DeleteTraveller(Traveller? selectedTraveller)

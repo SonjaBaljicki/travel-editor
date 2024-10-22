@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TravelEditor.Models;
+using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
 namespace TravelEditor.Views
@@ -21,10 +22,16 @@ namespace TravelEditor.Views
     /// </summary>
     public partial class ReviewView : Window
     {
-        public ReviewView (Review review)
+        public ReviewView (Review review, IReviewService reviewService,ITravellerService travellerService, ITripService tripService)
         {
             InitializeComponent();
-            ReviewViewModel reviewViewModel = new ReviewViewModel(review);
+            ReviewViewModel reviewViewModel = new ReviewViewModel(review, reviewService, travellerService, tripService);
+            this.DataContext = reviewViewModel;
+        }
+        public ReviewView(Review review,Trip trip, IReviewService reviewService, ITravellerService travellerService, ITripService tripService)
+        {
+            InitializeComponent();
+            ReviewViewModel reviewViewModel = new ReviewViewModel(review,trip, reviewService, travellerService, tripService);
             this.DataContext = reviewViewModel;
         }
     }

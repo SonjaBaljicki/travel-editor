@@ -118,7 +118,7 @@ namespace TravelEditor.ViewModels
         ////reviews command
         public AddReviewCommand AddReviewCommand { get; }
         public EditReviewCommand EditReviewCommand { get; }
-        //public DeleteReviewCommand DeleteReviewCommand { get; }
+        public DeleteReviewCommand DeleteReviewCommand { get; }
         public ViewTravellerCommand ViewTravellerCommand { get; }
 
 
@@ -137,7 +137,7 @@ namespace TravelEditor.ViewModels
             DeleteTripCommand = new DeleteTripCommand(this, _tripService);
             ViewDestinationCommand = new ViewDestinationCommand(this, _destinationService);
             ViewTravellersCommand = new ViewTravellersCommand(this, _travellerService);
-            ViewReviewsCommand = new ViewReviewsCommand(this);
+            ViewReviewsCommand = new ViewReviewsCommand(this, _reviewService, _travellerService, _tripService);
 
             AddDestinationCommand = new AddDestinationCommand(this, _destinationService);
             EditDestinationCommand = new EditDestinationCommand(this, _destinationService);
@@ -152,9 +152,9 @@ namespace TravelEditor.ViewModels
             EditTravellerCommand = new EditTravellerCommand(this, _travellerService);
             DeleteTravellerCommand = new DeleteTravellerCommand(this,_travellerService);
 
-            AddReviewCommand = new AddReviewCommand(this);
-            EditReviewCommand = new EditReviewCommand(this);
-            //DeleteReviewCommand = new DeleteReviewCommand(this);
+            AddReviewCommand = new AddReviewCommand(this, _reviewService, _travellerService, _tripService);
+            EditReviewCommand = new EditReviewCommand(this, _reviewService, _travellerService,_tripService);
+            DeleteReviewCommand = new DeleteReviewCommand(this, _reviewService);
             ViewTravellerCommand = new ViewTravellerCommand(this, _travellerService);
 
         }

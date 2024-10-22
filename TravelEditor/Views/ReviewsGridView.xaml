@@ -9,11 +9,11 @@
     <Grid>
         <StackPanel Background="#A4C3B2" Margin="20, 10, 20, 0">
             <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
-                <Button Width="120" Name="addReviewButton" Content="Add Review"/>
-                <Button Width="120" Name="editReviewButton" Content="Edit Review"/>
-                <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" />
+                <Button Width="120" Name="addReviewButton" Content="Add Review" Command="{Binding AddReviewCommand}"/>
+                <Button Width="120" Name="editReviewButton" Content="Edit Review"  Command="{Binding EditReviewCommand}"/>
+                <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" Command="{Binding DeleteReviewCommand}"/>
             </StackPanel>
-            <DataGrid AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
+            <DataGrid SelectedItem="{Binding SelectedReview}" AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" Width="120"/>
                     <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="120"/>

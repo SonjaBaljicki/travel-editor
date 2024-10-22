@@ -12,6 +12,7 @@ namespace TravelEditor.Repositories.Interfaces
         void AddTrip(Trip trip);
         void DeleteTrip(Trip trip);
         List<Trip> FindTravellersTrips(Traveller? selectedTraveller);
+        Trip FindTripWithReview(Review review);
         List<Trip> LoadAll();
         void UpdateTrip(Trip trip);
     }
