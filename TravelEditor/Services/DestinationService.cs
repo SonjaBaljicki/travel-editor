@@ -25,34 +25,36 @@ namespace TravelEditor.Services
             return _destinationRepository.LoadAll();
         }
         //add new destination
-        public void AddDestination(Destination destination)
+        public bool AddDestination(Destination destination)
         {
-            _destinationRepository.AddDestination(destination);
+            return _destinationRepository.AddDestination(destination);
+            
         }
         //update an existing destianation
-        public void UpdateDestination(Destination destination)
+        public bool UpdateDestination(Destination destination)
         {
-            _destinationRepository.UpdateDestination(destination);   
+            return _destinationRepository.UpdateDestination(destination);   
         }
         //adds an attractio to an extisting destination
-        public void AddDestinationAttractions(Destination destination, Attraction attraction)
+        public bool AddDestinationAttractions(Destination destination, Attraction attraction)
         {
-            _destinationRepository.AddDestinationAttractions(destination, attraction);
+            return _destinationRepository.AddDestinationAttractions(destination, attraction);
         }
         //delete a destination if it doesnt have trips
-        public void Delete(Destination destination)
+        public bool Delete(Destination destination)
         {
             if (_destinationRepository.FindOne(destination))
             {
                 if (!_destinationRepository.HasAssociatedTrips(destination))
                 {
-                    _destinationRepository.Delete(destination);
+                    return _destinationRepository.Delete(destination);
                 }
                 else
                 {
                     MessageBox.Show("Cant delete destination");
                 }
             }
+            return false;
         }
         public Destination FindDestinationWithAttraction(Attraction attraction)
         {

@@ -33,7 +33,7 @@ namespace TravelEditor.Repositories
             return false;
         }
         //u[dating basic review info
-        public void UpdateReview(Review review)
+        public bool UpdateReview(Review review)
         {
             if (_context.reviews.Find(review.ReviewId) != null)
             {
@@ -44,14 +44,17 @@ namespace TravelEditor.Repositories
                 existingReview.Traveller = review.Traveller;
                 existingReview.TravellerId = review.TravellerId;
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         //deleting a review
-        public void DeleteReview(Review review)
+        public bool DeleteReview(Review review)
         {
             Review reviewToDelete = _context.reviews.Find(review.ReviewId);
             _context.reviews.Remove(reviewToDelete);
             _context.SaveChanges();
+            return true;
         }
     }
 }

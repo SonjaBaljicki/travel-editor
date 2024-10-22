@@ -63,9 +63,9 @@ namespace TravelEditor.Services
             }
             return false;
         }
-        public void DeleteReview(Review review)
+        public bool DeleteReview(Review review)
         {
-            _reviewRepository.DeleteReview(review);
+            return _reviewRepository.DeleteReview(review);
         }
     }
 }

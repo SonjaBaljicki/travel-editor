@@ -55,11 +55,19 @@ namespace TravelEditor.Commands.Delete
         {
             if (mainViewModel != null && mainViewModel.SelectedReview != null)
             {
-                reviewService.DeleteReview(mainViewModel.SelectedReview);
+               bool success = reviewService.DeleteReview(mainViewModel.SelectedReview);
+                if (success)
+                {
+                    mainViewModel.Reviews.Remove(mainViewModel.SelectedReview);
+                }
             }
             else if (reviewsViewModel != null && reviewsViewModel.SelectedReview != null)
             {
-                reviewService.DeleteReview(reviewsViewModel.SelectedReview);
+                bool success = reviewService.DeleteReview(reviewsViewModel.SelectedReview);
+                if (success)
+                {
+                    reviewsViewModel.Reviews.Remove(reviewsViewModel.SelectedReview);
+                }
             }
         }
     }

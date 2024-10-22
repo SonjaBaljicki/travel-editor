@@ -10,7 +10,7 @@ namespace TravelEditor.Repositories.Interfaces
     public interface IAttractionRepository
     {
         List<Attraction> LoadAll();
-        void UpdateAttraction(Attraction attraction);
+        bool UpdateAttraction(Attraction attraction);
         void DeleteAttraction(Attraction attraction);
         bool FindOne(Attraction attraction);
     }

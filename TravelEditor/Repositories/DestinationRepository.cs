@@ -25,13 +25,14 @@ namespace TravelEditor.Repositories
             return _context.destinations.ToList();
         }
         //adds a new destination
-        public void AddDestination(Destination destination)
+        public bool AddDestination(Destination destination)
         {
             _context.destinations.Add(destination);
             _context.SaveChanges();
+            return true;
         }
         //update a destiantion if it exists
-        public void UpdateDestination(Destination destination)
+        public bool UpdateDestination(Destination destination)
         {
             if(_context.destinations.Find(destination.DestinationId)!=null)
             {
@@ -41,17 +42,21 @@ namespace TravelEditor.Repositories
                 existingDestination.Description = destination.Description;
                 existingDestination.Climate = destination.Climate;
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         //adding an attraction after a destinations has already been added
-        public void AddDestinationAttractions(Destination destination, Attraction attraction)
+        public bool AddDestinationAttractions(Destination destination, Attraction attraction)
         {
             if (_context.destinations.Find(destination.DestinationId) != null)
             {
                 Destination existingDestination = _context.destinations.Find(destination.DestinationId);
                 existingDestination.Attractions.Add(attraction);
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         //does the destination have any associated trips
         public bool HasAssociatedTrips(Destination destination)
@@ -64,10 +69,11 @@ namespace TravelEditor.Repositories
             return trips.Count > 0;
         }
         //delete a destination
-        public void Delete(Destination destination)
+        public bool Delete(Destination destination)
         {
             _context.destinations.Remove(destination);
             _context.SaveChanges();
+            return true;
         }
         //for an attraction find which destination it belongs to
         public Destination FindDestinationWithAttraction(Attraction attraction)

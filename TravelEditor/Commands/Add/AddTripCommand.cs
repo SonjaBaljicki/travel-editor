@@ -33,7 +33,7 @@ namespace TravelEditor.Commands.Add
 
         public void Execute(object? parameter)
         {
-            TripView tripView = new TripView(new Trip(), tripService, destinationService);
+            TripView tripView = new TripView(new Trip(), viewModel, tripService, destinationService);
             tripView.Show();
         }
     }

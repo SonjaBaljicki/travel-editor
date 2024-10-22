@@ -9,12 +9,12 @@ namespace TravelEditor.Repositories.Interfaces
 {
     public interface IDestinationRepository
     {
-        void AddDestination(Destination destination);
+        bool AddDestination(Destination destination);
         List<Destination> LoadAll();
-        void UpdateDestination(Destination destination);
-        void Delete(Destination destination);
+        bool UpdateDestination(Destination destination);
+        bool Delete(Destination destination);
         bool HasAssociatedTrips(Destination destination);
-        void AddDestinationAttractions(Destination destination, Attraction attraction);
+        bool AddDestinationAttractions(Destination destination, Attraction attraction);
         Destination FindDestinationWithAttraction(Attraction attraction);
         bool FindOne(Destination destination);
     }

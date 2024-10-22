@@ -28,64 +28,68 @@ namespace TravelEditor.Services
             return _travellerRepository.LoadAll();
         }
         //add new traveller
-        public void AddTraveller(Traveller traveller)
+        public bool AddTraveller(Traveller traveller)
         {
-            _travellerRepository.AddTraveller(traveller);
+            return _travellerRepository.AddTraveller(traveller);
         }
         //adds a traveller to trip then updates it
-        public void AddTravellerToTrip(Traveller selectedTraveller, Trip trip)
+        public bool AddTravellerToTrip(Traveller selectedTraveller, Trip trip)
         {
             if (!trip.Travellers.Any(t => t.TravellerId == selectedTraveller.TravellerId)
                 && _tripService.ValidateDates(trip.StartDate,trip.EndDate))
             {
                 trip.Travellers.Add(selectedTraveller);
-                _tripService.UpdateTrip(trip);
+                return _tripService.UpdateTrip(trip);
             }
             else
             {
                 MessageBox.Show("Already has this traveller or dates are not valid");
             }
+            return false;
 
         }
-        public void UpdateTraveller(Traveller traveller)
+        public bool UpdateTraveller(Traveller traveller)
         {
             Traveller travellerByEmail = _travellerRepository.FindTravellerByEmail(traveller.Email);
             if (travellerByEmail == null || travellerByEmail.TravellerId == traveller.TravellerId)
             {
-                _travellerRepository.UpdateTraveller(traveller);
+                return _travellerRepository.UpdateTraveller(traveller);
             }
             else
             {
                 MessageBox.Show("Email not unique");
             }
+            return false;
         }
         //removes traveller from chosen trip
-        public void DeleteTravellerFromTrip(Trip trip, Traveller selectedTraveller)
+        public bool DeleteTravellerFromTrip(Trip trip, Traveller selectedTraveller)
         {
             if(_tripService.ValidateDates(trip.StartDate, trip.EndDate))
             {
                 trip.Travellers.Remove(selectedTraveller);
-                _tripService.UpdateTrip(trip);
+                return _tripService.UpdateTrip(trip);
             }
             else
             {
                 MessageBox.Show("Can't delete");
             }
+            return false;
         }
         //delete a traveller
-        public void DeleteTraveller(Traveller? selectedTraveller)
+        public bool DeleteTraveller(Traveller? selectedTraveller)
         {
             //does he have any reviews left? if yes- cant delete
             //does he have any ongoing trips? if yes- cant delete
             if (!_reviewService.TravellerHasReviews(selectedTraveller) 
                 && !_tripService.TravellerHasTrips(selectedTraveller))
             {
-                _travellerRepository.DeleteTraveller(selectedTraveller);
+               return  _travellerRepository.DeleteTraveller(selectedTraveller);
             }
             else
             {
                 MessageBox.Show("Cant delete traveller");
             }
+            return false;
         }
     }
 }

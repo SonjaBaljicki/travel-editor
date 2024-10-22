@@ -24,12 +24,13 @@ namespace TravelEditor.Repositories
             return _context.travellers.ToList();
         }
         //adds a new traveller
-        public void AddTraveller(Traveller traveller)
+        public bool AddTraveller(Traveller traveller)
         {
             _context.travellers.Add(traveller);
             _context.SaveChanges();
+            return true;
         }
-        public void UpdateTraveller(Traveller traveller)
+        public bool UpdateTraveller(Traveller traveller)
         {
             if (_context.travellers.Find(traveller.TravellerId) != null)
             {
@@ -40,17 +41,20 @@ namespace TravelEditor.Repositories
                 existingTraveller.PhoneNumber = traveller.PhoneNumber;
                 existingTraveller.Age = traveller.Age;
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         public Traveller FindTravellerByEmail(string email)
         {
             return _context.travellers.FirstOrDefault(t => t.Email == email);
         }
 
-        public void DeleteTraveller(Traveller? selectedTraveller)
+        public bool DeleteTraveller(Traveller? selectedTraveller)
         {
             _context.travellers.Remove(selectedTraveller);
             _context.SaveChanges();
+            return true;
         }
     }
 }

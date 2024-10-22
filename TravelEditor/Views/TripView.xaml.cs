@@ -22,10 +22,10 @@ namespace TravelEditor.Views
     /// </summary>
     public partial class TripView : Window
     {
-        public TripView(Trip trip, ITripService tripService, IDestinationService destinationService)
+        public TripView(Trip trip,MainViewModel mainViewModel, ITripService tripService, IDestinationService destinationService)
         {
             InitializeComponent();
-            TripViewModel tripViewModel = new TripViewModel(trip, tripService, destinationService);
+            TripViewModel tripViewModel = new TripViewModel(trip, mainViewModel, tripService, destinationService);
             this.DataContext = tripViewModel;
         }
     }

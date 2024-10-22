@@ -42,7 +42,11 @@ namespace TravelEditor.Commands.Delete
             if (trip != null)
             {
                 MessageBox.Show("Deleting trip");
-                tripService.DeleteTrip(trip);
+                bool success = tripService.DeleteTrip(trip);
+                if (success)
+                {
+                    viewModel.Trips.Remove(trip);
+                }
             }
             else
             {

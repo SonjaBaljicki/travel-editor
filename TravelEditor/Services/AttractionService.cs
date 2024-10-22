@@ -24,7 +24,7 @@ namespace TravelEditor.Services
         {
             return _attractionRepository.LoadAll();
         }
-        public void UpdateAttraction(Attraction attraction, Destination destination)
+        public bool UpdateAttraction(Attraction attraction, Destination destination)
         {
             //update basic info for the attraction
             _attractionRepository.UpdateAttraction(attraction);
@@ -34,14 +34,18 @@ namespace TravelEditor.Services
             {
                 _attractionRepository.DeleteAttraction(attraction);
                 _destinationService.AddDestinationAttractions(destination, attraction);
+                return true;
             }
+            return false;
         }
-        public void DeleteAttraction(Attraction attraction)
+        public bool DeleteAttraction(Attraction attraction)
         {
             if (_attractionRepository.FindOne(attraction))
             {
                 _attractionRepository.DeleteAttraction(attraction);
+                return true;
             }
+            return false;
         }
 
     }

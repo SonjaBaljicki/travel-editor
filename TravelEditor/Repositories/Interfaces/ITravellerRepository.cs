@@ -9,10 +9,10 @@ namespace TravelEditor.Repositories.Interfaces
 {
     public interface ITravellerRepository
     {
-        void AddTraveller(Traveller traveller);
+        bool AddTraveller(Traveller traveller);
         List<Traveller> LoadAll();
-        void UpdateTraveller(Traveller traveller);
+        bool UpdateTraveller(Traveller traveller);
         Traveller FindTravellerByEmail(string email);
-        void DeleteTraveller(Traveller? selectedTraveller);
+        bool DeleteTraveller(Traveller? selectedTraveller);
     }
 }

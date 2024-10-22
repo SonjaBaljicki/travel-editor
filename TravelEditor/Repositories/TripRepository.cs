@@ -23,13 +23,14 @@ namespace TravelEditor.Repositories
             return _context.trips.ToList();
         }
         //adding a trip to database
-        public void AddTrip(Trip trip)
+        public bool AddTrip(Trip trip)
         {
             _context.trips.Add(trip);
             _context.SaveChanges();
+            return true;
         }
         //update trip basic info
-        public void UpdateTrip(Trip trip)
+        public bool UpdateTrip(Trip trip)
         {
             if (_context.trips.Find(trip.TripId) != null)
             {
@@ -43,16 +44,20 @@ namespace TravelEditor.Repositories
                 existingTrip.Travellers = trip.Travellers;
                 existingTrip.Reviews = trip.Reviews;
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         //delete a trip
-        public void DeleteTrip(Trip trip)
+        public bool DeleteTrip(Trip trip)
         {
             if (_context.trips.Find(trip.TripId) != null)
             {
                 _context.trips.Remove(trip);
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         public List<Trip> FindTravellersTrips(Traveller? selectedTraveller)
         {

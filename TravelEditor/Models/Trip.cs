@@ -35,5 +35,15 @@ namespace TravelEditor.Models
             Travellers = travellers;
             Reviews = reviews;
         }
+        public Trip(Trip trip)
+        {
+            TripId = trip.TripId;
+            Name = trip.Name;
+            StartDate = trip.StartDate;
+            EndDate = trip.EndDate;
+            Description = trip.Description;
+            DestinationId = trip.DestinationId;
+            Destination = trip.Destination;
+        }
     }
 }

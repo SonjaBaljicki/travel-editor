@@ -15,11 +15,14 @@ namespace TravelEditor.Commands.Save
     {
         public event EventHandler? CanExecuteChanged;
         public TripViewModel viewModel;
+        public MainViewModel mainViewModel;
         public ITripService tripService;
+        public List<Trip> Trips;
 
-        public SaveTripCommand(TripViewModel viewModel, ITripService tripService)
+        public SaveTripCommand(TripViewModel viewModel, MainViewModel mainViewModel, ITripService tripService)
         {
             this.viewModel = viewModel;
+            this.mainViewModel = mainViewModel;
             this.tripService = tripService;
         }
 
@@ -39,7 +42,11 @@ namespace TravelEditor.Commands.Save
                 Destination destination = viewModel.SelectedDestination;
                 Trip trip = new Trip(name, startDate, endDate, description, destination.DestinationId, destination,
                     new List<Traveller>(), new List<Review>());
-                tripService.AddTrip(trip);
+                bool success = tripService.AddTrip(trip);
+                if (success)
+                {
+                    mainViewModel.Trips.Add(trip);
+                }
                 MessageBox.Show("Saving add");
             }
             else
@@ -47,9 +54,18 @@ namespace TravelEditor.Commands.Save
                 Destination destination = viewModel.SelectedDestination;
                 viewModel.Trip.DestinationId = destination.DestinationId;
                 viewModel.Trip.Destination = destination;
-                
-                tripService.UpdateTrip(viewModel.Trip);
-                MessageBox.Show("Saving edit");
+                //tripService.UpdateTrip(viewModel.Trip);
+                //saljemo kopiju
+                bool success = tripService.UpdateTrip(viewModel.Trip);
+                if (success)
+                {
+                    int index = mainViewModel.Trips.IndexOf(mainViewModel.Trips.First(t => t.TripId == viewModel.Trip.TripId));
+                    if (index >= 0)
+                    {
+                        mainViewModel.Trips[index] = viewModel.Trip;
+                    }
+                    MessageBox.Show("Saving edit");
+                }
             }
         }
         protected void OnCanExecutedChanged()

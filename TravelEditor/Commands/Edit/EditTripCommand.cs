@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TravelEditor.Models;
 using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 using TravelEditor.Views;
@@ -39,7 +40,7 @@ namespace TravelEditor.Commands.Edit
         {
             if (viewModel.SelectedTrip != null) 
             {
-                TripView tripView = new TripView(viewModel.SelectedTrip, tripService, destinationService);
+                TripView tripView = new TripView(new Trip(viewModel.SelectedTrip), viewModel, tripService, destinationService);
                 tripView.Show();
             }
            

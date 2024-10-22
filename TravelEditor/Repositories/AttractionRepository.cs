@@ -23,7 +23,7 @@ namespace TravelEditor.Repositories
             return _context.attractions.ToList();
         }
         //update an attraction
-        public void UpdateAttraction(Attraction attraction)
+        public bool UpdateAttraction(Attraction attraction)
         {
             if (_context.attractions.Find(attraction.AttractionId) != null)
             {
@@ -33,7 +33,9 @@ namespace TravelEditor.Repositories
                 existingAttraction.Location = attraction.Location;
                 existingAttraction.Price = attraction.Price;
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         //deleting a existing attraction
         public void DeleteAttraction(Attraction attraction)
