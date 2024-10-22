@@ -21,6 +21,7 @@ namespace TravelEditor.Services
             _reviewRepository = reviewRepository;
             _tripService = tripService;
         }
+
         public List<Review> LoadAll()
         {
             return _reviewRepository.LoadAll();
@@ -36,7 +37,7 @@ namespace TravelEditor.Services
             //trip stayed the same
             if (trip.Reviews.Any(r => r.ReviewId == review.ReviewId))
             {
-                //update basic info for the review if traveller is valid
+                //update basic info for the review if traveller was on that trip
                 if (trip.Travellers.Any(t => t.TravellerId == review.Traveller.TravellerId))
                 {
                     _reviewRepository.UpdateReview(review);
@@ -61,6 +62,10 @@ namespace TravelEditor.Services
                 }
             }
             return false;
+        }
+        public void DeleteReview(Review review)
+        {
+            _reviewRepository.DeleteReview(review);
         }
     }
 }

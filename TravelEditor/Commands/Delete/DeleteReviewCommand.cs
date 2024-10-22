@@ -7,19 +7,25 @@ using System.Windows.Input;
 using System.Windows;
 using TravelEditor.Models;
 using TravelEditor.ViewModels;
+using TravelEditor.Services.Interfaces;
+using TravelEditor.Services;
+using TravelEditor.Views;
 
 namespace TravelEditor.Commands.Delete
 {
-    internal class DeleteReviewCommand : ICommand
+    public class DeleteReviewCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
+        public MainViewModel mainViewModel { get; }
+        public ReviewsGridViewModel reviewsViewModel { get; }
 
-        public MainViewModel viewModel;
+        public IReviewService reviewService;
 
-        public DeleteReviewCommand(MainViewModel viewModel)
+        public DeleteReviewCommand(MainViewModel viewModel, IReviewService reviewService)
         {
-            this.viewModel = viewModel;
-            this.viewModel.PropertyChanged += (sender, e) =>
+            mainViewModel = viewModel;
+            this.reviewService = reviewService;
+            mainViewModel.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == nameof(MainViewModel.SelectedReview))
                 {
@@ -27,22 +33,33 @@ namespace TravelEditor.Commands.Delete
                 }
             };
         }
-
+        public DeleteReviewCommand(ReviewsGridViewModel viewModel, IReviewService reviewService)
+        {
+            reviewsViewModel = viewModel;
+            this.reviewService = reviewService;
+            reviewsViewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(ReviewsGridViewModel.SelectedReview))
+                {
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                }
+            };
+        }
         public bool CanExecute(object? parameter)
         {
-            return viewModel.SelectedReview != null;
+            return (mainViewModel != null && mainViewModel.SelectedReview != null)
+               || (reviewsViewModel != null && reviewsViewModel.SelectedReview != null);
         }
 
         public void Execute(object? parameter)
         {
-            Review review = viewModel.SelectedReview;
-            if (review != null)
+            if (mainViewModel != null && mainViewModel.SelectedReview != null)
             {
-                MessageBox.Show(review.Comment);
+                reviewService.DeleteReview(mainViewModel.SelectedReview);
             }
-            else
+            else if (reviewsViewModel != null && reviewsViewModel.SelectedReview != null)
             {
-                MessageBox.Show("Please select the review");
+                reviewService.DeleteReview(reviewsViewModel.SelectedReview);
             }
         }
     }

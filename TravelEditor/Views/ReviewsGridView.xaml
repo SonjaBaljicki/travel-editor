@@ -11,7 +11,7 @@
             <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
                 <Button Width="120" Name="addReviewButton" Content="Add Review" Command="{Binding AddReviewCommand}"/>
                 <Button Width="120" Name="editReviewButton" Content="Edit Review"  Command="{Binding EditReviewCommand}"/>
-                <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" />
+                <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" Command="{Binding DeleteReviewCommand}"/>
             </StackPanel>
             <DataGrid SelectedItem="{Binding SelectedReview}" AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
                 <DataGrid.Columns>
