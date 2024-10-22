@@ -28,5 +28,11 @@ namespace TravelEditor.Views
             ReviewViewModel reviewViewModel = new ReviewViewModel(review, reviewService, travellerService, tripService);
             this.DataContext = reviewViewModel;
         }
+        public ReviewView(Review review,Trip trip, IReviewService reviewService, ITravellerService travellerService, ITripService tripService)
+        {
+            InitializeComponent();
+            ReviewViewModel reviewViewModel = new ReviewViewModel(review,trip, reviewService, travellerService, tripService);
+            this.DataContext = reviewViewModel;
+        }
     }
 }

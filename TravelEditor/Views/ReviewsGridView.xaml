@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel Background="#A4C3B2" Margin="20, 10, 20, 0">
             <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
-                <Button Width="120" Name="addReviewButton" Content="Add Review"/>
+                <Button Width="120" Name="addReviewButton" Content="Add Review" Command="{Binding AddReviewCommand}"/>
                 <Button Width="120" Name="editReviewButton" Content="Edit Review"/>
                 <Button  Width="120" Name="deleteReviewButton" Content="Delete Review" />
             </StackPanel>
