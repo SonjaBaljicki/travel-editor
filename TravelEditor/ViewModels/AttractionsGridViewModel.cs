@@ -47,7 +47,6 @@ namespace TravelEditor.ViewModels
             DeleteAttractionCommand = new DeleteAttractionCommand(this, attractionService);
             AddAttractionCommand = new AddAttractionCommand(this, destinationService, attractionService);
         }
-
         private void LoadData()
         {
             Attractions.Clear();
@@ -55,6 +54,10 @@ namespace TravelEditor.ViewModels
             {
                 Attractions.Add(attraction);
             }
+        }
+        ~AttractionsGridViewModel()
+        {
+            Messenger.DataChanged -= LoadData;
         }
     }
 }

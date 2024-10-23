@@ -166,11 +166,6 @@ namespace TravelEditor.ViewModels
 
         public void LoadData()
         {
-            //Trips = new ObservableCollection<Trip>(_tripService.LoadAll());
-            //Destinations =new ObservableCollection<Destination>(_destinationService.LoadAll());
-            //Attractions = new ObservableCollection<Attraction>(_attractionService.LoadAll());
-            //Reviews = new ObservableCollection<Review>(_reviewService.LoadAll());
-            //Travellers = new ObservableCollection<Traveller>(_travellerService.LoadAll());
             Trips.Clear();
             Destinations.Clear();
             Attractions.Clear();

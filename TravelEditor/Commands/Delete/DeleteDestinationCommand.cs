@@ -15,7 +15,6 @@ namespace TravelEditor.Commands.Delete
     public class DeleteDestinationCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-
         public MainViewModel viewModel;
         public IDestinationService destinationService;
 

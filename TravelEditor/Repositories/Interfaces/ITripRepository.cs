@@ -9,11 +9,11 @@ namespace TravelEditor.Repositories.Interfaces
 {
     public interface ITripRepository
     {
-        bool AddTrip(Trip trip);
-        bool DeleteTrip(Trip trip);
+        bool Add(Trip trip);
+        bool Delete(Trip trip);
         List<Trip> FindTravellersTrips(Traveller? selectedTraveller);
         Trip FindTripWithReview(Review review);
         List<Trip> LoadAll();
-        bool UpdateTrip(Trip trip);
+        bool Update(Trip trip);
     }
 }

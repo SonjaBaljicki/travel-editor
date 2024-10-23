@@ -43,7 +43,7 @@ namespace TravelEditor.Commands.Save
                 string climate = viewModel.Destination.Climate;
 
                 Destination destination = new Destination(city, country, description, climate, viewModel.Destination.Attractions);
-                bool success=destinationService.AddDestination(destination);
+                bool success=destinationService.Add(destination);
                 if (success)
                 {
                     Messenger.NotifyDataChanged();
@@ -53,7 +53,7 @@ namespace TravelEditor.Commands.Save
             }
             else
             {
-                bool success=destinationService.UpdateDestination(viewModel.Destination);
+                bool success=destinationService.Update(viewModel.Destination);
                 if (success)
                 {
                     Messenger.NotifyDataChanged();

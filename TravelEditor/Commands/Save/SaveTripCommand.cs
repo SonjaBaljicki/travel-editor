@@ -40,7 +40,7 @@ namespace TravelEditor.Commands.Save
                 Destination destination = viewModel.SelectedDestination;
                 Trip trip = new Trip(name, startDate, endDate, description, destination.DestinationId, destination,
                     new List<Traveller>(), new List<Review>());
-                bool success = tripService.AddTrip(trip);
+                bool success = tripService.Add(trip);
                 if (success)
                 {
                     Messenger.NotifyDataChanged();
@@ -52,7 +52,7 @@ namespace TravelEditor.Commands.Save
                 Destination destination = viewModel.SelectedDestination;
                 viewModel.Trip.DestinationId = destination.DestinationId;
                 viewModel.Trip.Destination = destination;
-                bool success = tripService.UpdateTrip(viewModel.Trip);
+                bool success = tripService.Update(viewModel.Trip);
                 if (success)
                 {
                     Messenger.NotifyDataChanged();

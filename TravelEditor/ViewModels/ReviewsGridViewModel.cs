@@ -62,5 +62,9 @@ namespace TravelEditor.ViewModels
                 Reviews.Add(review);
             }
         }
+        ~ReviewsGridViewModel()
+        {
+            Messenger.DataChanged -= LoadData;
+        }
     }
 }

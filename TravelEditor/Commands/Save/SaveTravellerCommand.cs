@@ -32,7 +32,7 @@ namespace TravelEditor.Commands.Save
         {
             if (viewModel.Traveller.TravellerId == 0)
             {
-                bool success=travellerService.AddTraveller(viewModel.Traveller);
+                bool success=travellerService.Add(viewModel.Traveller);
                 if (success)
                 {
                     Messenger.NotifyDataChanged();
@@ -41,7 +41,7 @@ namespace TravelEditor.Commands.Save
             }
             else
             {
-                bool success=travellerService.UpdateTraveller(viewModel.Traveller);
+                bool success=travellerService.Update(viewModel.Traveller);
                 if (success)
                 {
                     Messenger.NotifyDataChanged();

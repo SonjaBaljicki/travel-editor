@@ -28,9 +28,9 @@ namespace TravelEditor.Services
             return _travellerRepository.LoadAll();
         }
         //add new traveller
-        public bool AddTraveller(Traveller traveller)
+        public bool Add(Traveller traveller)
         {
-            return _travellerRepository.AddTraveller(traveller);
+            return _travellerRepository.Add(traveller);
         }
         //adds a traveller to trip then updates it
         public bool AddTravellerToTrip(Traveller selectedTraveller, Trip trip)
@@ -39,7 +39,7 @@ namespace TravelEditor.Services
                 && _tripService.ValidateDates(trip.StartDate,trip.EndDate))
             {
                 trip.Travellers.Add(selectedTraveller);
-                return _tripService.UpdateTrip(trip);
+                return _tripService.Update(trip);
             }
             else
             {
@@ -48,12 +48,12 @@ namespace TravelEditor.Services
             return false;
 
         }
-        public bool UpdateTraveller(Traveller traveller)
+        public bool Update(Traveller traveller)
         {
             Traveller travellerByEmail = _travellerRepository.FindTravellerByEmail(traveller.Email);
             if (travellerByEmail == null || travellerByEmail.TravellerId == traveller.TravellerId)
             {
-                return _travellerRepository.UpdateTraveller(traveller);
+                return _travellerRepository.Update(traveller);
             }
             else
             {
@@ -67,7 +67,7 @@ namespace TravelEditor.Services
             if(_tripService.ValidateDates(trip.StartDate, trip.EndDate))
             {
                 trip.Travellers.Remove(selectedTraveller);
-                return _tripService.UpdateTrip(trip);
+                return _tripService.Update(trip);
             }
             else
             {
@@ -76,14 +76,14 @@ namespace TravelEditor.Services
             return false;
         }
         //delete a traveller
-        public bool DeleteTraveller(Traveller? selectedTraveller)
+        public bool Delete(Traveller? selectedTraveller)
         {
             //does he have any reviews left? if yes- cant delete
             //does he have any ongoing trips? if yes- cant delete
             if (!_reviewService.TravellerHasReviews(selectedTraveller) 
                 && !_tripService.TravellerHasTrips(selectedTraveller))
             {
-               return  _travellerRepository.DeleteTraveller(selectedTraveller);
+               return  _travellerRepository.Delete(selectedTraveller);
             }
             else
             {

@@ -10,9 +10,9 @@ namespace TravelEditor.Services.Interfaces
     public interface IDestinationService
     {
         List<Destination> LoadAll();
-        bool AddDestination(Destination destination);
-        bool UpdateDestination(Destination destination);
-        bool AddDestinationAttractions(Destination destination, Attraction attraction);
+        bool Add(Destination destination);
+        bool Update(Destination destination);
+        bool AddDestinationAttraction(Destination destination, Attraction attraction);
         bool Delete(Destination destination);
         Destination FindDestinationWithAttraction(Attraction attraction);
 

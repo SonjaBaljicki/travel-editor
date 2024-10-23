@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace TravelEditor.ViewModels
 {
     public class TravellersGridViewModel
     {
-        public List<Traveller> Travellers { get; set; }
+        public ObservableCollection<Traveller> Travellers { get; set; }
         public Trip Trip { get; set; }
         public ViewTravellersCommand ViewTravellersCommand { get;}
         public EditTravellerCommand EditTravellerCommand { get; }
@@ -41,8 +42,8 @@ namespace TravelEditor.ViewModels
 
         public TravellersGridViewModel(Trip trip, ITravellerService travellerService)
         {
+            Travellers = new ObservableCollection<Traveller>(trip.Travellers);
             Trip = trip;
-            Travellers = trip.Travellers;
             Messenger.DataChanged+= LoadData;
             _travellerService = travellerService;
             ViewTravellersCommand = new ViewTravellersCommand(this, _travellerService);
@@ -57,6 +58,10 @@ namespace TravelEditor.ViewModels
             {
                 Travellers.Add(traveller);
             }
+        }
+        ~TravellersGridViewModel()
+        {
+            Messenger.DataChanged -= LoadData;
         }
     }
 }

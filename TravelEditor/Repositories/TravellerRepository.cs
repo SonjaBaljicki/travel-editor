@@ -21,20 +21,20 @@ namespace TravelEditor.Repositories
         //loads all travellers
         public List<Traveller> LoadAll()
         {
-            return _context.travellers.ToList();
+            return _context.Travellers.ToList();
         }
         //adds a new traveller
-        public bool AddTraveller(Traveller traveller)
+        public bool Add(Traveller traveller)
         {
-            _context.travellers.Add(traveller);
+            _context.Travellers.Add(traveller);
             _context.SaveChanges();
             return true;
         }
-        public bool UpdateTraveller(Traveller traveller)
+        public bool Update(Traveller traveller)
         {
-            if (_context.travellers.Find(traveller.TravellerId) != null)
+            if (_context.Travellers.Find(traveller.TravellerId) != null)
             {
-                Traveller existingTraveller=_context.travellers.Find(traveller.TravellerId);
+                Traveller existingTraveller=_context.Travellers.Find(traveller.TravellerId);
                 existingTraveller.FirstName = traveller.FirstName;
                 existingTraveller.LastName = traveller.LastName;
                 existingTraveller.Email = traveller.Email;
@@ -47,12 +47,12 @@ namespace TravelEditor.Repositories
         }
         public Traveller FindTravellerByEmail(string email)
         {
-            return _context.travellers.FirstOrDefault(t => t.Email == email);
+            return _context.Travellers.FirstOrDefault(t => t.Email == email);
         }
 
-        public bool DeleteTraveller(Traveller? selectedTraveller)
+        public bool Delete(Traveller? selectedTraveller)
         {
-            _context.travellers.Remove(selectedTraveller);
+            _context.Travellers.Remove(selectedTraveller);
             _context.SaveChanges();
             return true;
         }

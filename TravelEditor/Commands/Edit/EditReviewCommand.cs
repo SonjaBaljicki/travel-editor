@@ -14,9 +14,8 @@ namespace TravelEditor.Commands.Edit
     public class EditReviewCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        public MainViewModel mainViewModel { get; }
-        public ReviewsGridViewModel reviewsViewModel { get; }
-
+        public MainViewModel mainViewModel;
+        public ReviewsGridViewModel reviewsViewModel;
         public IReviewService reviewService;
         public ITripService tripService;
         public ITravellerService travellerService;

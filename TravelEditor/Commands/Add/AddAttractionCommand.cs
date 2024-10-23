@@ -16,10 +16,9 @@ namespace TravelEditor.Commands.Add
     public class AddAttractionCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        public MainViewModel mainViewModel { get; }
-        public AttractionsGridViewModel attractionsGridViewModel { get; }
-        public DestinationViewModel destinationViewModel { get; }
-
+        public MainViewModel mainViewModel;
+        public AttractionsGridViewModel attractionsGridViewModel;
+        public DestinationViewModel destinationViewModel;
         public IDestinationService destinationService;
         public IAttractionService attractionService;
 

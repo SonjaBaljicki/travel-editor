@@ -51,7 +51,7 @@ namespace TravelEditor.Commands.Save
                 if (viewModel.SelectedTraveller != null && viewModel.SelectedTrip != null)
                 {
                     viewModel.Review.Traveller = viewModel.SelectedTraveller;
-                    bool success=reviewService.UpdateReview(viewModel.SelectedTrip, viewModel.Review);
+                    bool success=reviewService.Update(viewModel.SelectedTrip, viewModel.Review);
                     if (success)
                     {
                         Messenger.NotifyDataChanged();

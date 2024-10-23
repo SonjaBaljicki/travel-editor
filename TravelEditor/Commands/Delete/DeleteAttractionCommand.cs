@@ -65,19 +65,21 @@ namespace TravelEditor.Commands.Delete
             if (mainViewModel != null && mainViewModel.SelectedAttraction!=null)
             {
                 Attraction attraction = mainViewModel.SelectedAttraction;
-                bool success = attractionService.DeleteAttraction(attraction);
+                bool success = attractionService.Delete(attraction);
                 if (success)
                 {
-                    mainViewModel.Attractions.Remove(attraction);
+                    Messenger.NotifyDataChanged();
+                    //mainViewModel.Attractions.Remove(attraction);
                 }
             }
             else if (attractionsGridViewModel != null && attractionsGridViewModel.SelectedAttraction!=null)
             {
                 Attraction attraction = attractionsGridViewModel.SelectedAttraction;
-                bool success=attractionService.DeleteAttraction(attraction);
+                bool success=attractionService.Delete(attraction);
                 if (success)
                 {
-                    attractionsGridViewModel.Attractions.Remove(attraction);
+                    Messenger.NotifyDataChanged();
+                    //attractionsGridViewModel.Attractions.Remove(attraction);
                 }
             }
         }

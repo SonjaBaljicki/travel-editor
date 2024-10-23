@@ -20,14 +20,14 @@ namespace TravelEditor.Repositories
         }
         public List<Attraction> LoadAll()
         {
-            return _context.attractions.ToList();
+            return _context.Attractions.ToList();
         }
         //update an attraction
-        public bool UpdateAttraction(Attraction attraction)
+        public bool Update(Attraction attraction)
         {
-            if (_context.attractions.Find(attraction.AttractionId) != null)
+            if (_context.Attractions.Find(attraction.AttractionId) != null)
             {
-                Attraction existingAttraction = _context.attractions.Find(attraction.AttractionId);
+                Attraction existingAttraction = _context.Attractions.Find(attraction.AttractionId);
                 existingAttraction.Name = attraction.Name;
                 existingAttraction.Description = attraction.Description;
                 existingAttraction.Location = attraction.Location;
@@ -38,15 +38,15 @@ namespace TravelEditor.Repositories
             return false;
         }
         //deleting a existing attraction
-        public void DeleteAttraction(Attraction attraction)
+        public void Delete(Attraction attraction)
         {
-            Attraction attractionToDelete = _context.attractions.Find(attraction.AttractionId);
-            _context.attractions.Remove(attractionToDelete);
+            Attraction attractionToDelete = _context.Attractions.Find(attraction.AttractionId);
+            _context.Attractions.Remove(attractionToDelete);
             _context.SaveChanges();
         }
         public bool FindOne(Attraction attraction)
         {
-            return _context.attractions.Find(attraction.AttractionId) != null;
+            return _context.Attractions.Find(attraction.AttractionId) != null;
         }
     }
 }

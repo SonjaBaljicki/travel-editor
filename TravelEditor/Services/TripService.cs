@@ -24,12 +24,12 @@ namespace TravelEditor.Services
             return _tripRepository.LoadAll();
         }
         //adding a new trip
-        public bool AddTrip(Trip trip)
+        public bool Add(Trip trip)
         {
             bool validDates=ValidateDates(trip.StartDate, trip.EndDate);
             if (validDates)
             {
-                return _tripRepository.AddTrip(trip);
+                return _tripRepository.Add(trip);
             }
             else
             {
@@ -44,11 +44,11 @@ namespace TravelEditor.Services
             return startDate > now && endDate > now && startDate<endDate;
         }
         //update trip after checking dates
-        public bool UpdateTrip(Trip trip)
+        public bool Update(Trip trip)
         {
             if(ValidateDates(trip.StartDate, trip.EndDate))
             {
-                return _tripRepository.UpdateTrip(trip);
+                return _tripRepository.Update(trip);
             }
             else
             {
@@ -57,11 +57,11 @@ namespace TravelEditor.Services
             return false;
         }
         //delete a trip
-        public bool DeleteTrip(Trip trip)
+        public bool Delete(Trip trip)
         {
             if(!IsTripNow(trip.StartDate, trip.EndDate))
             {
-                return _tripRepository.DeleteTrip(trip);
+                return _tripRepository.Delete(trip);
             }
             else
             {
@@ -103,7 +103,7 @@ namespace TravelEditor.Services
                 if(trip.Travellers.Any(t=> t.TravellerId == review.Traveller.TravellerId))
                 {
                     trip.Reviews.Add(review);
-                    return _tripRepository.UpdateTrip(trip);
+                    return _tripRepository.Update(trip);
                 }
                 else
                 {

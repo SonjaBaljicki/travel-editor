@@ -54,7 +54,7 @@ namespace TravelEditor.Commands.Delete
         {
             if (mainViewModel != null && mainViewModel.SelectedTraveller != null)
             {
-                bool success = travellerService.DeleteTraveller(mainViewModel.SelectedTraveller);
+                bool success = travellerService.Delete(mainViewModel.SelectedTraveller);
                 if (success)
                 {
                     mainViewModel.Travellers.Remove(mainViewModel.SelectedTraveller);

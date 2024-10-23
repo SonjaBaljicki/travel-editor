@@ -42,7 +42,7 @@ namespace TravelEditor.Commands.Save
               
                 if (viewModel.SelectedDestination != null)
                 {
-                    bool success=destinationService.AddDestinationAttractions(viewModel.SelectedDestination, attraction);
+                    bool success=destinationService.AddDestinationAttraction(viewModel.SelectedDestination, attraction);
                     if (success)
                     {
                         Messenger.NotifyDataChanged();
@@ -59,7 +59,7 @@ namespace TravelEditor.Commands.Save
             {
                 if (viewModel.SelectedDestination != null)
                 {
-                    bool success=attractionService.UpdateAttraction(viewModel.Attraction, viewModel.SelectedDestination);
+                    bool success=attractionService.Update(viewModel.Attraction, viewModel.SelectedDestination);
                     if (success)
                     {
                         Messenger.NotifyDataChanged();
