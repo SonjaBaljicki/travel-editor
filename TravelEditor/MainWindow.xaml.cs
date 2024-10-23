@@ -32,13 +32,14 @@ namespace TravelEditor
         private IAttractionService attractionService;
         private IReviewService reviewService;
         private ITravellerService travellerService;
+        private IDataTableService dataTableService;
 
         public MainWindow()
         {
         }
 
         public MainWindow(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService,
-            IReviewService reviewService, ITravellerService travellerService)
+            IReviewService reviewService, ITravellerService travellerService, IDataTableService dataTableService)
         {
             InitializeComponent();
 
@@ -47,10 +48,11 @@ namespace TravelEditor
             this.attractionService = attractionService;
             this.reviewService = reviewService;
             this.travellerService = travellerService;
+            this.dataTableService = dataTableService;
 
-            MainViewModel mainViewModel = new MainViewModel(tripService, destinationService, attractionService, reviewService, travellerService);
+            MainViewModel mainViewModel = new MainViewModel(tripService, destinationService, attractionService, reviewService, travellerService, dataTableService);
             this.DataContext = mainViewModel;
-
+            this.dataTableService = dataTableService;
         }
     }
 }

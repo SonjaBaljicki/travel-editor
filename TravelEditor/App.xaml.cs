@@ -25,6 +25,7 @@ namespace TravelEditor
         public IAttractionService AttractionService { get; set; }
         public IReviewService ReviewService { get; set; }
         public ITravellerService TravellerService { get; set; }
+        public IDataTableService DataTableService { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -36,8 +37,9 @@ namespace TravelEditor
             AttractionService = new AttractionService(new AttractionRepository(dbContext),DestinationService);
             ReviewService = new ReviewService(new ReviewRepository(dbContext),TripService);
             TravellerService = new TravellerService(new TravellerRepository(dbContext),TripService, ReviewService);
+            DataTableService = new DataTableService(dbContext);
 
-            MainWindow mainWindow = new MainWindow(TripService, DestinationService, AttractionService, ReviewService, TravellerService);
+            MainWindow mainWindow = new MainWindow(TripService, DestinationService, AttractionService, ReviewService, TravellerService, DataTableService);
             mainWindow.Show();
         }
     }
