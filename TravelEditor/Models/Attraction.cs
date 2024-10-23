@@ -25,5 +25,13 @@ namespace TravelEditor.Models
             Price = price;
             Location = location;
         }
+        public Attraction(Attraction attraction)
+        {
+            AttractionId = attraction.AttractionId;
+            Name = attraction.Name;
+            Description = attraction.Description;
+            Price = attraction.Price;
+            Location = attraction.Location;
+        }
     }
 }

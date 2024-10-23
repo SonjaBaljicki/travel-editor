@@ -43,11 +43,20 @@ namespace TravelEditor.ViewModels
         {
             Trip = trip;
             Travellers = trip.Travellers;
+            Messenger.DataChanged+= LoadData;
             _travellerService = travellerService;
             ViewTravellersCommand = new ViewTravellersCommand(this, _travellerService);
             EditTravellerCommand = new EditTravellerCommand(this, _travellerService);
             DeleteTravellerCommand = new DeleteTravellerCommand(this, _travellerService);
         }
 
+        private void LoadData()
+        {
+            Travellers.Clear();
+            foreach (Traveller traveller in Trip.Travellers)
+            {
+                Travellers.Add(traveller);
+            }
+        }
     }
 }

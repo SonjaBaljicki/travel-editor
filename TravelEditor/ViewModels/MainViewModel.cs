@@ -84,11 +84,11 @@ namespace TravelEditor.ViewModels
         }
 
         //grid views lists
-        public ObservableCollection<Trip> Trips { get; set; }
-        public ObservableCollection<Destination> Destinations { get; set; }
-        public ObservableCollection<Attraction> Attractions { get; set; }
-        public ObservableCollection<Review> Reviews { get; set; }
-        public ObservableCollection<Traveller> Travellers { get; set; }
+        public ObservableCollection<Trip> Trips { get; set; }=new ObservableCollection<Trip>();
+        public ObservableCollection<Destination> Destinations { get; set; }= new ObservableCollection<Destination>();
+        public ObservableCollection<Attraction> Attractions { get; set; } = new ObservableCollection<Attraction>();
+        public ObservableCollection<Review> Reviews { get; set; } = new ObservableCollection<Review>();
+        public ObservableCollection<Traveller> Travellers { get; set; } = new ObservableCollection<Traveller>();
 
 
         //trips commands
@@ -131,7 +131,8 @@ namespace TravelEditor.ViewModels
             _travellerService = travellerService;
 
             LoadData();
-           
+            Messenger.DataChanged += LoadData;
+
             AddTripCommand = new AddTripCommand(this, _tripService, _destinationService);
             EditTripCommand = new EditTripCommand(this, _tripService, _destinationService);
             DeleteTripCommand = new DeleteTripCommand(this, _tripService);
@@ -158,14 +159,48 @@ namespace TravelEditor.ViewModels
             ViewTravellerCommand = new ViewTravellerCommand(this, _travellerService);
 
         }
-
-        private void LoadData()
+        ~MainViewModel()
         {
-            Trips = new ObservableCollection<Trip>(_tripService.LoadAll());
-            Destinations =new ObservableCollection<Destination>(_destinationService.LoadAll());
-            Attractions = new ObservableCollection<Attraction>(_attractionService.LoadAll());
-            Reviews = new ObservableCollection<Review>(_reviewService.LoadAll());
-            Travellers = new ObservableCollection<Traveller>(_travellerService.LoadAll());
+            Messenger.DataChanged -= LoadData;
+        }
+
+        public void LoadData()
+        {
+            //Trips = new ObservableCollection<Trip>(_tripService.LoadAll());
+            //Destinations =new ObservableCollection<Destination>(_destinationService.LoadAll());
+            //Attractions = new ObservableCollection<Attraction>(_attractionService.LoadAll());
+            //Reviews = new ObservableCollection<Review>(_reviewService.LoadAll());
+            //Travellers = new ObservableCollection<Traveller>(_travellerService.LoadAll());
+            Trips.Clear();
+            Destinations.Clear();
+            Attractions.Clear();
+            Reviews.Clear();
+            Travellers.Clear();
+
+            foreach (var trip in _tripService.LoadAll())
+            {
+                Trips.Add(trip);
+            }
+
+            foreach (var destination in _destinationService.LoadAll())
+            {
+                Destinations.Add(destination);
+            }
+
+            foreach (var attraction in _attractionService.LoadAll())
+            {
+                Attractions.Add(attraction);
+            }
+
+            foreach (var review in _reviewService.LoadAll())
+            {
+                Reviews.Add(review);
+            }
+
+            foreach (var traveller in _travellerService.LoadAll())
+            {
+                Travellers.Add(traveller);
+            }
         }
     }
 }

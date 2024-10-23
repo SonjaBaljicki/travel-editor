@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TravelEditor.Models;
 using TravelEditor.Services.Interfaces;
@@ -29,18 +30,18 @@ namespace TravelEditor.Commands.Edit
                     CanExecuteChanged?.Invoke(this, EventArgs.Empty);
                 }
             };
-        }   
+        }
 
         public bool CanExecute(object? parameter)
         {
-            return viewModel.SelectedTrip!=null;
+            return viewModel.SelectedTrip != null;
         }
 
         public void Execute(object? parameter)
         {
-            if (viewModel.SelectedTrip != null) 
+            if (viewModel.SelectedTrip != null)
             {
-                TripView tripView = new TripView(new Trip(viewModel.SelectedTrip), viewModel, tripService, destinationService);
+                TripView tripView = new TripView(new Trip(viewModel.SelectedTrip), tripService, destinationService);
                 tripView.Show();
             }
            

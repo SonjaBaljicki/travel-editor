@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using TravelEditor.Models;
 using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
@@ -31,13 +32,21 @@ namespace TravelEditor.Commands.Save
         {
             if (viewModel.Traveller.TravellerId == 0)
             {
-                travellerService.AddTraveller(viewModel.Traveller);
-                MessageBox.Show("Saving add");
+                bool success=travellerService.AddTraveller(viewModel.Traveller);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    MessageBox.Show("Saving add");
+                }
             }
             else
             {
-                travellerService.UpdateTraveller(viewModel.Traveller);
-                MessageBox.Show("Saving edit");
+                bool success=travellerService.UpdateTraveller(viewModel.Traveller);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    MessageBox.Show("Saving edit");
+                }
             }
         }
         protected void OnCanExecutedChanged()

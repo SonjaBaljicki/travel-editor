@@ -15,7 +15,6 @@ namespace TravelEditor.ViewModels
     public class TripViewModel
     {
         public Trip Trip { get; set; }
-        public MainViewModel MainViewModel { get; set; }
         public ObservableCollection<Destination> Destinations { get; set; }
         public SaveTripCommand SaveTripCommand { get; }
 
@@ -38,10 +37,10 @@ namespace TravelEditor.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public TripViewModel(Trip trip, MainViewModel mainViewModel, ITripService tripService, IDestinationService destinationService)
+
+        public TripViewModel(Trip trip, ITripService tripService, IDestinationService destinationService)
         {
             Trip = trip;
-            MainViewModel = mainViewModel;
             _tripService = tripService;
             _destinationService = destinationService;
             Destinations = new ObservableCollection<Destination>(_destinationService.LoadAll());           
@@ -50,7 +49,7 @@ namespace TravelEditor.ViewModels
             {
                 SelectedDestination = Trip.Destination;
             }
-            SaveTripCommand = new SaveTripCommand(this,MainViewModel,_tripService);
+            SaveTripCommand = new SaveTripCommand(this,_tripService);
         }
     }
 }

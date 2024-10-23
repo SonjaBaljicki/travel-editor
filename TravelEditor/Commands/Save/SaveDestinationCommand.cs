@@ -43,14 +43,22 @@ namespace TravelEditor.Commands.Save
                 string climate = viewModel.Destination.Climate;
 
                 Destination destination = new Destination(city, country, description, climate, viewModel.Destination.Attractions);
-                destinationService.AddDestination(destination);
-                MessageBox.Show("Saving add");
+                bool success=destinationService.AddDestination(destination);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    MessageBox.Show("Saving add");
+                }
 
             }
             else
             {
-                destinationService.UpdateDestination(viewModel.Destination);
-                MessageBox.Show("Saving update");
+                bool success=destinationService.UpdateDestination(viewModel.Destination);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    MessageBox.Show("Saving edit");
+                }
             }
         }
         protected void OnCanExecutedChanged()

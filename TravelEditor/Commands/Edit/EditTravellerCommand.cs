@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TravelEditor.Models;
 using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 using TravelEditor.Views;
@@ -52,12 +53,12 @@ namespace TravelEditor.Commands.Edit
         {
             if (mainViewModel != null && mainViewModel.SelectedTraveller != null)
             {
-                TravellerView travellerView = new TravellerView(mainViewModel.SelectedTraveller, travellerService);
+                TravellerView travellerView = new TravellerView(new Traveller(mainViewModel.SelectedTraveller), travellerService);
                 travellerView.Show();
             }
             else if (travellersViewModel != null && travellersViewModel.SelectedTraveller != null)
             {
-                TravellerView travellerView = new TravellerView(travellersViewModel.SelectedTraveller, travellerService);
+                TravellerView travellerView = new TravellerView(new Traveller(travellersViewModel.SelectedTraveller), travellerService);
                 travellerView.Show();
             }
         }

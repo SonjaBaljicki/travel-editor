@@ -34,9 +34,8 @@ namespace TravelEditor.Services
             {
                 _attractionRepository.DeleteAttraction(attraction);
                 _destinationService.AddDestinationAttractions(destination, attraction);
-                return true;
             }
-            return false;
+            return true;
         }
         public bool DeleteAttraction(Attraction attraction)
         {
