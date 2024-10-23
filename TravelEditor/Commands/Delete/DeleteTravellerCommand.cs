@@ -54,13 +54,21 @@ namespace TravelEditor.Commands.Delete
         {
             if (mainViewModel != null && mainViewModel.SelectedTraveller != null)
             {
-                travellerService.DeleteTraveller(mainViewModel.SelectedTraveller);
+                bool success = travellerService.Delete(mainViewModel.SelectedTraveller);
+                if (success)
+                {
+                    mainViewModel.Travellers.Remove(mainViewModel.SelectedTraveller);
+                }
                 MessageBox.Show("Deleted traveller");
 
             }
             else if (travellersViewModel != null && travellersViewModel.SelectedTraveller != null)
             {
-                travellerService.DeleteTravellerFromTrip(travellersViewModel.Trip, travellersViewModel.SelectedTraveller);
+                bool success = travellerService.DeleteTravellerFromTrip(travellersViewModel.Trip, travellersViewModel.SelectedTraveller);
+                if (success)
+                {
+                    travellersViewModel.Travellers.Remove(travellersViewModel.SelectedTraveller);
+                }
                 MessageBox.Show("Removed traveller from selected trip");
             }
         }

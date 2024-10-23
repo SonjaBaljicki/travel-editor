@@ -16,6 +16,7 @@ namespace TravelEditor.Commands.Save
         public event EventHandler? CanExecuteChanged;
         public TripViewModel viewModel;
         public ITripService tripService;
+        public List<Trip> Trips;
 
         public SaveTripCommand(TripViewModel viewModel, ITripService tripService)
         {
@@ -39,17 +40,25 @@ namespace TravelEditor.Commands.Save
                 Destination destination = viewModel.SelectedDestination;
                 Trip trip = new Trip(name, startDate, endDate, description, destination.DestinationId, destination,
                     new List<Traveller>(), new List<Review>());
-                tripService.AddTrip(trip);
-                MessageBox.Show("Saving add");
+                bool success = tripService.Add(trip);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    MessageBox.Show("Saving add");
+                }
             }
             else
             {
                 Destination destination = viewModel.SelectedDestination;
                 viewModel.Trip.DestinationId = destination.DestinationId;
                 viewModel.Trip.Destination = destination;
-                
-                tripService.UpdateTrip(viewModel.Trip);
-                MessageBox.Show("Saving edit");
+                bool success = tripService.Update(viewModel.Trip);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    MessageBox.Show("Saving edit");
+                }
+
             }
         }
         protected void OnCanExecutedChanged()

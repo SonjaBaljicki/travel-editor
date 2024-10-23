@@ -37,6 +37,7 @@ namespace TravelEditor.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         public TripViewModel(Trip trip, ITripService tripService, IDestinationService destinationService)
         {
             Trip = trip;
@@ -48,7 +49,7 @@ namespace TravelEditor.ViewModels
             {
                 SelectedDestination = Trip.Destination;
             }
-            SaveTripCommand = new SaveTripCommand(this, _tripService);
+            SaveTripCommand = new SaveTripCommand(this,_tripService);
         }
     }
 }

@@ -19,11 +19,11 @@ namespace TravelEditor.Repositories
         }
         public List<Review> LoadAll()
         {
-            return _context.reviews.ToList();
+            return _context.Reviews.ToList();
         }
         public bool TravellerHasReviews(Traveller? selectedTraveller)
         {
-            foreach (Review review in _context.reviews)
+            foreach (Review review in _context.Reviews)
             {
                 if (review.TravellerId == selectedTraveller.TravellerId)
                 {
@@ -33,25 +33,28 @@ namespace TravelEditor.Repositories
             return false;
         }
         //u[dating basic review info
-        public void UpdateReview(Review review)
+        public bool Update(Review review)
         {
-            if (_context.reviews.Find(review.ReviewId) != null)
+            if (_context.Reviews.Find(review.ReviewId) != null)
             {
-                Review existingReview = _context.reviews.Find(review.ReviewId);
+                Review existingReview = _context.Reviews.Find(review.ReviewId);
                 existingReview.Comment = review.Comment;
                 existingReview.Date = review.Date;
                 existingReview.Rating = review.Rating;
                 existingReview.Traveller = review.Traveller;
                 existingReview.TravellerId = review.TravellerId;
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         //deleting a review
-        public void DeleteReview(Review review)
+        public bool Delete(Review review)
         {
-            Review reviewToDelete = _context.reviews.Find(review.ReviewId);
-            _context.reviews.Remove(reviewToDelete);
+            Review reviewToDelete = _context.Reviews.Find(review.ReviewId);
+            _context.Reviews.Remove(reviewToDelete);
             _context.SaveChanges();
+            return true;
         }
     }
 }

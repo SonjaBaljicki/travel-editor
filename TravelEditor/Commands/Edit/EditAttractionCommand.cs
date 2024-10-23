@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TravelEditor.Models;
 using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 using TravelEditor.Views;
@@ -62,11 +63,11 @@ namespace TravelEditor.Commands.Edit
         {
             if (mainViewModel!=null && mainViewModel.SelectedAttraction != null)
             {
-                AttractionView attractionView = new AttractionView(mainViewModel.SelectedAttraction,destinationService,attractionService);
+                AttractionView attractionView = new AttractionView(new Attraction(mainViewModel.SelectedAttraction),destinationService,attractionService);
                 attractionView.Show();
             }else if(attractionsGridViewModel!=null && attractionsGridViewModel.SelectedAttraction != null)
             {
-                AttractionView attractionView = new AttractionView(attractionsGridViewModel.SelectedAttraction,attractionsGridViewModel.Destination, destinationService, attractionService);
+                AttractionView attractionView = new AttractionView(new Attraction(attractionsGridViewModel.SelectedAttraction),attractionsGridViewModel.Destination, destinationService, attractionService);
                 attractionView.Show();
             }
         }

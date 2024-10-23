@@ -28,5 +28,10 @@ namespace TravelEditor.Views
             TripViewModel tripViewModel = new TripViewModel(trip, tripService, destinationService);
             this.DataContext = tripViewModel;
         }
+        public TripView(TripViewModel tripViewModel)
+        {
+            InitializeComponent();
+            this.DataContext = tripViewModel;
+        }
     }
 }

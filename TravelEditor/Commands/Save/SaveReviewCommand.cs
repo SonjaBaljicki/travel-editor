@@ -38,7 +38,11 @@ namespace TravelEditor.Commands.Save
                 {
                     viewModel.Review.Traveller = viewModel.SelectedTraveller;
                     viewModel.Review.TravellerId = viewModel.SelectedTraveller.TravellerId;
-                    tripService.AddTripReview(viewModel.SelectedTrip, viewModel.Review);
+                    bool success=tripService.AddTripReview(viewModel.SelectedTrip, viewModel.Review);
+                    if (success)
+                    {
+                        Messenger.NotifyDataChanged();
+                    }
                     MessageBox.Show("Saving add");
                 }
             }
@@ -46,16 +50,11 @@ namespace TravelEditor.Commands.Save
             {
                 if (viewModel.SelectedTraveller != null && viewModel.SelectedTrip != null)
                 {
-                    Traveller originalTraveller = viewModel.Review.Traveller;
-
                     viewModel.Review.Traveller = viewModel.SelectedTraveller;
-                    bool success=reviewService.UpdateReview(viewModel.SelectedTrip, viewModel.Review);
-                    if (!success)
+                    bool success=reviewService.Update(viewModel.SelectedTrip, viewModel.Review);
+                    if (success)
                     {
-                        viewModel.Review.Traveller = originalTraveller;
-                    }
-                    else
-                    {
+                        Messenger.NotifyDataChanged();
                         MessageBox.Show("Saving edit");
                     }
                 }

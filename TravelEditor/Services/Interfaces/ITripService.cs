@@ -9,12 +9,12 @@ namespace TravelEditor.Services.Interfaces
 {
     public interface ITripService
     {
-        void AddTrip(Trip trip);
-        void AddTripReview(Trip selectedTrip, Review review);
-        void DeleteTrip(Trip trip);
+        bool Add(Trip trip);
+        bool AddTripReview(Trip selectedTrip, Review review);
+        bool Delete(Trip trip);
         List<Trip> LoadAll();
         bool TravellerHasTrips(Traveller? selectedTraveller);
-        void UpdateTrip(Trip trip);
+        bool Update(Trip trip);
         bool ValidateDates(DateTime startDate, DateTime endDate);
         Trip FindTripWithReview(Review review);
         bool HasTripHappened(DateTime startDate, DateTime endDate);

@@ -28,5 +28,14 @@ namespace TravelEditor.Models
             TravellerId = travellerId;
             Traveller = traveller;
         }
+        public Review(Review review)
+        {
+            ReviewId = review.ReviewId;
+            Comment = review.Comment;
+            Rating = review.Rating;
+            Date = review.Date;
+            TravellerId = review.TravellerId;
+            Traveller = review.Traveller;
+        }
     }
 }

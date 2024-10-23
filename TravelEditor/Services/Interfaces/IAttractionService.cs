@@ -10,8 +10,8 @@ namespace TravelEditor.Services.Interfaces
     public interface IAttractionService
     {
         List<Attraction> LoadAll();
-        void UpdateAttraction(Attraction attraction, Destination destination);
-        void DeleteAttraction(Attraction attraction);
+        bool Update(Attraction attraction, Destination destination);
+        bool Delete(Attraction attraction);
 
 
     }

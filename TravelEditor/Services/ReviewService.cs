@@ -32,7 +32,7 @@ namespace TravelEditor.Services
             return _reviewRepository.TravellerHasReviews(selectedTraveller);
         }
 
-        public bool UpdateReview(Trip trip, Review review)
+        public bool Update(Trip trip, Review review)
         {
             //trip stayed the same
             if (trip.Reviews.Any(r => r.ReviewId == review.ReviewId))
@@ -40,7 +40,7 @@ namespace TravelEditor.Services
                 //update basic info for the review if traveller was on that trip
                 if (trip.Travellers.Any(t => t.TravellerId == review.Traveller.TravellerId))
                 {
-                    _reviewRepository.UpdateReview(review);
+                    _reviewRepository.Update(review);
                     return true;
                 }
                 else
@@ -55,7 +55,7 @@ namespace TravelEditor.Services
                 {
                     if (trip.Travellers.Any(t => t.TravellerId == review.Traveller.TravellerId))
                     {
-                        _reviewRepository.DeleteReview(review);
+                        _reviewRepository.Delete(review);
                         _tripService.AddTripReview(trip, review);
                         return true;
                     }
@@ -63,9 +63,9 @@ namespace TravelEditor.Services
             }
             return false;
         }
-        public void DeleteReview(Review review)
+        public bool Delete(Review review)
         {
-            _reviewRepository.DeleteReview(review);
+            return _reviewRepository.Delete(review);
         }
     }
 }

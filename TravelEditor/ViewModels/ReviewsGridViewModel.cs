@@ -46,12 +46,25 @@ namespace TravelEditor.ViewModels
         {
             Trip = trip;
             Reviews = new ObservableCollection<Review>(trip.Reviews);
+            Messenger.DataChanged += LoadData;
             _reviewService = reviewService;
             _travellerService = travellerService;
             _tripService = tripService;
             AddReviewCommand = new AddReviewCommand(this, _reviewService, _travellerService, _tripService);
             EditReviewCommand = new EditReviewCommand(this, _reviewService, _travellerService, _tripService);
             DeleteReviewCommand = new DeleteReviewCommand(this, _reviewService);
+        }
+        private void LoadData()
+        {
+            Reviews.Clear();
+            foreach (Review review in Trip.Reviews)
+            {
+                Reviews.Add(review);
+            }
+        }
+        ~ReviewsGridViewModel()
+        {
+            Messenger.DataChanged -= LoadData;
         }
     }
 }

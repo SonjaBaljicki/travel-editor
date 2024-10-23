@@ -42,9 +42,22 @@ namespace TravelEditor.ViewModels
         {
             Attractions = new ObservableCollection<Attraction>(destination.Attractions);
             Destination= destination;
+            Messenger.DataChanged += LoadData;
             EditAttractionCommand = new EditAttractionCommand(this, destinationService, attractionService);
             DeleteAttractionCommand = new DeleteAttractionCommand(this, attractionService);
             AddAttractionCommand = new AddAttractionCommand(this, destinationService, attractionService);
+        }
+        private void LoadData()
+        {
+            Attractions.Clear();
+            foreach(Attraction attraction in Destination.Attractions)
+            {
+                Attractions.Add(attraction);
+            }
+        }
+        ~AttractionsGridViewModel()
+        {
+            Messenger.DataChanged -= LoadData;
         }
     }
 }

@@ -24,24 +24,27 @@ namespace TravelEditor.Services
         {
             return _attractionRepository.LoadAll();
         }
-        public void UpdateAttraction(Attraction attraction, Destination destination)
+        public bool Update(Attraction attraction, Destination destination)
         {
             //update basic info for the attraction
-            _attractionRepository.UpdateAttraction(attraction);
+            _attractionRepository.Update(attraction);
 
             //destination has changed, this destination doesnt have this attraction
             if (!destination.Attractions.Any(a => a.AttractionId == attraction.AttractionId))
             {
-                _attractionRepository.DeleteAttraction(attraction);
-                _destinationService.AddDestinationAttractions(destination, attraction);
+                _attractionRepository.Delete(attraction);
+                _destinationService.AddDestinationAttraction(destination, attraction);
             }
+            return true;
         }
-        public void DeleteAttraction(Attraction attraction)
+        public bool Delete(Attraction attraction)
         {
             if (_attractionRepository.FindOne(attraction))
             {
-                _attractionRepository.DeleteAttraction(attraction);
+                _attractionRepository.Delete(attraction);
+                return true;
             }
+            return false;
         }
 
     }

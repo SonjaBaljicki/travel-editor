@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,25 +61,26 @@ namespace TravelEditor.Commands.Delete
 
         public void Execute(object? parameter)
         {
-            Attraction attraction=null;
 
-            if (mainViewModel != null)
+            if (mainViewModel != null && mainViewModel.SelectedAttraction!=null)
             {
-                attraction = mainViewModel.SelectedAttraction;
+                Attraction attraction = mainViewModel.SelectedAttraction;
+                bool success = attractionService.Delete(attraction);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    //mainViewModel.Attractions.Remove(attraction);
+                }
             }
-            else if (attractionsGridViewModel != null)
+            else if (attractionsGridViewModel != null && attractionsGridViewModel.SelectedAttraction!=null)
             {
-                attraction = attractionsGridViewModel.SelectedAttraction;
-            }
-
-            if (attraction != null)
-            {
-                attractionService.DeleteAttraction(attraction);
-                MessageBox.Show("Deleted attraction");
-            }
-            else
-            {
-                MessageBox.Show("Please select the attraction");
+                Attraction attraction = attractionsGridViewModel.SelectedAttraction;
+                bool success=attractionService.Delete(attraction);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    //attractionsGridViewModel.Attractions.Remove(attraction);
+                }
             }
         }
     }

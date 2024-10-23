@@ -15,7 +15,6 @@ namespace TravelEditor.Commands.Delete
     public class DeleteDestinationCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-
         public MainViewModel viewModel;
         public IDestinationService destinationService;
 
@@ -43,7 +42,11 @@ namespace TravelEditor.Commands.Delete
             if (destination != null)
             {
                 MessageBox.Show("Deleting destination");
-                destinationService.Delete(destination);
+                bool success=destinationService.Delete(destination);
+                if (success)
+                {
+                    viewModel.Destinations.Remove(destination);
+                }
             }
             else
             {

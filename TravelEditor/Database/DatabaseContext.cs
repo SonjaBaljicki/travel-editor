@@ -6,11 +6,11 @@ namespace TravelEditor.Database
 {
     public class DatabaseContext: DbContext
     {
-        public DbSet<Trip> trips { get; set; }
-        public DbSet<Destination> destinations { get; set; }
-        public DbSet<Review> reviews { get; set; }
-        public DbSet<Traveller> travellers { get; set; }
-        public DbSet<Attraction> attractions { get; set; }
+        public DbSet<Trip> Trips { get; set; }
+        public DbSet<Destination> Destinations { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Traveller> Travellers { get; set; }
+        public DbSet<Attraction> Attractions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

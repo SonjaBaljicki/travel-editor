@@ -9,11 +9,11 @@ namespace TravelEditor.Services.Interfaces
 {
     public interface ITravellerService
     {
-        void AddTraveller(Traveller traveller);
-        void AddTravellerToTrip(Traveller selectedTraveller, Trip trip);
-        void DeleteTraveller(Traveller? selectedTraveller);
-        void DeleteTravellerFromTrip(Trip trip, Traveller selectedTraveller);
+        bool Add(Traveller traveller);
+        bool AddTravellerToTrip(Traveller selectedTraveller, Trip trip);
+        bool Delete(Traveller? selectedTraveller);
+        bool DeleteTravellerFromTrip(Trip trip, Traveller selectedTraveller);
         List<Traveller> LoadAll();
-        void UpdateTraveller(Traveller traveller);
+        bool Update(Traveller traveller);
     }
 }

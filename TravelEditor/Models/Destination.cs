@@ -27,5 +27,14 @@ namespace TravelEditor.Models
             Climate = climate;
             Attractions = attractions;
         }
+        public Destination(Destination destination)
+        {
+            DestinationId = destination.DestinationId;
+            City = destination.City;
+            Country = destination.Country;
+            Description = destination.Description;
+            Climate = destination.Climate;
+            Attractions = destination.Attractions;
+        }
     }
 }

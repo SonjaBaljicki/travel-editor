@@ -9,9 +9,9 @@ namespace TravelEditor.Repositories.Interfaces
 {
     public interface IReviewRepository
     {
-        void DeleteReview(Review review);
+        bool Delete(Review review);
         List<Review> LoadAll();
         bool TravellerHasReviews(Traveller? selectedTraveller);
-        void UpdateReview(Review review);
+        bool Update(Review review);
     }
 }

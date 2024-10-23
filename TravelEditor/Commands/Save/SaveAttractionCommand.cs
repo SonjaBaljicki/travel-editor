@@ -42,8 +42,12 @@ namespace TravelEditor.Commands.Save
               
                 if (viewModel.SelectedDestination != null)
                 {
-                    destinationService.AddDestinationAttractions(viewModel.SelectedDestination, attraction);
-                    MessageBox.Show("Saving add");
+                    bool success=destinationService.AddDestinationAttraction(viewModel.SelectedDestination, attraction);
+                    if (success)
+                    {
+                        Messenger.NotifyDataChanged();
+                        MessageBox.Show("Saving add");
+                    }
                 }
                 else
                 {
@@ -55,10 +59,14 @@ namespace TravelEditor.Commands.Save
             {
                 if (viewModel.SelectedDestination != null)
                 {
-                    attractionService.UpdateAttraction(viewModel.Attraction, viewModel.SelectedDestination);
-                    MessageBox.Show("Saving edit");
+                    bool success=attractionService.Update(viewModel.Attraction, viewModel.SelectedDestination);
+                    if (success)
+                    {
+                        Messenger.NotifyDataChanged();
+                        MessageBox.Show("Saving edit");
+                    }
                 }
-          
+
             }
         }
         protected void OnCanExecutedChanged()

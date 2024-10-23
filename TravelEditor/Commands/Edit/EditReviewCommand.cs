@@ -14,9 +14,8 @@ namespace TravelEditor.Commands.Edit
     public class EditReviewCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        public MainViewModel mainViewModel { get; }
-        public ReviewsGridViewModel reviewsViewModel { get; }
-
+        public MainViewModel mainViewModel;
+        public ReviewsGridViewModel reviewsViewModel;
         public IReviewService reviewService;
         public ITripService tripService;
         public ITravellerService travellerService;
@@ -60,12 +59,12 @@ namespace TravelEditor.Commands.Edit
             if (mainViewModel != null && mainViewModel.SelectedReview != null)
             {
 
-                ReviewView reviewView = new ReviewView(mainViewModel.SelectedReview, reviewService, travellerService, tripService);
+                ReviewView reviewView = new ReviewView(new Review(mainViewModel.SelectedReview), reviewService, travellerService, tripService);
                 reviewView.Show();
             }
             else if (reviewsViewModel != null && reviewsViewModel.SelectedReview != null)
             {
-                ReviewView reviewView = new ReviewView(reviewsViewModel.SelectedReview, reviewsViewModel.Trip, reviewService, travellerService, tripService);
+                ReviewView reviewView = new ReviewView(new Review(reviewsViewModel.SelectedReview), reviewsViewModel.Trip, reviewService, travellerService, tripService);
                 reviewView.Show();
             }
         }

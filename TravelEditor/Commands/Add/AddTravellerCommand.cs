@@ -14,8 +14,8 @@ namespace TravelEditor.Commands.Add
     public class AddTravellerCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        public MainViewModel viewModel { get; }
-        public ITravellerService travellerService { get; }
+        public MainViewModel viewModel;
+        public ITravellerService travellerService;
 
         public AddTravellerCommand(MainViewModel viewModel, ITravellerService travellerService)
         {

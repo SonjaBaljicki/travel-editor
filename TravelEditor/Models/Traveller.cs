@@ -27,5 +27,14 @@ namespace TravelEditor.Models
             PhoneNumber = phoneNumber;
             Age = age;
         }
+        public Traveller(Traveller traveller)
+        {
+            TravellerId = traveller.TravellerId;
+            FirstName = traveller.FirstName;
+            LastName = traveller.LastName;
+            Email = traveller.Email;
+            PhoneNumber=traveller.PhoneNumber;
+            Age = traveller.Age;
+        }
     }
 }

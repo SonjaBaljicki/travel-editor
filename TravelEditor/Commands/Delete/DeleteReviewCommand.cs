@@ -16,9 +16,8 @@ namespace TravelEditor.Commands.Delete
     public class DeleteReviewCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
-        public MainViewModel mainViewModel { get; }
-        public ReviewsGridViewModel reviewsViewModel { get; }
-
+        public MainViewModel mainViewModel;
+        public ReviewsGridViewModel reviewsViewModel;
         public IReviewService reviewService;
 
         public DeleteReviewCommand(MainViewModel viewModel, IReviewService reviewService)
@@ -55,11 +54,21 @@ namespace TravelEditor.Commands.Delete
         {
             if (mainViewModel != null && mainViewModel.SelectedReview != null)
             {
-                reviewService.DeleteReview(mainViewModel.SelectedReview);
+               bool success = reviewService.Delete(mainViewModel.SelectedReview);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    //mainViewModel.Reviews.Remove(mainViewModel.SelectedReview);
+                }
             }
             else if (reviewsViewModel != null && reviewsViewModel.SelectedReview != null)
             {
-                reviewService.DeleteReview(reviewsViewModel.SelectedReview);
+                bool success = reviewService.Delete(reviewsViewModel.SelectedReview);
+                if (success)
+                {
+                    Messenger.NotifyDataChanged();
+                    //reviewsViewModel.Reviews.Remove(reviewsViewModel.SelectedReview);
+                }
             }
         }
     }

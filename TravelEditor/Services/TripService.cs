@@ -24,17 +24,18 @@ namespace TravelEditor.Services
             return _tripRepository.LoadAll();
         }
         //adding a new trip
-        public void AddTrip(Trip trip)
+        public bool Add(Trip trip)
         {
             bool validDates=ValidateDates(trip.StartDate, trip.EndDate);
             if (validDates)
             {
-                _tripRepository.AddTrip(trip);
+                return _tripRepository.Add(trip);
             }
             else
             {
                 MessageBox.Show("Dates are not valid");
             }
+            return false;
         }
         //check if dates are in the future
         public bool ValidateDates(DateTime startDate, DateTime endDate)
@@ -43,28 +44,30 @@ namespace TravelEditor.Services
             return startDate > now && endDate > now && startDate<endDate;
         }
         //update trip after checking dates
-        public void UpdateTrip(Trip trip)
+        public bool Update(Trip trip)
         {
             if(ValidateDates(trip.StartDate, trip.EndDate))
             {
-                _tripRepository.UpdateTrip(trip);
+                return _tripRepository.Update(trip);
             }
             else
             {
                 MessageBox.Show("Dates are not valid");
             }
+            return false;
         }
         //delete a trip
-        public void DeleteTrip(Trip trip)
+        public bool Delete(Trip trip)
         {
             if(!IsTripNow(trip.StartDate, trip.EndDate))
             {
-                _tripRepository.DeleteTrip(trip);
+                return _tripRepository.Delete(trip);
             }
             else
             {
                 MessageBox.Show("Trip is currently in progress");
             }
+            return false;
         }
         //is the trip currently in progress
         public bool IsTripNow(DateTime startDate, DateTime endDate)
@@ -93,14 +96,14 @@ namespace TravelEditor.Services
         }
         //first check if the trip has happened, then check if the traveller who is leaving a review
         //was on that trip
-        public void AddTripReview(Trip trip, Review review)
+        public bool AddTripReview(Trip trip, Review review)
         {
             if (HasTripHappened(trip.StartDate, trip.EndDate))
             {
                 if(trip.Travellers.Any(t=> t.TravellerId == review.Traveller.TravellerId))
                 {
                     trip.Reviews.Add(review);
-                    _tripRepository.UpdateTrip(trip);
+                    return _tripRepository.Update(trip);
                 }
                 else
                 {
@@ -111,6 +114,7 @@ namespace TravelEditor.Services
             {
                 MessageBox.Show("Trip hasnt happened yet");
             }
+            return false;
         }
         public Trip FindTripWithReview(Review review)
         {

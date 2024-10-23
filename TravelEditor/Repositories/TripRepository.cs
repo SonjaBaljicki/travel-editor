@@ -20,20 +20,21 @@ namespace TravelEditor.Repositories
         //loads all trips from the database
         public List<Trip> LoadAll()
         {
-            return _context.trips.ToList();
+            return _context.Trips.ToList();
         }
         //adding a trip to database
-        public void AddTrip(Trip trip)
+        public bool Add(Trip trip)
         {
-            _context.trips.Add(trip);
+            _context.Trips.Add(trip);
             _context.SaveChanges();
+            return true;
         }
         //update trip basic info
-        public void UpdateTrip(Trip trip)
+        public bool Update(Trip trip)
         {
-            if (_context.trips.Find(trip.TripId) != null)
+            if (_context.Trips.Find(trip.TripId) != null)
             {
-                Trip existingTrip = _context.trips.Find(trip.TripId);
+                Trip existingTrip = _context.Trips.Find(trip.TripId);
                 existingTrip.Name =trip.Name;
                 existingTrip.StartDate = trip.StartDate;
                 existingTrip.EndDate = trip.EndDate;
@@ -43,20 +44,24 @@ namespace TravelEditor.Repositories
                 existingTrip.Travellers = trip.Travellers;
                 existingTrip.Reviews = trip.Reviews;
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         //delete a trip
-        public void DeleteTrip(Trip trip)
+        public bool Delete(Trip trip)
         {
-            if (_context.trips.Find(trip.TripId) != null)
+            if (_context.Trips.Find(trip.TripId) != null)
             {
-                _context.trips.Remove(trip);
+                _context.Trips.Remove(trip);
                 _context.SaveChanges();
+                return true;
             }
+            return false;
         }
         public List<Trip> FindTravellersTrips(Traveller? selectedTraveller)
         {
-            return _context.trips
+            return _context.Trips
                 .Where(trip => trip.Travellers.Any(t => t.TravellerId == selectedTraveller.TravellerId))
                 .Select(trip => trip)
                 .ToList();
@@ -64,7 +69,7 @@ namespace TravelEditor.Repositories
 
         public Trip FindTripWithReview(Review review)
         {
-            Trip trip = _context.trips
+            Trip trip = _context.Trips
                                   .Where(t => t.Reviews.Any(r => r.ReviewId == review.ReviewId))
                                   .Select(d => d).FirstOrDefault();
             return trip;
