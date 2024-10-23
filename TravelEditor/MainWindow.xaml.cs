@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelEditor.Database;
+using TravelEditor.Export.Iterfaces;
 using TravelEditor.Models;
 using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
@@ -36,7 +37,8 @@ namespace TravelEditor
         {
         }
 
-        public MainWindow(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService, IReviewService reviewService, ITravellerService travellerService)
+        public MainWindow(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService,
+            IReviewService reviewService, ITravellerService travellerService)
         {
             InitializeComponent();
 

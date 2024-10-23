@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TravelEditor.Commands;
 using TravelEditor.Commands.Add;
 using TravelEditor.Commands.Delete;
 using TravelEditor.Commands.Edit;
 using TravelEditor.Commands.View;
 using TravelEditor.Database;
+using TravelEditor.Export.Iterfaces;
 using TravelEditor.Models;
 using TravelEditor.Services;
 using TravelEditor.Services.Interfaces;
@@ -24,6 +26,7 @@ namespace TravelEditor.ViewModels
         private readonly IAttractionService _attractionService;
         private readonly IReviewService _reviewService;
         private readonly ITravellerService _travellerService;
+        private readonly IDataExporter _dataExporter;
 
         private Trip? _selectedTrip;
         public Trip? SelectedTrip
@@ -120,9 +123,10 @@ namespace TravelEditor.ViewModels
         public EditReviewCommand EditReviewCommand { get; }
         public DeleteReviewCommand DeleteReviewCommand { get; }
         public ViewTravellerCommand ViewTravellerCommand { get; }
+        public ExportDataCommand ExportDataCommand { get; }
 
-
-        public MainViewModel(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService, IReviewService reviewService, ITravellerService travellerService)
+        public MainViewModel(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService,
+            IReviewService reviewService, ITravellerService travellerService)
         {
             _tripService = tripService;
             _destinationService = destinationService;
@@ -158,6 +162,7 @@ namespace TravelEditor.ViewModels
             DeleteReviewCommand = new DeleteReviewCommand(this, _reviewService);
             ViewTravellerCommand = new ViewTravellerCommand(this, _travellerService);
 
+            ExportDataCommand = new ExportDataCommand();
         }
         ~MainViewModel()
         {

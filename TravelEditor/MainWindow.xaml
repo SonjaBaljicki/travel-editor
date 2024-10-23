@@ -10,7 +10,7 @@
         <StackPanel Name="mainStackPanel"  Background="#A4C3B2" >
             <Menu>
                 <MenuItem Name="importMenuItem" Header="Import"></MenuItem>
-                <MenuItem Name="exportMenuItem" Header="Export"></MenuItem>
+                <MenuItem Name="exportMenuItem" Header="Export" Command="{Binding ExportDataCommand}"></MenuItem>
             </Menu>
 
             <StackPanel  Name="tabsStackPanel"  Width="1000" Height="550" Margin="0, 20, 0, 0">
