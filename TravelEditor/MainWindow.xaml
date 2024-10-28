@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel Name="mainStackPanel"  Background="#A4C3B2" >
             <Menu>
-                <MenuItem Name="importMenuItem" Header="Import"></MenuItem>
+                <MenuItem Name="importMenuItem" Header="Import" Command="{Binding ImportDataCommand}"></MenuItem>
                 <MenuItem Name="exportMenuItem" Header="Export" Command="{Binding ExportDataCommand}"></MenuItem>
             </Menu>
 

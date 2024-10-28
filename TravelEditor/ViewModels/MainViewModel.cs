@@ -115,17 +115,20 @@ namespace TravelEditor.ViewModels
         public EditAttractionCommand EditAttractionCommand { get; }
         public DeleteAttractionCommand DeleteAttractionCommand { get; set; }
 
-        ////travellers commands
+        //travellers commands
         public AddTravellerCommand AddTravellerCommand { get; }
         public EditTravellerCommand EditTravellerCommand { get; }
         public DeleteTravellerCommand DeleteTravellerCommand { get; }
 
-        ////reviews command
+        //reviews command
         public AddReviewCommand AddReviewCommand { get; }
         public EditReviewCommand EditReviewCommand { get; }
         public DeleteReviewCommand DeleteReviewCommand { get; }
         public ViewTravellerCommand ViewTravellerCommand { get; }
+
+        //export and import commmands
         public ExportDataCommand ExportDataCommand { get; }
+        public ImportDataCommand ImportDataCommand { get; }
 
         public MainViewModel(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService,
             IReviewService reviewService, ITravellerService travellerService, IDataTableService dataTableService)
@@ -166,6 +169,7 @@ namespace TravelEditor.ViewModels
             ViewTravellerCommand = new ViewTravellerCommand(this, _travellerService);
 
             ExportDataCommand = new ExportDataCommand(_dataTableService);
+            ImportDataCommand = new ImportDataCommand(_dataTableService);
         }
         ~MainViewModel()
         {
