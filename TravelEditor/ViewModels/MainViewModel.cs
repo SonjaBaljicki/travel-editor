@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TravelEditor.Commands;
 using TravelEditor.Commands.Add;
 using TravelEditor.Commands.Delete;
 using TravelEditor.Commands.Edit;
 using TravelEditor.Commands.View;
 using TravelEditor.Database;
+using TravelEditor.Export.Iterfaces;
+using TravelEditor.Export.Service;
 using TravelEditor.Models;
 using TravelEditor.Services;
 using TravelEditor.Services.Interfaces;
@@ -24,6 +28,7 @@ namespace TravelEditor.ViewModels
         private readonly IAttractionService _attractionService;
         private readonly IReviewService _reviewService;
         private readonly ITravellerService _travellerService;
+        private readonly IDataTableService _dataTableService;
 
         private Trip? _selectedTrip;
         public Trip? SelectedTrip
@@ -120,15 +125,17 @@ namespace TravelEditor.ViewModels
         public EditReviewCommand EditReviewCommand { get; }
         public DeleteReviewCommand DeleteReviewCommand { get; }
         public ViewTravellerCommand ViewTravellerCommand { get; }
+        public ExportDataCommand ExportDataCommand { get; }
 
-
-        public MainViewModel(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService, IReviewService reviewService, ITravellerService travellerService)
+        public MainViewModel(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService,
+            IReviewService reviewService, ITravellerService travellerService, IDataTableService dataTableService)
         {
             _tripService = tripService;
             _destinationService = destinationService;
             _attractionService = attractionService;
             _reviewService = reviewService;
             _travellerService = travellerService;
+            _dataTableService = dataTableService;
 
             LoadData();
             Messenger.DataChanged += LoadData;
@@ -158,6 +165,7 @@ namespace TravelEditor.ViewModels
             DeleteReviewCommand = new DeleteReviewCommand(this, _reviewService);
             ViewTravellerCommand = new ViewTravellerCommand(this, _travellerService);
 
+            ExportDataCommand = new ExportDataCommand(_dataTableService);
         }
         ~MainViewModel()
         {
