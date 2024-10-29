@@ -20,8 +20,14 @@ namespace TravelEditor.Export_Import.Importers
             this.dataTableService = dataTableService;
         }
 
+        //Reading data from excel file
+        //Getting attractions from the data table and then creating destiantions with the related attractions
+        //Creating travellers from the data table, then doing the same with reviews as with attractions
+        //After getting reviews creating trips
         public void Import(string filePath)
         {
+            dataTableService.ClearDatabase();
+
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
@@ -35,11 +41,26 @@ namespace TravelEditor.Export_Import.Importers
                         }
                     });
 
-                    List<Attraction> attractions = dataTableService.GetAttractions(result.Tables["Attractions"], typeof(Attraction));
-                    dataTableService.ImportDestinations(result.Tables["Destinations"], typeof(Destination), attractions);
-                    dataTableService.ImportTravellers(result.Tables["Travellers"], typeof(Traveller));
-                    List<Review> reviews = dataTableService.GetReviews(result.Tables["Reviews"], typeof(Review));
-                    dataTableService.ImportTrips(result.Tables["Trips"], typeof(Trip), reviews);
+                    List<Attraction> attractions = dataTableService.GetEntities<Attraction>(result.Tables["Attractions"]);
+
+                    var attractionDictionary = new Dictionary<string, List<object>>
+                    {
+                        { nameof(Destination.Attractions), attractions.Cast<object>().ToList() }
+                    };
+
+                    dataTableService.ImportEntities(result.Tables["Destinations"], typeof(Destination), attractionDictionary);
+
+                    dataTableService.ImportEntities(result.Tables["Travellers"], typeof(Traveller));
+
+                    List<Review> reviews = dataTableService.GetEntities<Review>(result.Tables["Reviews"]);
+
+                    var tripDictionary = new Dictionary<string, List<object>>
+                    {
+                        { nameof(Trip.Reviews), reviews.Cast<object>().ToList() }
+                    };
+
+                    dataTableService.ImportEntities(result.Tables["Trips"], typeof(Trip), tripDictionary);
+
                 }
             }
         }
