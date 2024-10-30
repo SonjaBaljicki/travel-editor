@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelEditor", "TravelEditor\TravelEditor.csproj", "{C96EE914-4D8E-4B66-B5E4-9C3C5F62C264}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TravelEditor", "TravelEditor\TravelEditor.csproj", "{C96EE914-4D8E-4B66-B5E4-9C3C5F62C264}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelEditorTests", "TravelEditorTests\TravelEditorTests.csproj", "{19B93904-E1D8-4A8B-82A2-1B41F38DD70F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C96EE914-4D8E-4B66-B5E4-9C3C5F62C264}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C96EE914-4D8E-4B66-B5E4-9C3C5F62C264}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C96EE914-4D8E-4B66-B5E4-9C3C5F62C264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19B93904-E1D8-4A8B-82A2-1B41F38DD70F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19B93904-E1D8-4A8B-82A2-1B41F38DD70F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19B93904-E1D8-4A8B-82A2-1B41F38DD70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19B93904-E1D8-4A8B-82A2-1B41F38DD70F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

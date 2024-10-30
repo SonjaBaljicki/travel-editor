@@ -11,7 +11,7 @@ namespace TravelEditor.Repositories.Interfaces
     {
         List<Attraction> LoadAll();
         bool Update(Attraction attraction);
-        void Delete(Attraction attraction);
+        bool Delete(Attraction attraction);
         bool FindOne(Attraction attraction);
     }
 }
