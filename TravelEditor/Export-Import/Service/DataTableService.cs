@@ -190,6 +190,12 @@ namespace TravelEditor.Export.Service
 
             _context.SaveChanges();
         }
+
+        //Method that updates an existing entity, used for list, object or basic properies
+        //For lists it uses reflection to get the specific ID property dynamically
+        //It checks if the related entity already exists in the database if it does it updates it in the list
+        //If it doesnt it adds it to the list
+        //Destination is looked up in the database and updated and the basic properites are update in the last else block
         public void UpdateEntity<T>(T existingEntity, T newEntity) where T : class
         {
             if (existingEntity == null || newEntity == null) return;
@@ -207,21 +213,17 @@ namespace TravelEditor.Export.Service
                     {
                         foreach (var newRelatedEntity in newRelatedEntitiesValue)
                         {
-                            // Use reflection to get the specific ID property dynamically
                             var idProperty = GetIdProperty(newRelatedEntity.GetType());
                             var newId = (int)(idProperty?.GetValue(newRelatedEntity));
 
-                            // Check if the related entity already exists in the database
                             var existingRelatedEntity = _context.Set(newRelatedEntity.GetType()).Find(newId);
 
                             if (existingRelatedEntity != null && existingRelatedEntitiesValue.Contains(existingRelatedEntity))
                             {
-                                // Update the existing related entity
                                 UpdateRelatedEntity(existingRelatedEntity, newRelatedEntity);
                             }
                             else
                             {
-                                // If it does not exist, add it to the list
                                 existingRelatedEntitiesValue.Add(newRelatedEntity);
                             }
                         }
@@ -244,22 +246,21 @@ namespace TravelEditor.Export.Service
                 }
                 else
                 {
-                    // Handle other properties if necessary
                     var newValue = property.GetValue(newEntity);
                     property.SetValue(existingEntity, newValue);
                 }
             }
         }
 
-        // Method to get the ID property dynamically based on entity type
+        //Method to get the ID property dynamically based on entity type
         public PropertyInfo GetIdProperty(Type entityType)
         {
             return entityType.GetProperties().FirstOrDefault(p =>
                 p.Name.EndsWith("Id", StringComparison.OrdinalIgnoreCase) &&
-                p.PropertyType == typeof(int)); // Adjust the type if necessary
+                p.PropertyType == typeof(int));
         }
 
-        // Example method to update properties of the related entity
+        //Method to update properties of the related entity of an already existing entity
         public void UpdateRelatedEntity<T>(T existingRelatedEntity, T newRelatedEntity) where T : class
         {
             var properties = newRelatedEntity.GetType().GetProperties();
@@ -273,7 +274,7 @@ namespace TravelEditor.Export.Service
             }
         }
 
-
+        //Method that gets an existing entity if it exists or else returns null
         public object GetExistingEntity(object entity, Type entityType)
         {
             var idProperty = entityType.GetProperties()
