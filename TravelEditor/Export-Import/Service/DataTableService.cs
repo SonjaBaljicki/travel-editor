@@ -61,7 +61,7 @@ namespace TravelEditor.Export.Service
         }
 
         //for every property set column type and add columns
-        private void AddColumns(DataTable dataTable, PropertyInfo[] properties)
+        public void AddColumns(DataTable dataTable, PropertyInfo[] properties)
         {
             foreach (var prop in properties)
             {
@@ -78,7 +78,7 @@ namespace TravelEditor.Export.Service
         }
 
         //adding data to rows, serializing if the property type is an object
-        private void PopulateRow(DataRow row, object entity, PropertyInfo[] properties)
+        public void PopulateRow(DataRow row, object entity, PropertyInfo[] properties)
         {
             foreach (var prop in properties)
             {
@@ -109,35 +109,35 @@ namespace TravelEditor.Export.Service
             }
         }
 
-        private string SerializeTravellers(List<Traveller> travellers)
+        public string SerializeTravellers(List<Traveller> travellers)
         {
             return travellers != null
                 ? JsonSerializer.Serialize(travellers.Select(t => new { t.TravellerId, t.Email, t.FirstName }))
                 : DBNull.Value.ToString();
         }
 
-        private string SerializeReviews(List<Review> reviews)
+        public string SerializeReviews(List<Review> reviews)
         {
             return reviews != null
                 ? JsonSerializer.Serialize(reviews.Select(r => new { r.ReviewId, r.Comment, r.Rating }))
                 : DBNull.Value.ToString();
         }
 
-        private string SerializeAttractions(List<Attraction> attractions)
+        public string SerializeAttractions(List<Attraction> attractions)
         {
             return attractions != null
                 ? JsonSerializer.Serialize(attractions.Select(a => new { a.AttractionId, a.Name }))
                 : DBNull.Value.ToString();
         }
 
-        private string SerializeDestination(Destination destination)
+        public string SerializeDestination(Destination destination)
         {
             return destination != null
                 ? JsonSerializer.Serialize(new { destination.DestinationId, destination.City, destination.Country })
                 : DBNull.Value.ToString();
         }
 
-        private string SerializeTraveller(Traveller traveller)
+        public string SerializeTraveller(Traveller traveller)
         {
             return traveller != null
                 ? JsonSerializer.Serialize(new { traveller.TravellerId, traveller.Email, traveller.FirstName })
@@ -195,7 +195,7 @@ namespace TravelEditor.Export.Service
         //if the column is traveller the property is set differently
         //beacause review needs to get connected to a traveller from the database
         //row is not valid if if properties of the entity dont have a column name
-        private object CreateEntity(DataRow row, Type entityType, Dictionary<string, PropertyInfo> properties, Dictionary<string, List<object>> relatedEntities)
+        public object CreateEntity(DataRow row, Type entityType, Dictionary<string, PropertyInfo> properties, Dictionary<string, List<object>> relatedEntities)
         {
             var entity = Activator.CreateInstance(entityType);
             bool isValidRow = true;
@@ -227,7 +227,7 @@ namespace TravelEditor.Export.Service
 
         //setting traveller property, based on the json in the row the traveller is looked up in the database 
         //by that email, if the traveller is not found its not valid
-        private bool SetTravellerProperty(Review review, object value)
+        public bool SetTravellerProperty(Review review, object value)
         {
             if (value == DBNull.Value) return false;
 
@@ -263,7 +263,7 @@ namespace TravelEditor.Export.Service
         //if the property is a list it get set using SetRelatedEntityList, if its Destination we set it using
         //SetRelatedDestination and the rest is in the else block
         //if it cant be converted to property type its not valid
-        private bool SetEntityProperty(object entity, PropertyInfo property, object value, Dictionary<string, List<object>> relatedEntities)
+        public bool SetEntityProperty(object entity, PropertyInfo property, object value, Dictionary<string, List<object>> relatedEntities)
         {
             if (value == DBNull.Value) return false;
 
@@ -294,7 +294,7 @@ namespace TravelEditor.Export.Service
         //if the list is of type Traveller we lookup the travellers in the database and set them
         //if the list if of type Attractions or Reviews it means we passed all of them from the data table (param relatedEntites)
         //we look what items in the dtoList match items in relatedEntities
-        private bool SetRelatedEntityList(object entity, PropertyInfo property, object value, Dictionary<string, List<object>> relatedEntities)
+        public bool SetRelatedEntityList(object entity, PropertyInfo property, object value, Dictionary<string, List<object>> relatedEntities)
         {
             try
             {
@@ -356,7 +356,7 @@ namespace TravelEditor.Export.Service
 
         //when setting the destination we need to look it up in the database
         //after deserializing it from the value we try and set it, if it cant be found its not valid
-        private bool SetRelatedDestinationEntity(object entity, PropertyInfo property, object value)
+        public bool SetRelatedDestinationEntity(object entity, PropertyInfo property, object value)
         {
             try
             {
@@ -391,7 +391,7 @@ namespace TravelEditor.Export.Service
         // Find the property on the entity that matches the dto key, ignoring case
         // If the property doesn't exist or its value doesn't match the expected value, return false
         // All properties match, so return true
-        private bool IsMatchingEntity(object entity, Dictionary<string, object> dto)
+        public bool IsMatchingEntity(object entity, Dictionary<string, object> dto)
         {
             foreach (var (propertyName, expectedValue) in dto)
             {

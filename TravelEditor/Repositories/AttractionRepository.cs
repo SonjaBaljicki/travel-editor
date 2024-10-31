@@ -38,11 +38,17 @@ namespace TravelEditor.Repositories
             return false;
         }
         //deleting a existing attraction
-        public void Delete(Attraction attraction)
+        public bool Delete(Attraction attraction)
         {
             Attraction attractionToDelete = _context.Attractions.Find(attraction.AttractionId);
-            _context.Attractions.Remove(attractionToDelete);
-            _context.SaveChanges();
+            if(attractionToDelete != null)
+            {
+                _context.Attractions.Remove(attractionToDelete);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        
         }
         public bool FindOne(Attraction attraction)
         {

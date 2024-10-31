@@ -73,7 +73,7 @@ namespace TravelEditor.Services
         public bool IsTripNow(DateTime startDate, DateTime endDate)
         {
             DateTime now = DateTime.Now;
-            return startDate >= now && endDate <= now;
+            return startDate <= now && endDate >= now;
         }
         //does traveller have ongoing trips
         public bool TravellerHasTrips(Traveller? selectedTraveller)

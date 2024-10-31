@@ -41,8 +41,7 @@ namespace TravelEditor.Services
         {
             if (_attractionRepository.FindOne(attraction))
             {
-                _attractionRepository.Delete(attraction);
-                return true;
+                return _attractionRepository.Delete(attraction);
             }
             return false;
         }
