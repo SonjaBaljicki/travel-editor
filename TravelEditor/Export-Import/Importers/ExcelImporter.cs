@@ -26,7 +26,6 @@ namespace TravelEditor.Export_Import.Importers
         //After getting reviews creating trips
         public void Import(string filePath)
         {
-            dataTableService.ClearDatabase();
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             using (var stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
@@ -48,9 +47,9 @@ namespace TravelEditor.Export_Import.Importers
                         { nameof(Destination.Attractions), attractions.Cast<object>().ToList() }
                     };
 
-                    dataTableService.ImportEntities(result.Tables["Destinations"], typeof(Destination), attractionDictionary);
+                    dataTableService.ImportEntities<Destination>(result.Tables["Destinations"], attractionDictionary);
 
-                    dataTableService.ImportEntities(result.Tables["Travellers"], typeof(Traveller));
+                    dataTableService.ImportEntities<Traveller>(result.Tables["Travellers"]);
 
                     List<Review> reviews = dataTableService.GetEntities<Review>(result.Tables["Reviews"]);
 
@@ -59,7 +58,7 @@ namespace TravelEditor.Export_Import.Importers
                         { nameof(Trip.Reviews), reviews.Cast<object>().ToList() }
                     };
 
-                    dataTableService.ImportEntities(result.Tables["Trips"], typeof(Trip), tripDictionary);
+                    dataTableService.ImportEntities<Trip>(result.Tables["Trips"], tripDictionary);
 
                 }
             }

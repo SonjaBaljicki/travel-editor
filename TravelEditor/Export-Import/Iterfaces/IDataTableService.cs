@@ -10,9 +10,8 @@ namespace TravelEditor.Export.Iterfaces
 {
     public interface IDataTableService
     {
-        void ClearDatabase();
         DataTable GetAsDataTable<T>() where T : class;
         List<T> GetEntities<T>(DataTable? table) where T : class, new();
-        void ImportEntities(DataTable table, Type entityType, Dictionary<string, List<object>> relatedEntities = null);
+        void ImportEntities<T>(DataTable table, Dictionary<string, List<object>> relatedEntities = null) where T : class;
     }
 }

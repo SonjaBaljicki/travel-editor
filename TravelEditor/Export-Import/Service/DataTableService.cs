@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.Entity.Migrations;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -23,18 +25,6 @@ namespace TravelEditor.Export.Service
         public DataTableService(DatabaseContext context)
         {
             _context = context;
-        }
-
-        public void ClearDatabase()
-        {
-            var trips = _context.Trips.ToList();
-            _context.Trips.RemoveRange(trips);
-            var destinations = _context.Destinations.ToList();
-            _context.Destinations.RemoveRange(destinations);
-            var trevellers = _context.Travellers.ToList();
-            _context.Travellers.RemoveRange(trevellers);
-
-            _context.SaveChanges();
         }
 
         //getting records from the database for each entity
@@ -172,23 +162,128 @@ namespace TravelEditor.Export.Service
 
         //importing entites from the data table to the database
         //The optional parameter relatedEntities dictionary is used for handling relationships if needed during entity creation
-        public void ImportEntities(DataTable table, Type entityType, Dictionary<string, List<object>> relatedEntities = null)
+        public void ImportEntities<T>(DataTable table, Dictionary<string, List<object>> relatedEntities = null) where T : class
         {
             if (table == null) return;
+
+            var entityType = typeof(T);
 
             var properties = entityType.GetProperties()
                                        .ToDictionary(p => p.Name.ToLowerInvariant(), p => p);
 
             foreach (DataRow row in table.Rows)
             {
-                var entity = CreateEntity(row, entityType, properties, relatedEntities);
+                var entity = CreateEntity(row, entityType, properties, relatedEntities) as T;
                 if (entity != null)
                 {
-                    _context.Set(entityType).Add(entity);
+                    var existing = GetExistingEntity(entity, entityType) as T;
+                    if (existing != null)
+                    {
+                        UpdateEntity(existing, entity);
+                    }
+                    else
+                    {
+                        _context.Set(entityType).Add(entity);
+                    }
                 }
             }
 
             _context.SaveChanges();
+        }
+        public void UpdateEntity<T>(T existingEntity, T newEntity) where T : class
+        {
+            if (existingEntity == null || newEntity == null) return;
+
+            var properties = typeof(T).GetProperties();
+
+            foreach (var property in properties)
+            {
+                if (typeof(IList).IsAssignableFrom(property.PropertyType))
+                {
+                    var newRelatedEntitiesValue = property.GetValue(newEntity) as IList;
+                    var existingRelatedEntitiesValue = property.GetValue(existingEntity) as IList;
+
+                    if (newRelatedEntitiesValue != null)
+                    {
+                        foreach (var newRelatedEntity in newRelatedEntitiesValue)
+                        {
+                            // Use reflection to get the specific ID property dynamically
+                            var idProperty = GetIdProperty(newRelatedEntity.GetType());
+                            var newId = (int)(idProperty?.GetValue(newRelatedEntity));
+
+                            // Check if the related entity already exists in the database
+                            var existingRelatedEntity = _context.Set(newRelatedEntity.GetType()).Find(newId);
+
+                            if (existingRelatedEntity != null && existingRelatedEntitiesValue.Contains(existingRelatedEntity))
+                            {
+                                // Update the existing related entity
+                                UpdateRelatedEntity(existingRelatedEntity, newRelatedEntity);
+                            }
+                            else
+                            {
+                                // If it does not exist, add it to the list
+                                existingRelatedEntitiesValue.Add(newRelatedEntity);
+                            }
+                        }
+                    }
+                }
+                else if (property.PropertyType == typeof(Destination))
+                {
+                    Destination destination = (Destination)property.GetValue(newEntity);
+
+                    var matchingEntity = _context.Destinations
+                    .Where(e =>
+                    e.City == destination.City &&
+                        e.Country == destination.Country).FirstOrDefault();
+
+                    if (matchingEntity != null)
+                    {
+                        property.SetValue(existingEntity, matchingEntity);
+                    }
+
+                }
+                else
+                {
+                    // Handle other properties if necessary
+                    var newValue = property.GetValue(newEntity);
+                    property.SetValue(existingEntity, newValue);
+                }
+            }
+        }
+
+        // Method to get the ID property dynamically based on entity type
+        public PropertyInfo GetIdProperty(Type entityType)
+        {
+            return entityType.GetProperties().FirstOrDefault(p =>
+                p.Name.EndsWith("Id", StringComparison.OrdinalIgnoreCase) &&
+                p.PropertyType == typeof(int)); // Adjust the type if necessary
+        }
+
+        // Example method to update properties of the related entity
+        public void UpdateRelatedEntity<T>(T existingRelatedEntity, T newRelatedEntity) where T : class
+        {
+            var properties = newRelatedEntity.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.CanWrite)
+                {
+                    var newValue = property.GetValue(newRelatedEntity);
+                    property.SetValue(existingRelatedEntity, newValue);
+                }
+            }
+        }
+
+
+        public object GetExistingEntity(object entity, Type entityType)
+        {
+            var idProperty = entityType.GetProperties()
+                                       .FirstOrDefault(p => p.Name.EndsWith("Id", StringComparison.OrdinalIgnoreCase));
+
+            if (idProperty == null)
+                throw new InvalidOperationException("Entity type does not have an identifiable ID property.");
+
+            var idValue = idProperty.GetValue(entity);
+            return idValue != null ? _context.Set(entityType).Find(idValue) : null;
         }
 
         //creating an entity based on its info in the row, properties and type
