@@ -13,5 +13,7 @@ namespace TravelEditor.Export.Iterfaces
         DataTable GetAsDataTable<T>() where T : class;
         List<T> GetEntities<T>(DataTable? table) where T : class, new();
         void ImportEntities<T>(DataTable table, Dictionary<string, List<object>> relatedEntities = null) where T : class;
+        void ValidateReviews();
+
     }
 }

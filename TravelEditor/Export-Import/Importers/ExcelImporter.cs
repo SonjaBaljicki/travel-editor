@@ -60,6 +60,8 @@ namespace TravelEditor.Export_Import.Importers
 
                     dataTableService.ImportEntities<Trip>(result.Tables["Trips"], tripDictionary);
 
+                    dataTableService.ValidateReviews();
+
                 }
             }
         }

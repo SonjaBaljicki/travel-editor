@@ -10,6 +10,8 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Documents;
 using TravelEditor.Database;
 using TravelEditor.Export.Iterfaces;
@@ -433,7 +435,8 @@ namespace TravelEditor.Export.Service
 
                         foreach (var relatedEntity in relatedEntityList)
                         {
-                            if (dtoList.Any(dto => IsMatchingEntity(relatedEntity, dto)))
+                            bool taken = CheckEntityRelationship(entity, relatedEntity, entityType);
+                            if (!taken && dtoList.Any(dto => IsMatchingEntity(relatedEntity, dto)))
                             {
                                 matchedEntities.Add(relatedEntity);
                             }
@@ -446,6 +449,42 @@ namespace TravelEditor.Export.Service
             catch (Exception)
             {
                 return false;
+            }
+            return false;
+        }
+
+        //check attraction when adding a destination and the same for review trip relationship
+        private bool CheckEntityRelationship(object mainEntity, object relatedEntity, Type entityType)
+        {
+            var mainType = typeof(Trip);
+            if (entityType == typeof(Attraction))
+            {
+                mainType = typeof(Destination);
+            }
+            var parentEntity = GetExistingEntity(mainEntity, mainType);
+            var childEntity = GetExistingEntity(relatedEntity, entityType);
+            if (parentEntity != null && childEntity != null)
+            {
+
+                var propertyInfoAttr = mainType.GetProperty("Attractions");
+                var propertyInfoReview = mainType.GetProperty("Reviews");
+                if (propertyInfoAttr != null)
+                {
+                    var attractions = propertyInfoAttr.GetValue(parentEntity) as IEnumerable<object>;
+                    if (attractions != null)
+                    {
+                        return !attractions.Contains(childEntity);
+                    }
+                }
+                else if (propertyInfoReview != null)
+                {
+                    var reviews = propertyInfoReview.GetValue(parentEntity) as IEnumerable<object>;
+                    if (reviews != null)
+                    {
+                        return !reviews.Contains(childEntity);
+                    }
+                }
+
             }
             return false;
         }
@@ -504,6 +543,33 @@ namespace TravelEditor.Export.Service
             }
 
             return true;
+        }
+        public void ValidateReviews()
+        {
+            var trips = _context.Trips.ToList();
+
+            DateTime today = DateTime.Today;
+
+            foreach (var trip in trips)
+            {
+                var reviewsToRemove = new List<Review>();
+
+                foreach (var review in trip.Reviews)
+                {
+                    bool travellerExistsOnTrip = trip.Travellers.Any(t => t.TravellerId == review.Traveller.TravellerId);
+
+                    if (!travellerExistsOnTrip || trip.EndDate > today)
+                    {
+                        reviewsToRemove.Add(review);
+                    }
+                }
+                foreach (var review in reviewsToRemove)
+                {
+                    trip.Reviews.Remove(review);
+                    _context.Reviews.Remove(review);
+                }
+            }
+            _context.SaveChanges();
         }
     }
 }
