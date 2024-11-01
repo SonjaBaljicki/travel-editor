@@ -12,6 +12,8 @@ using TravelEditor.Services;
 using TravelEditor.Database;
 using TravelEditor.Export.Iterfaces;
 using TravelEditor.Export.Service;
+using TravelEditor.Export_Import.Iterfaces;
+using TravelEditor.Export_Import.Service;
 
 namespace TravelEditor
 {
@@ -25,7 +27,8 @@ namespace TravelEditor
         public IAttractionService AttractionService { get; set; }
         public IReviewService ReviewService { get; set; }
         public ITravellerService TravellerService { get; set; }
-        public IDataTableService DataTableService { get; set; }
+        public IExportService ExportService { get; set; }
+        public IImportService ImportService { get; set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -37,9 +40,10 @@ namespace TravelEditor
             AttractionService = new AttractionService(new AttractionRepository(dbContext),DestinationService);
             ReviewService = new ReviewService(new ReviewRepository(dbContext),TripService);
             TravellerService = new TravellerService(new TravellerRepository(dbContext),TripService, ReviewService);
-            DataTableService = new DataTableService(dbContext);
+            ExportService = new ExportService(dbContext);
+            ImportService = new ImportService(dbContext);
 
-            MainWindow mainWindow = new MainWindow(TripService, DestinationService, AttractionService, ReviewService, TravellerService, DataTableService);
+            MainWindow mainWindow = new MainWindow(TripService, DestinationService, AttractionService, ReviewService, TravellerService, ExportService, ImportService);
             mainWindow.Show();
         }
     }

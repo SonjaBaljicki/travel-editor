@@ -21,12 +21,12 @@ namespace TravelEditorTests.Services
     public class DataTableServiceTest
     {
         private readonly Mock<DatabaseContext> _mockContext;
-        private readonly DataTableService _dataTableService;
+        private readonly ExportService _dataTableService;
 
         public DataTableServiceTest()
         {
             _mockContext = new Mock<DatabaseContext>();
-            _dataTableService = new DataTableService(_mockContext.Object);
+            _dataTableService = new ExportService(_mockContext.Object);
         }
 
         [Fact]

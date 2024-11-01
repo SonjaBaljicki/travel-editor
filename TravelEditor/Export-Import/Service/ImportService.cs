@@ -2,138 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using System.Data.Entity.Migrations;
-using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows;
-using System.Windows.Documents;
 using TravelEditor.Database;
-using TravelEditor.Export.Iterfaces;
-using TravelEditor.Models;
+using TravelEditor.Export_Import.Iterfaces;
 using TravelEditor.Models.dtos;
+using TravelEditor.Models;
 
-namespace TravelEditor.Export.Service
+namespace TravelEditor.Export_Import.Service
 {
-    public class DataTableService : IDataTableService
+    public class ImportService : IImportService
     {
         private readonly DatabaseContext _context;
 
-        public DataTableService(DatabaseContext context)
+        public ImportService(DatabaseContext context)
         {
             _context = context;
-        }
-
-        //getting records from the database for each entity
-        //then making columns based on properties and adding each record as a row 
-        public DataTable GetAsDataTable<T>() where T : class
-        {
-            DataTable dataTable = new DataTable();
-            var entities = _context.Set<T>().ToList();
-
-            if (entities.Any())
-            {
-                PropertyInfo[] properties = typeof(T).GetProperties();
-                AddColumns(dataTable, properties);
-
-                foreach (var entity in entities)
-                {
-                    DataRow row = dataTable.NewRow();
-                    PopulateRow(row, entity, properties);
-                    dataTable.Rows.Add(row);
-                }
-            }
-
-            return dataTable;
-        }
-
-        //for every property set column type and add columns
-        public void AddColumns(DataTable dataTable, PropertyInfo[] properties)
-        {
-            foreach (var prop in properties)
-            {
-                Type columnType = prop.PropertyType == typeof(List<Traveller>) ||
-                                  prop.PropertyType == typeof(List<Review>) ||
-                                  prop.PropertyType == typeof(List<Attraction>) ||
-                                  prop.PropertyType == typeof(Destination) ||
-                                  prop.PropertyType == typeof(Traveller)
-                    ? typeof(string)
-                    : Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
-
-                dataTable.Columns.Add(prop.Name, columnType);
-            }
-        }
-
-        //adding data to rows, serializing if the property type is an object
-        public void PopulateRow(DataRow row, object entity, PropertyInfo[] properties)
-        {
-            foreach (var prop in properties)
-            {
-                if (prop.PropertyType == typeof(List<Traveller>))
-                {
-                    row[prop.Name] = SerializeTravellers(prop.GetValue(entity) as List<Traveller>);
-                }
-                else if (prop.PropertyType == typeof(List<Review>))
-                {
-                    row[prop.Name] = SerializeReviews(prop.GetValue(entity) as List<Review>);
-                }
-                else if (prop.PropertyType == typeof(List<Attraction>))
-                {
-                    row[prop.Name] = SerializeAttractions(prop.GetValue(entity) as List<Attraction>);
-                }
-                else if (prop.PropertyType == typeof(Destination))
-                {
-                    row[prop.Name] = SerializeDestination(prop.GetValue(entity) as Destination);
-                }
-                else if (prop.PropertyType == typeof(Traveller))
-                {
-                    row[prop.Name] = SerializeTraveller(prop.GetValue(entity) as Traveller);
-                }
-                else
-                {
-                    row[prop.Name] = prop.GetValue(entity) ?? DBNull.Value;
-                }
-            }
-        }
-
-        public string SerializeTravellers(List<Traveller> travellers)
-        {
-            return travellers != null
-                ? JsonSerializer.Serialize(travellers.Select(t => new { t.TravellerId, t.Email, t.FirstName }))
-                : DBNull.Value.ToString();
-        }
-
-        public string SerializeReviews(List<Review> reviews)
-        {
-            return reviews != null
-                ? JsonSerializer.Serialize(reviews.Select(r => new { r.ReviewId, r.Comment, r.Rating }))
-                : DBNull.Value.ToString();
-        }
-
-        public string SerializeAttractions(List<Attraction> attractions)
-        {
-            return attractions != null
-                ? JsonSerializer.Serialize(attractions.Select(a => new { a.AttractionId, a.Name }))
-                : DBNull.Value.ToString();
-        }
-
-        public string SerializeDestination(Destination destination)
-        {
-            return destination != null
-                ? JsonSerializer.Serialize(new { destination.DestinationId, destination.City, destination.Country })
-                : DBNull.Value.ToString();
-        }
-
-        public string SerializeTraveller(Traveller traveller)
-        {
-            return traveller != null
-                ? JsonSerializer.Serialize(new { traveller.TravellerId, traveller.Email, traveller.FirstName })
-                : DBNull.Value.ToString();
         }
 
         //getting entities after reading an excel file
@@ -194,10 +80,6 @@ namespace TravelEditor.Export.Service
         }
 
         //Method that updates an existing entity, used for list, object or basic properies
-        //For lists it uses reflection to get the specific ID property dynamically
-        //It checks if the related entity already exists in the database if it does it updates it in the list
-        //If it doesnt it adds it to the list
-        //Destination is looked up in the database and updated and the basic properites are update in the last else block
         public void UpdateEntity<T>(T existingEntity, T newEntity) where T : class
         {
             if (existingEntity == null || newEntity == null) return;
@@ -208,51 +90,67 @@ namespace TravelEditor.Export.Service
             {
                 if (typeof(IList).IsAssignableFrom(property.PropertyType))
                 {
-                    var newRelatedEntitiesValue = property.GetValue(newEntity) as IList;
-                    var existingRelatedEntitiesValue = property.GetValue(existingEntity) as IList;
-
-                    if (newRelatedEntitiesValue != null)
-                    {
-                        foreach (var newRelatedEntity in newRelatedEntitiesValue)
-                        {
-                            var idProperty = GetIdProperty(newRelatedEntity.GetType());
-                            var newId = (int)(idProperty?.GetValue(newRelatedEntity));
-
-                            var existingRelatedEntity = _context.Set(newRelatedEntity.GetType()).Find(newId);
-
-                            if (existingRelatedEntity != null && existingRelatedEntitiesValue.Contains(existingRelatedEntity))
-                            {
-                                UpdateRelatedEntity(existingRelatedEntity, newRelatedEntity);
-                            }
-                            else
-                            {
-                                existingRelatedEntitiesValue.Add(newRelatedEntity);
-                            }
-                        }
-                    }
+                    UpdateRelatedEntities(existingEntity, newEntity, property);
                 }
                 else if (property.PropertyType == typeof(Destination))
                 {
-                    Destination destination = (Destination)property.GetValue(newEntity);
-
-                    var matchingEntity = _context.Destinations
-                    .Where(e =>
-                    e.City == destination.City &&
-                        e.Country == destination.Country).FirstOrDefault();
-
-                    if (matchingEntity != null)
-                    {
-                        property.SetValue(existingEntity, matchingEntity);
-                    }
-
+                    UpdateDestination(existingEntity, newEntity, property);
                 }
                 else
                 {
-                    var newValue = property.GetValue(newEntity);
-                    property.SetValue(existingEntity, newValue);
+                    UpdateStandardProperty(existingEntity, newEntity, property);
                 }
             }
         }
+
+        //For lists it uses reflection to get the specific ID property dynamically
+        //It checks if the related entity already exists in the database if it does it updates it in the list
+        //If it doesnt it adds it to the list
+        private void UpdateRelatedEntities<T>(T existingEntity, T newEntity, PropertyInfo property) where T : class
+        {
+            var newRelatedEntitiesValue = property.GetValue(newEntity) as IList;
+            var existingRelatedEntitiesValue = property.GetValue(existingEntity) as IList;
+
+            if (newRelatedEntitiesValue != null)
+            {
+                foreach (var newRelatedEntity in newRelatedEntitiesValue)
+                {
+                    var idProperty = GetIdProperty(newRelatedEntity.GetType());
+                    var newId = (int)(idProperty?.GetValue(newRelatedEntity));
+
+                    var existingRelatedEntity = _context.Set(newRelatedEntity.GetType()).Find(newId);
+
+                    if (existingRelatedEntity != null && existingRelatedEntitiesValue.Contains(existingRelatedEntity))
+                    {
+                        UpdateRelatedEntity(existingRelatedEntity, newRelatedEntity);
+                    }
+                    else
+                    {
+                        existingRelatedEntitiesValue.Add(newRelatedEntity);
+                    }
+                }
+            }
+        }
+        //Destination is looked up in the database and updated
+
+        private void UpdateDestination<T>(T existingEntity, T newEntity, PropertyInfo property) where T : class
+        {
+            Destination destination = (Destination)property.GetValue(newEntity);
+            var matchingEntity = _context.Destinations
+                .FirstOrDefault(e => e.City == destination.City && e.Country == destination.Country);
+
+            if (matchingEntity != null)
+            {
+                property.SetValue(existingEntity, matchingEntity);
+            }
+        }
+        //The basic properites are update in the last else block
+        private void UpdateStandardProperty<T>(T existingEntity, T newEntity, PropertyInfo property) where T : class
+        {
+            var newValue = property.GetValue(newEntity);
+            property.SetValue(existingEntity, newValue);
+        }
+
 
         //Method to get the ID property dynamically based on entity type
         public PropertyInfo GetIdProperty(Type entityType)
@@ -388,61 +286,27 @@ namespace TravelEditor.Export.Service
             }
         }
 
-        //first the value gets deserialized
-        //if the list is of type Traveller we lookup the travellers in the database and set them
-        //if the list if of type Attractions or Reviews it means we passed all of them from the data table (param relatedEntites)
-        //we look what items in the dtoList match items in relatedEntities
+        // This method sets the related entity list for a given property of an entity.
+        // It first deserializes the input value, and based on the property type, it 
+        // determines how to populate the related entities.
         public bool SetRelatedEntityList(object entity, PropertyInfo property, object value, Dictionary<string, List<object>> relatedEntities)
         {
             try
             {
-                var json = value.ToString();
-                var dtoList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
+                var dtoList = DeserializeValue(value);
+                if (dtoList == null) return false;
 
-                if (dtoList == null)
-                    return false;
-
-                if (property.PropertyType.IsGenericType &&
-                    property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+                if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
                 {
                     var entityType = property.PropertyType.GetGenericArguments()[0];
 
                     if (entityType == typeof(Traveller))
                     {
-                        var matchingEntities = new List<Traveller>();
-
-                        var emails = dtoList.Select(dto => dto.ContainsKey("Email") ? dto["Email"].ToString() : null)
-                                            .Where(email => email != null)
-                                            .ToList();
-
-                        if (emails.Any())
-                        {
-                            matchingEntities = _context.Travellers
-                                .Where(e => emails.Contains(e.Email))
-                                .ToList();
-                        }
-
-                        property.SetValue(entity, matchingEntities);
-                        return true;
+                        return SetTravellerList(entity, property, dtoList);
                     }
                     else if (entityType == typeof(Attraction) || entityType == typeof(Review))
                     {
-                        var relatedEntityList = relatedEntities[property.Name];
-                        var matchedEntities = Activator.CreateInstance(property.PropertyType) as IList;
-
-                        if (matchedEntities == null)
-                            return false;
-
-                        foreach (var relatedEntity in relatedEntityList)
-                        {
-                            bool taken = CheckEntityRelationship(entity, relatedEntity, entityType);
-                            if (!taken && dtoList.Any(dto => IsMatchingEntity(relatedEntity, dto)))
-                            {
-                                matchedEntities.Add(relatedEntity);
-                            }
-                        }
-                        property.SetValue(entity, matchedEntities);
-                        return true;
+                        return SetAttractionOrReviewList(entity, property, dtoList, relatedEntities);
                     }
                 }
             }
@@ -453,7 +317,55 @@ namespace TravelEditor.Export.Service
             return false;
         }
 
-        //check attraction when adding a destination and the same for review trip relationship
+        // Method deserializes the value from JSON into a list of dictionaries.
+        private List<Dictionary<string, object>> DeserializeValue(object value)
+        {
+            var json = value.ToString();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
+        }
+
+        // Method sets the list of Traveller entities based on the provided dtoList.
+        private bool SetTravellerList(object entity, PropertyInfo property, List<Dictionary<string, object>> dtoList)
+        {
+            var matchingEntities = new List<Traveller>();
+            var emails = dtoList.Select(dto => dto.ContainsKey("Email") ? dto["Email"].ToString() : null)
+                                .Where(email => email != null)
+                                .ToList();
+
+            if (emails.Any())
+            {
+                matchingEntities = _context.Travellers
+                    .Where(e => emails.Contains(e.Email))
+                    .ToList();
+            }
+
+            property.SetValue(entity, matchingEntities);
+            return true;
+        }
+
+        //Method sets the list of Attraction or Review entities based on matching items from relatedEntities.
+        private bool SetAttractionOrReviewList(object entity, PropertyInfo property, List<Dictionary<string, object>> dtoList, Dictionary<string, List<object>> relatedEntities)
+        {
+            var relatedEntityList = relatedEntities[property.Name];
+            var matchedEntities = Activator.CreateInstance(property.PropertyType) as IList;
+
+            if (matchedEntities == null) return false;
+
+            foreach (var relatedEntity in relatedEntityList)
+            {
+                bool taken = CheckEntityRelationship(entity, relatedEntity, property.PropertyType.GetGenericArguments()[0]);
+                if (!taken && dtoList.Any(dto => IsMatchingEntity(relatedEntity, dto)))
+                {
+                    matchedEntities.Add(relatedEntity);
+                }
+            }
+
+            property.SetValue(entity, matchedEntities);
+            return true;
+        }
+
+
+        //check attraction/review when adding a destination or trip not to add it to two different objects
         private bool CheckEntityRelationship(object mainEntity, object relatedEntity, Type entityType)
         {
             var mainType = typeof(Trip);
@@ -544,11 +456,11 @@ namespace TravelEditor.Export.Service
 
             return true;
         }
+
+        //If an invalid review was added we delete it
         public void ValidateReviews()
         {
             var trips = _context.Trips.ToList();
-
-            DateTime today = DateTime.Today;
 
             foreach (var trip in trips)
             {
@@ -558,7 +470,7 @@ namespace TravelEditor.Export.Service
                 {
                     bool travellerExistsOnTrip = trip.Travellers.Any(t => t.TravellerId == review.Traveller.TravellerId);
 
-                    if (!travellerExistsOnTrip || trip.EndDate > today)
+                    if (!travellerExistsOnTrip || trip.EndDate > DateTime.Today)
                     {
                         reviewsToRemove.Add(review);
                     }

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TravelEditor.Database;
 using TravelEditor.Export.Iterfaces;
+using TravelEditor.Export_Import.Iterfaces;
 using TravelEditor.Models;
 using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
@@ -32,14 +33,15 @@ namespace TravelEditor
         private IAttractionService attractionService;
         private IReviewService reviewService;
         private ITravellerService travellerService;
-        private IDataTableService dataTableService;
+        private IExportService exportService;
+        private IImportService importService;
 
         public MainWindow()
         {
         }
 
         public MainWindow(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService,
-            IReviewService reviewService, ITravellerService travellerService, IDataTableService dataTableService)
+            IReviewService reviewService, ITravellerService travellerService, IExportService exportService, IImportService importService)
         {
             InitializeComponent();
 
@@ -48,11 +50,11 @@ namespace TravelEditor
             this.attractionService = attractionService;
             this.reviewService = reviewService;
             this.travellerService = travellerService;
-            this.dataTableService = dataTableService;
+            this.exportService = exportService;
+            this.importService = importService;
 
-            MainViewModel mainViewModel = new MainViewModel(tripService, destinationService, attractionService, reviewService, travellerService, dataTableService);
+            MainViewModel mainViewModel = new MainViewModel(tripService, destinationService, attractionService, reviewService, travellerService, exportService, importService);
             this.DataContext = mainViewModel;
-            this.dataTableService = dataTableService;
         }
     }
 }

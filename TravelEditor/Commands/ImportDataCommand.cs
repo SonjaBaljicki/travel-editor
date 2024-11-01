@@ -16,10 +16,10 @@ namespace TravelEditor.Commands
 {
     public class ImportDataCommand : ICommand
     {
-        public IDataTableService dataTableService;
-        public ImportDataCommand(IDataTableService dataTableService)
+        public IImportService importService;
+        public ImportDataCommand(IImportService importService )
         {
-            this.dataTableService = dataTableService;
+            this.importService = importService;
         }
 
         public event EventHandler? CanExecuteChanged;
@@ -32,9 +32,10 @@ namespace TravelEditor.Commands
         public void Execute(object? parameter)
         {
             //based on what format user chose we create importer and call ImportFile
-            IDataImporter importer = new ExcelImporter(dataTableService);
-            DataImportService importService = new DataImportService(importer);
-            importService.ImportFile("../../../Data/imported_data.xlsx");
+            IDataImporter importer = new ExcelImporter(importService);
+            DataImportService dataImportService = new DataImportService(importer);
+            dataImportService.ImportFile("../../../Data/imported_data.xlsx");
+
             Messenger.NotifyDataChanged();
 
         }

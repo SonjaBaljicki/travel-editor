@@ -12,11 +12,11 @@ namespace TravelEditor.Export.Exporters
     public class CsvExporter : IDataExporter
     {
 
-        private readonly IDataTableService _dataTableService;
+        private readonly IExportService _exportService;
 
-        public CsvExporter(IDataTableService dataTableService)
+        public CsvExporter(IExportService exportService)
         {
-            _dataTableService = dataTableService;
+            _exportService = exportService;
         }
 
         public void Export(string filePath)

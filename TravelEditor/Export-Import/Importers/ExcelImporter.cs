@@ -13,11 +13,11 @@ namespace TravelEditor.Export_Import.Importers
 {
     internal class ExcelImporter : IDataImporter
     {
-        private IDataTableService dataTableService;
+        private IImportService importService;
 
-        public ExcelImporter(IDataTableService dataTableService)
+        public ExcelImporter(IImportService importService)
         {
-            this.dataTableService = dataTableService;
+            this.importService = importService;
         }
 
         //Reading data from excel file
@@ -40,27 +40,27 @@ namespace TravelEditor.Export_Import.Importers
                         }
                     });
 
-                    List<Attraction> attractions = dataTableService.GetEntities<Attraction>(result.Tables["Attractions"]);
+                    List<Attraction> attractions = importService.GetEntities<Attraction>(result.Tables["Attractions"]);
 
                     var attractionDictionary = new Dictionary<string, List<object>>
                     {
                         { nameof(Destination.Attractions), attractions.Cast<object>().ToList() }
                     };
 
-                    dataTableService.ImportEntities<Destination>(result.Tables["Destinations"], attractionDictionary);
+                    importService.ImportEntities<Destination>(result.Tables["Destinations"], attractionDictionary);
 
-                    dataTableService.ImportEntities<Traveller>(result.Tables["Travellers"]);
+                    importService.ImportEntities<Traveller>(result.Tables["Travellers"]);
 
-                    List<Review> reviews = dataTableService.GetEntities<Review>(result.Tables["Reviews"]);
+                    List<Review> reviews = importService.GetEntities<Review>(result.Tables["Reviews"]);
 
                     var tripDictionary = new Dictionary<string, List<object>>
                     {
                         { nameof(Trip.Reviews), reviews.Cast<object>().ToList() }
                     };
 
-                    dataTableService.ImportEntities<Trip>(result.Tables["Trips"], tripDictionary);
+                    importService.ImportEntities<Trip>(result.Tables["Trips"], tripDictionary);
 
-                    dataTableService.ValidateReviews();
+                    importService.ValidateReviews();
 
                 }
             }
