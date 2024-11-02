@@ -68,8 +68,8 @@ namespace TravelEditor.Commands.Delete
                 bool success = attractionService.Delete(attraction);
                 if (success)
                 {
+                    MessageBox.Show("Delete successful");
                     Messenger.NotifyDataChanged();
-                    //mainViewModel.Attractions.Remove(attraction);
                 }
             }
             else if (attractionsGridViewModel != null && attractionsGridViewModel.SelectedAttraction!=null)
@@ -78,8 +78,8 @@ namespace TravelEditor.Commands.Delete
                 bool success=attractionService.Delete(attraction);
                 if (success)
                 {
+                    MessageBox.Show("Delete successful");
                     Messenger.NotifyDataChanged();
-                    //attractionsGridViewModel.Attractions.Remove(attraction);
                 }
             }
         }

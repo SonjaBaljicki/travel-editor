@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TravelEditor.Database;
 using TravelEditor.Export.Exporters;
@@ -45,6 +46,8 @@ namespace TravelEditor.Commands
             IDataExporter exporter = new ExcelExporter(exportService);
             DataExportService dataExportService = new DataExportService(exporter);
             dataExportService.ExportToFile( "../../../Data/"+viewModel.FileName+".xlsx");
+            MessageBox.Show("Data exported");
+
         }
     }
 }

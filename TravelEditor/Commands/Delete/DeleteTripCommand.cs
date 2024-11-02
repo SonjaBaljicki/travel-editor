@@ -40,11 +40,11 @@ namespace TravelEditor.Commands.Delete
             Trip trip = viewModel.SelectedTrip;
             if (trip != null)
             {
-                MessageBox.Show("Deleting trip");
                 bool success = tripService.Delete(trip);
                 if (success)
                 {
-                    viewModel.Trips.Remove(trip);
+                    MessageBox.Show("Delete successful");
+                    Messenger.NotifyDataChanged();
                 }
             }
             else

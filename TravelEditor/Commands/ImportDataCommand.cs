@@ -49,6 +49,7 @@ namespace TravelEditor.Commands
             try
             {
                 dataImportService.ImportFile("../../../Data/" + viewModel.FileName + ".xlsx");
+                MessageBox.Show("Data imported");
             }
             catch(FileNotFoundException ex)
             {

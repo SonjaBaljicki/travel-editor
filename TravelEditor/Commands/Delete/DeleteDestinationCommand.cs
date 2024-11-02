@@ -41,11 +41,12 @@ namespace TravelEditor.Commands.Delete
             Destination destination = viewModel.SelectedDestination;
             if (destination != null)
             {
-                MessageBox.Show("Deleting destination");
                 bool success=destinationService.Delete(destination);
                 if (success)
                 {
+                    MessageBox.Show("Delete successful");
                     viewModel.Destinations.Remove(destination);
+                    Messenger.NotifyDataChanged();
                 }
             }
             else
