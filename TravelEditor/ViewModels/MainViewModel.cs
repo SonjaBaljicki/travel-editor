@@ -32,6 +32,17 @@ namespace TravelEditor.ViewModels
         private readonly IExportService _exportService;
         private readonly IImportService _importService;
 
+        private string _fileName="";
+        public string FileName
+        {
+            get { return _fileName; }
+            set
+            {
+                _fileName = value;
+                OnPropertyChanged(nameof(FileName));
+            }
+        }
+
         private Trip? _selectedTrip;
         public Trip? SelectedTrip
         {
@@ -171,8 +182,8 @@ namespace TravelEditor.ViewModels
             DeleteReviewCommand = new DeleteReviewCommand(this, _reviewService);
             ViewTravellerCommand = new ViewTravellerCommand(this, _travellerService);
 
-            ExportDataCommand = new ExportDataCommand(_exportService);
-            ImportDataCommand = new ImportDataCommand(_importService);
+            ExportDataCommand = new ExportDataCommand(_exportService,this);
+            ImportDataCommand = new ImportDataCommand(_importService,this);
         }
         ~MainViewModel()
         {

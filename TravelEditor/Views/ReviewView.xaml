@@ -17,7 +17,7 @@
                 <TextBox Name="commentTextBox" Text="{Binding Review.Comment}" Width="200" Height="30"  Margin="5,0,0,10" HorizontalAlignment="Left" />
 
                 <Label Content="Date:"/>
-                <DatePicker SelectedDate="{Binding Review.Date}" Name="reviewDatePicker" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left" />
+                <DatePicker IsEnabled="False" SelectedDate="{Binding Review.Date}" Name="reviewDatePicker" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left" />
                 <StackPanel >
                     <DataGrid SelectedItem="{Binding SelectedTraveller}" CanUserAddRows="False" AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}"  Height="80" Width="276">
                         <DataGrid.Columns>

@@ -49,6 +49,11 @@ namespace TravelEditor.ViewModels
             {
                 SelectedDestination = Trip.Destination;
             }
+            else
+            {
+                Trip.StartDate=DateTime.Now;
+                Trip.EndDate = DateTime.Now.AddDays(1);
+            }
             SaveTripCommand = new SaveTripCommand(this,_tripService);
         }
     }
