@@ -82,6 +82,8 @@ namespace TravelEditor.ViewModels
             {
                 SelectedTraveller = Review.Traveller;
             }
+            Review.Date = DateTime.Now;
+
         }
 
         private void LoadTravellers()
