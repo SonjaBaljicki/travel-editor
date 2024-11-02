@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TravelEditor.Database;
 using TravelEditor.Export_Import.Iterfaces;
 using TravelEditor.Models.dtos;
@@ -92,10 +90,6 @@ namespace TravelEditor.Export_Import.Service
                 {
                     UpdateRelatedEntities(existingEntity, newEntity, property);
                 }
-                else if (property.PropertyType == typeof(Destination))
-                {
-                    UpdateDestination(existingEntity, newEntity, property);
-                }
                 else
                 {
                     UpdateStandardProperty(existingEntity, newEntity, property);
@@ -113,39 +107,85 @@ namespace TravelEditor.Export_Import.Service
 
             if (newRelatedEntitiesValue != null)
             {
-                foreach (var newRelatedEntity in newRelatedEntitiesValue)
+                if (newRelatedEntitiesValue.Count == 0)
                 {
-                    var idProperty = GetIdProperty(newRelatedEntity.GetType());
-                    var newId = (int)(idProperty?.GetValue(newRelatedEntity));
-
-                    var existingRelatedEntity = _context.Set(newRelatedEntity.GetType()).Find(newId);
-
-                    if (existingRelatedEntity != null && existingRelatedEntitiesValue.Contains(existingRelatedEntity))
+                    EmptyEntityList(existingRelatedEntitiesValue);
+                }
+                else
+                {
+                    RemoveNotPresentEntities(existingRelatedEntitiesValue, newRelatedEntitiesValue);
+                    foreach (var newRelatedEntity in newRelatedEntitiesValue)
                     {
-                        UpdateRelatedEntity(existingRelatedEntity, newRelatedEntity);
-                    }
-                    else
-                    {
-                        existingRelatedEntitiesValue.Add(newRelatedEntity);
+                        var idProperty = GetIdProperty(newRelatedEntity.GetType());
+                        var newId = (int)(idProperty?.GetValue(newRelatedEntity));
+
+                        var existingRelatedEntity = _context.Set(newRelatedEntity.GetType()).Find(newId);
+
+                        if (existingRelatedEntity != null && existingRelatedEntitiesValue.Contains(existingRelatedEntity))
+                        {
+                            UpdateRelatedEntity(existingRelatedEntity, newRelatedEntity);
+                        }
+                        else
+                        {
+                            existingRelatedEntitiesValue.Add(newRelatedEntity);
+                        }
                     }
                 }
             }
         }
-        //Destination is looked up in the database and updated
 
-        private void UpdateDestination<T>(T existingEntity, T newEntity, PropertyInfo property) where T : class
+        //if we are updating an entity that already exists in the database and not all old ones are present
+        private void RemoveNotPresentEntities(IList? existingRelatedEntitiesValue, IList newRelatedEntitiesValue)
         {
-            Destination destination = (Destination)property.GetValue(newEntity);
-            var matchingEntity = _context.Destinations
-                .FirstOrDefault(e => e.City == destination.City && e.Country == destination.Country);
-
-            if (matchingEntity != null)
+            var newRelatedEntityIds = new HashSet<int>(newRelatedEntitiesValue.Cast<object>().Select(e => (int)GetIdProperty(e.GetType()).GetValue(e)));
+            var entitiesToRemove = new List<object>();
+            for (int i = 0; i < existingRelatedEntitiesValue.Count; i++)
             {
-                property.SetValue(existingEntity, matchingEntity);
+                var existingEntity = existingRelatedEntitiesValue[i];
+                var existingId = (int)GetIdProperty(existingEntity.GetType()).GetValue(existingEntity);
+
+                if (!newRelatedEntityIds.Contains(existingId))
+                {
+                    entitiesToRemove.Add(existingEntity);
+                    existingRelatedEntitiesValue.Remove(existingEntity);
+                }
+            }
+            if (entitiesToRemove.Count > 0)
+            {
+                if (existingRelatedEntitiesValue is List<Attraction>)
+                {
+                    _context.Attractions.RemoveRange((IEnumerable<Attraction>)entitiesToRemove);
+                }
+                else if (existingRelatedEntitiesValue is List<Review>)
+                {
+                    _context.Reviews.RemoveRange((IEnumerable<Review>)entitiesToRemove);
+                }
             }
         }
+
+        //if we are updating an entity that already exists in the database and now want its related lists to be empty
+        public void EmptyEntityList(IList? existingRelatedEntitiesValue)
+        {
+            if (existingRelatedEntitiesValue is List<Attraction>)
+            {
+                _context.Attractions.RemoveRange(existingRelatedEntitiesValue as List<Attraction>);
+                existingRelatedEntitiesValue.Clear();
+            }
+            else if (existingRelatedEntitiesValue is List<Traveller>)
+            {
+                existingRelatedEntitiesValue.Clear();
+            }
+            else if (existingRelatedEntitiesValue is List<Review>)
+            {
+                _context.Reviews.RemoveRange(existingRelatedEntitiesValue as List<Review>);
+                existingRelatedEntitiesValue.Clear();
+            }
+
+
+        }
+
         //The basic properites are update in the last else block
-        private void UpdateStandardProperty<T>(T existingEntity, T newEntity, PropertyInfo property) where T : class
+        public void UpdateStandardProperty<T>(T existingEntity, T newEntity, PropertyInfo property) where T : class
         {
             var newValue = property.GetValue(newEntity);
             property.SetValue(existingEntity, newValue);
@@ -318,14 +358,14 @@ namespace TravelEditor.Export_Import.Service
         }
 
         // Method deserializes the value from JSON into a list of dictionaries.
-        private List<Dictionary<string, object>> DeserializeValue(object value)
+        public List<Dictionary<string, object>> DeserializeValue(object value)
         {
             var json = value.ToString();
             return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
         }
 
         // Method sets the list of Traveller entities based on the provided dtoList.
-        private bool SetTravellerList(object entity, PropertyInfo property, List<Dictionary<string, object>> dtoList)
+        public bool SetTravellerList(object entity, PropertyInfo property, List<Dictionary<string, object>> dtoList)
         {
             var matchingEntities = new List<Traveller>();
             var emails = dtoList.Select(dto => dto.ContainsKey("Email") ? dto["Email"].ToString() : null)
@@ -344,7 +384,7 @@ namespace TravelEditor.Export_Import.Service
         }
 
         //Method sets the list of Attraction or Review entities based on matching items from relatedEntities.
-        private bool SetAttractionOrReviewList(object entity, PropertyInfo property, List<Dictionary<string, object>> dtoList, Dictionary<string, List<object>> relatedEntities)
+        public bool SetAttractionOrReviewList(object entity, PropertyInfo property, List<Dictionary<string, object>> dtoList, Dictionary<string, List<object>> relatedEntities)
         {
             var relatedEntityList = relatedEntities[property.Name];
             var matchedEntities = Activator.CreateInstance(property.PropertyType) as IList;
@@ -366,7 +406,7 @@ namespace TravelEditor.Export_Import.Service
 
 
         //check attraction/review when adding a destination or trip not to add it to two different objects
-        private bool CheckEntityRelationship(object mainEntity, object relatedEntity, Type entityType)
+        public bool CheckEntityRelationship(object mainEntity, object relatedEntity, Type entityType)
         {
             var mainType = typeof(Trip);
             if (entityType == typeof(Attraction))
