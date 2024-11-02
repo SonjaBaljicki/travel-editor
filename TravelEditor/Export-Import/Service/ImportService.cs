@@ -100,7 +100,7 @@ namespace TravelEditor.Export_Import.Service
         //For lists it uses reflection to get the specific ID property dynamically
         //It checks if the related entity already exists in the database if it does it updates it in the list
         //If it doesnt it adds it to the list
-        private void UpdateRelatedEntities<T>(T existingEntity, T newEntity, PropertyInfo property) where T : class
+        public void UpdateRelatedEntities<T>(T existingEntity, T newEntity, PropertyInfo property) where T : class
         {
             var newRelatedEntitiesValue = property.GetValue(newEntity) as IList;
             var existingRelatedEntitiesValue = property.GetValue(existingEntity) as IList;
@@ -135,7 +135,7 @@ namespace TravelEditor.Export_Import.Service
         }
 
         //if we are updating an entity that already exists in the database and not all old ones are present
-        private void RemoveNotPresentEntities(IList? existingRelatedEntitiesValue, IList newRelatedEntitiesValue)
+        public void RemoveNotPresentEntities(IList? existingRelatedEntitiesValue, IList newRelatedEntitiesValue)
         {
             var newRelatedEntityIds = new HashSet<int>(newRelatedEntitiesValue.Cast<object>().Select(e => (int)GetIdProperty(e.GetType()).GetValue(e)));
             var entitiesToRemove = new List<object>();
@@ -154,11 +154,11 @@ namespace TravelEditor.Export_Import.Service
             {
                 if (existingRelatedEntitiesValue is List<Attraction>)
                 {
-                    _context.Attractions.RemoveRange((IEnumerable<Attraction>)entitiesToRemove);
+                    _context.Attractions.RemoveRange(entitiesToRemove.OfType<Attraction>().ToList());
                 }
                 else if (existingRelatedEntitiesValue is List<Review>)
                 {
-                    _context.Reviews.RemoveRange((IEnumerable<Review>)entitiesToRemove);
+                    _context.Reviews.RemoveRange(entitiesToRemove.OfType<Review>().ToList());
                 }
             }
         }
@@ -180,8 +180,6 @@ namespace TravelEditor.Export_Import.Service
                 _context.Reviews.RemoveRange(existingRelatedEntitiesValue as List<Review>);
                 existingRelatedEntitiesValue.Clear();
             }
-
-
         }
 
         //The basic properites are update in the last else block

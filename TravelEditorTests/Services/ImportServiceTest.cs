@@ -22,6 +22,7 @@ namespace TravelEditorTests.Services
         private readonly Mock<DatabaseContext> _mockContext;
         private readonly ImportService _importService;
 
+
         public ImportServiceTest()
         {
             _mockContext = new Mock<DatabaseContext>();
@@ -325,14 +326,14 @@ namespace TravelEditorTests.Services
             var property = typeof(Trip).GetProperty("Travellers");
             var dtoList = new List<Dictionary<string, object>>
             {
-                new Dictionary<string, object> { { "Email", "test1@example.com" } },
-                new Dictionary<string, object> { { "Email", "test2@example.com" } }
+                new Dictionary<string, object> { { "Email", "mika@gmail.com" } },
+                new Dictionary<string, object> { { "Email", "zika@gmail.com" } }
             };
 
             var travellers = new List<Traveller>
             {
-                new Traveller { Email = "test1@example.com" },
-                new Traveller { Email = "test3@example.com" }
+                new Traveller { Email = "mika@gmail.com" },
+                new Traveller { Email = "pera@gmail.com" }
             };
 
             _mockContext.Setup(m => m.Travellers).Returns(DbSetMock.CreateMockSet(travellers).Object);
@@ -344,7 +345,95 @@ namespace TravelEditorTests.Services
             Assert.True(result);
             var matchedTravellers = (List<Traveller>)property.GetValue(entity);
             Assert.Equal(1, matchedTravellers.Count);
-            Assert.Equal("test1@example.com", matchedTravellers.First().Email);
+            Assert.Equal("mika@gmail.com", matchedTravellers.First().Email);
+        }
+
+        [Fact]
+        public void RemoveNotPresentEntities_ShouldRemoveEntitiesNotInNewList()
+        {
+            // Arrange
+            List<Attraction> existingAttractions = new List<Attraction>
+            {
+                new Attraction { AttractionId = 1, Name = "Attraction 1", Description="opis 1",Price=10, Location="lokacija 1" },
+                new Attraction { AttractionId = 2, Name = "Attraction 2",  Description="opis 2",Price=10, Location="lokacija 2" }
+            };
+
+            List<Attraction> newAttractions = new List<Attraction>
+            {
+                new Attraction { AttractionId = 2, Name = "Attraction 2",  Description="opis 2",Price=10, Location="lokacija 2" }
+            };
+
+            var mockSet = DbSetMock.CreateMockSet(existingAttractions);
+
+            _mockContext.Setup(m => m.Attractions).Returns(mockSet.Object);
+
+            // Act
+            _importService.RemoveNotPresentEntities(existingAttractions, newAttractions);
+
+            // Assert
+            Assert.Single(existingAttractions);
+            Assert.Equal(2, existingAttractions[0].AttractionId);
+        }
+
+        [Fact]
+        public void EmptyEntityList_ShouldRemoveAllEntitiesInAttractions()
+        {
+            // Arrange
+            List<Attraction> existingAttractions = new List<Attraction>
+            {
+                new Attraction { AttractionId = 1, Name = "Attraction 1", Description="opis 1",Price=10, Location="lokacija 1" },
+                new Attraction { AttractionId = 2, Name = "Attraction 2",  Description="opis 2",Price=10, Location="lokacija 2" }
+            };
+            var mockSet = DbSetMock.CreateMockSet(existingAttractions);
+
+            _mockContext.Setup(m => m.Attractions).Returns(mockSet.Object); 
+
+            // Act
+            _importService.EmptyEntityList(existingAttractions);
+
+            // Assert
+            _mockContext.Verify(m => m.Attractions.RemoveRange(existingAttractions), Times.Once);
+            Assert.Empty(existingAttractions);
+        }
+
+        [Fact]
+        public void EmptyEntityList_ShouldClearTravellerListWithoutRemovingFromDb()
+        {
+            // Arrange
+            var existingTravellers = new List<Traveller>
+        {
+            new Traveller { TravellerId = 1, FirstName = "Mika" },
+            new Traveller { TravellerId = 2, FirstName = "Zika" }
+        };
+
+            // Act
+            _importService.EmptyEntityList(existingTravellers);
+
+            // Assert
+            Assert.Empty(existingTravellers);
+            _mockContext.Verify(m => m.Travellers.RemoveRange(It.IsAny<IEnumerable<Traveller>>()), Times.Never);
+        }
+
+        [Fact]
+        public void EmptyEntityList_ShouldRemoveAllEntitiesInReviews()
+        {
+            // Arrange
+            var existingReviews = new List<Review>
+            {
+                new Review { ReviewId = 1, Comment = "Great!" },
+                new Review { ReviewId = 2, Comment = "Okay." }
+            };
+
+            var reviewSet = DbSetMock.CreateMockSet(existingReviews);
+
+            _mockContext.Setup(m => m.Reviews).Returns(reviewSet.Object);
+
+            // Act
+            _importService.EmptyEntityList(existingReviews);
+
+            // Assert
+            _mockContext.Verify(m => m.Reviews.RemoveRange(existingReviews), Times.Once);
+            Assert.Empty(existingReviews);
         }
 
     }
