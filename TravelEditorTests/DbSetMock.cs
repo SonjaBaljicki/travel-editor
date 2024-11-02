@@ -22,6 +22,15 @@ namespace TravelEditorTests
 
             mockSet.Setup(m => m.Add(It.IsAny<T>())).Callback<T>(data.Add);
 
+            mockSet.Setup(m => m.Find(It.IsAny<object[]>())).Returns<object[]>(ids =>
+            {
+                var keyProperty = typeof(T).GetProperties().FirstOrDefault();
+                if (keyProperty == null) return null;
+
+                var id = ids[0];
+                return data.SingleOrDefault(d => keyProperty.GetValue(d).Equals(id));
+            });
+
             return mockSet;
         }
     }

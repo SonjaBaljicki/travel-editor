@@ -1,114 +1,33 @@
 ﻿using Moq;
-using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Net.Sockets;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Markup;
+using System.Xml;
 using TravelEditor.Database;
 using TravelEditor.Export.Service;
+using TravelEditor.Export_Import.Service;
 using TravelEditor.Models;
-using TravelEditor.Models.dtos;
 using Xunit;
 
 namespace TravelEditorTests.Services
 {
-    public class DataTableServiceTest
+    public class ImportServiceTest
     {
         private readonly Mock<DatabaseContext> _mockContext;
-        private readonly DataTableService _dataTableService;
+        private readonly ImportService _importService;
 
-        public DataTableServiceTest()
+        public ImportServiceTest()
         {
             _mockContext = new Mock<DatabaseContext>();
-            _dataTableService = new DataTableService(_mockContext.Object);
+            _importService = new ImportService(_mockContext.Object);
+
         }
-
-        [Fact]
-        public void GetAsDataTable_ReturnsDataTable_WithCorrectData()
-        {
-            // Arrange
-            var travellerList = new List<Traveller>
-            {
-                new Traveller { TravellerId=1, Email = "mika@gmail.com", FirstName = "Mika" },
-                new Traveller { TravellerId=2, Email = "zika@gmail.com", FirstName = "Zika" }
-            };
-
-            var mockSet = DbSetMock.CreateMockSet(travellerList);
-            _mockContext.Setup(c => c.Travellers).Returns(mockSet.Object);
-            _mockContext.Setup(c => c.Set<Traveller>()).Returns(mockSet.Object);
-
-            // Act
-            var result = _dataTableService.GetAsDataTable<Traveller>();
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(2, result.Rows.Count);
-            Assert.Equal("Mika", result.Rows[0]["FirstName"]);
-            Assert.Equal("Zika", result.Rows[1]["FirstName"]);
-        }
-
-        [Fact]
-        public void AddColumns_ShouldAddColumnsToDataTable()
-        {
-            // Arrange
-            var dataTable = new DataTable();
-            var properties = typeof(TestEntity).GetProperties();
-
-            // Act
-            _dataTableService.AddColumns(dataTable, properties);
-
-            // Assert
-            Assert.Equal(properties.Length, dataTable.Columns.Count);
-            foreach (var property in properties)
-            {
-                Assert.True(dataTable.Columns.Contains(property.Name));
-            }
-        }
-        [Fact]
-        public void PopulateRow_ShouldPopulateDataRowWithValues()
-        {
-            // Arrange
-            var dataTable = new DataTable();
-            dataTable.Columns.Add("Id", typeof(int));
-            dataTable.Columns.Add("Name", typeof(string));
-
-            var properties = typeof(TestEntity).GetProperties();
-            var row = dataTable.NewRow();
-            var entity = new TestEntity { Id = 1, Name = "Name" };
-
-            // Act
-            _dataTableService.PopulateRow(row, entity, properties);
-
-            // Assert
-            Assert.Equal(1, row["Id"]);
-            Assert.Equal("Name", row["Name"]);
-        }
-
-        [Fact]
-        public void SerializeTravellers_ShouldReturnSerializedString()
-        {
-            // Arrange
-            var travellersList = new List<Traveller>
-            {
-                new Traveller { TravellerId = 1, FirstName = "Mika", Email = "mika@gmail.com" },
-                new Traveller { TravellerId = 2, FirstName = "Zika", Email = "zika@gmail.com" }
-            };
-
-            // Act
-            var result = _dataTableService.SerializeTravellers(travellersList);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Contains("Mika", result);
-            Assert.Contains("Zika", result);
-        }
-
         [Fact]
         public void GetEntities_ShouldReturnListOfEntities()
         {
@@ -120,7 +39,7 @@ namespace TravelEditorTests.Services
             dataTable.Rows.Add(2, "Value2");
 
             // Act
-            var result = _dataTableService.GetEntities<TestEntity>(dataTable);
+            var result = _importService.GetEntities<TestEntity>(dataTable);
 
             // Assert
             Assert.Equal(2, result.Count);
@@ -144,7 +63,7 @@ namespace TravelEditorTests.Services
            .ToDictionary(prop => prop.Name.ToLower(), prop => prop);
 
             // Act
-            var entity = _dataTableService.CreateEntity(dataTable.Rows[0], typeof(TestEntity), properties, null);
+            var entity = _importService.CreateEntity(dataTable.Rows[0], typeof(TestEntity), properties, null);
 
             // Assert
             Assert.NotNull(entity);
@@ -166,7 +85,7 @@ namespace TravelEditorTests.Services
             _mockContext.Setup(c => c.Travellers).Returns(mockSet.Object);
 
             // Act
-            var result = _dataTableService.SetTravellerProperty(review, json);
+            var result = _importService.SetTravellerProperty(review, json);
 
             // Assert
             Assert.True(result);
@@ -191,7 +110,7 @@ namespace TravelEditorTests.Services
             _mockContext.Setup(c => c.Travellers).Returns(mockSet.Object);
 
             // Act
-            var result = _dataTableService.SetTravellerProperty(review, json);
+            var result = _importService.SetTravellerProperty(review, json);
 
             // Assert
             Assert.False(result);
@@ -207,7 +126,7 @@ namespace TravelEditorTests.Services
             var value = "Trip1";
 
             // Act
-            _dataTableService.SetEntityProperty(entity, entity.GetType().GetProperty(propertyName), value, null);
+            _importService.SetEntityProperty(entity, entity.GetType().GetProperty(propertyName), value, null);
 
             // Assert
             Assert.Equal("Trip1", entity.Name);
@@ -230,7 +149,7 @@ namespace TravelEditorTests.Services
             var json = "[{\"TravellerId\": 1,\"Email\": \"mika@gmail.com\",\"FirstName\": \"Mika\"}]";
 
             // Act
-            var result = _dataTableService.SetRelatedEntityList(entity, property, json, null);
+            var result = _importService.SetRelatedEntityList(entity, property, json, null);
 
             // Assert
             Assert.True(result);
@@ -256,7 +175,7 @@ namespace TravelEditorTests.Services
             var json = "{\"DestinationId\":1, \"City\":\"Paris\", \"Country\":\"France\"}";
 
             // Act
-            var result = _dataTableService.SetRelatedDestinationEntity(entity, property, json);
+            var result = _importService.SetRelatedDestinationEntity(entity, property, json);
 
             // Assert
             Assert.True(result);
@@ -279,7 +198,7 @@ namespace TravelEditorTests.Services
             };
 
             // Act
-            var result = _dataTableService.IsMatchingEntity(entity, dto);
+            var result = _importService.IsMatchingEntity(entity, dto);
 
             // Assert
             Assert.True(result);
@@ -297,12 +216,136 @@ namespace TravelEditorTests.Services
             };
 
             // Act
-            var result = _dataTableService.IsMatchingEntity(entity, dto);
+            var result = _importService.IsMatchingEntity(entity, dto);
 
             // Assert
             Assert.False(result);
         }
 
+        [Fact]
+        public void UpdateEntity_UpdatesStandardProperties()
+        {
+            // Arrange
+            var existingEntity = new TestEntity { Id=1, Name="Old name"};
+            var newEntity = new TestEntity { Id=1, Name = "New name"};
+
+            // Act
+            _importService.UpdateEntity(existingEntity, newEntity);
+
+            // Assert
+            Assert.Equal("New name", existingEntity.Name);
+        }
+
+        [Fact]
+        public void UpdateEntity_UpdatesDestinationProperty()
+        {
+            var destinationList = new List<Destination>
+            {
+                new Destination { DestinationId=1, City = "Old City", Country = "Old Country" }
+            };
+
+            var mockSet = DbSetMock.CreateMockSet(destinationList);
+            _mockContext.Setup(c => c.Destinations).Returns(mockSet.Object);
+
+            // Arrange
+            var existingEntity = new Trip {TripId=1, Destination = new Destination {DestinationId=1, City = "Old City", Country = "Old Country" } };
+            var newEntity = new Trip { TripId=1, Destination = new Destination { DestinationId=1, City = "New City", Country = "New Country" } };
+
+            // Act
+            _importService.UpdateEntity(existingEntity, newEntity);
+
+            // Assert
+            Assert.Equal("New City", existingEntity.Destination.City);
+            Assert.Equal("New Country", existingEntity.Destination.Country);
+        }
+
+        [Fact]
+        public void UpdateEntity_NullExistingEntity_DoesNothing()
+        {
+            // Arrange
+            TestEntity existingEntity = null;
+            var newEntity = new TestEntity { Id=1, Name = "Entity1" };
+
+            // Act
+            _importService.UpdateEntity(existingEntity, newEntity);
+
+            // Assert
+            Assert.Null(existingEntity);
+        }
+
+        [Fact]
+        public void UpdateRelatedEntity_ShouldUpdateProperties()
+        {
+            // Arrange
+            var existingEntity = new Traveller { TravellerId = 1, FirstName = "Mika" };
+            var newEntity = new Traveller { TravellerId = 1, FirstName = "Zika" };
+
+            // Act
+            _importService.UpdateRelatedEntity(existingEntity, newEntity);
+
+            // Assert
+            Assert.Equal("Zika", existingEntity.FirstName);
+        }
+
+        [Fact]
+        public void UpdateStandardProperty_ShouldSetNewValue()
+        {
+            // Arrange
+            var existingEntity = new Traveller { TravellerId = 1, FirstName = "Mika" };
+            var newEntity = new Traveller { TravellerId = 1, FirstName = "Zika" };
+            var propertyInfo = typeof(Traveller).GetProperty(nameof(Traveller.FirstName));
+
+            // Act
+            _importService.UpdateStandardProperty(existingEntity, newEntity, propertyInfo);
+
+            // Assert
+            Assert.Equal("Zika", existingEntity.FirstName);
+        }
+
+        [Fact]
+        public void DeserializeValue_ShouldReturnListOfDictionaries()
+        {
+            // Arrange
+            var json = "[{\"Email\":\"test1@example.com\"}, {\"Email\":\"test2@example.com\"}]";
+
+            // Act
+            var result = _importService.DeserializeValue(json);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(2, result.Count);
+            Assert.Equal("test1@example.com", result[0]["Email"]);
+        }
+
+        [Fact]
+        public void SetTravellerList_ShouldSetMatchingTravellers()
+        {
+            // Arrange
+            var entity = new Trip();
+            var property = typeof(Trip).GetProperty("Travellers");
+            var dtoList = new List<Dictionary<string, object>>
+            {
+                new Dictionary<string, object> { { "Email", "test1@example.com" } },
+                new Dictionary<string, object> { { "Email", "test2@example.com" } }
+            };
+
+            var travellers = new List<Traveller>
+            {
+                new Traveller { Email = "test1@example.com" },
+                new Traveller { Email = "test3@example.com" }
+            };
+
+            _mockContext.Setup(m => m.Travellers).Returns(DbSetMock.CreateMockSet(travellers).Object);
+
+            // Act
+            var result = _importService.SetTravellerList(entity, property, dtoList);
+
+            // Assert
+            Assert.True(result);
+            var matchedTravellers = (List<Traveller>)property.GetValue(entity);
+            Assert.Equal(1, matchedTravellers.Count);
+            Assert.Equal("test1@example.com", matchedTravellers.First().Email);
+        }
 
     }
 }

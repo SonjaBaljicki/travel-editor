@@ -17,10 +17,10 @@ namespace TravelEditor.Commands
 {
     public class ExportDataCommand : ICommand
     {
-        public IDataTableService dataTableService;
-        public ExportDataCommand(IDataTableService dataTableService)
+        public IExportService exportService;
+        public ExportDataCommand(IExportService exportService)
         {
-            this.dataTableService = dataTableService;
+            this.exportService = exportService;
         }
 
         public event EventHandler? CanExecuteChanged;
@@ -33,9 +33,9 @@ namespace TravelEditor.Commands
         public void Execute(object? parameter)
         {
             //based on what format user chose we create exporter and call ExportToFile
-            IDataExporter exporter = new ExcelExporter(dataTableService);
-            DataExportService exportService = new DataExportService(exporter);
-            exportService.ExportToFile( "../../../Data/exported_data.xlsx");
+            IDataExporter exporter = new ExcelExporter(exportService);
+            DataExportService dataExportService = new DataExportService(exporter);
+            dataExportService.ExportToFile( "../../../Data/exported_data.xlsx");
         }
     }
 }

@@ -15,6 +15,7 @@ using TravelEditor.Commands.View;
 using TravelEditor.Database;
 using TravelEditor.Export.Iterfaces;
 using TravelEditor.Export.Service;
+using TravelEditor.Export_Import.Iterfaces;
 using TravelEditor.Models;
 using TravelEditor.Services;
 using TravelEditor.Services.Interfaces;
@@ -28,7 +29,8 @@ namespace TravelEditor.ViewModels
         private readonly IAttractionService _attractionService;
         private readonly IReviewService _reviewService;
         private readonly ITravellerService _travellerService;
-        private readonly IDataTableService _dataTableService;
+        private readonly IExportService _exportService;
+        private readonly IImportService _importService;
 
         private Trip? _selectedTrip;
         public Trip? SelectedTrip
@@ -131,14 +133,15 @@ namespace TravelEditor.ViewModels
         public ImportDataCommand ImportDataCommand { get; }
 
         public MainViewModel(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService,
-            IReviewService reviewService, ITravellerService travellerService, IDataTableService dataTableService)
+            IReviewService reviewService, ITravellerService travellerService, IExportService exportService, IImportService importService)
         {
             _tripService = tripService;
             _destinationService = destinationService;
             _attractionService = attractionService;
             _reviewService = reviewService;
             _travellerService = travellerService;
-            _dataTableService = dataTableService;
+            _exportService = exportService;
+            _importService = importService;
 
             LoadData();
             Messenger.DataChanged += LoadData;
@@ -168,8 +171,8 @@ namespace TravelEditor.ViewModels
             DeleteReviewCommand = new DeleteReviewCommand(this, _reviewService);
             ViewTravellerCommand = new ViewTravellerCommand(this, _travellerService);
 
-            ExportDataCommand = new ExportDataCommand(_dataTableService);
-            ImportDataCommand = new ImportDataCommand(_dataTableService);
+            ExportDataCommand = new ExportDataCommand(_exportService);
+            ImportDataCommand = new ImportDataCommand(_importService);
         }
         ~MainViewModel()
         {
