@@ -42,8 +42,9 @@ namespace TravelEditor.Commands.Save
                     if (success)
                     {
                         Messenger.NotifyDataChanged();
+                        MessageBox.Show("Saving add");
+
                     }
-                    MessageBox.Show("Saving add");
                 }
             }
             else

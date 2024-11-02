@@ -59,7 +59,7 @@ namespace TravelEditor.Commands.Delete
                 {
                     mainViewModel.Travellers.Remove(mainViewModel.SelectedTraveller);
                 }
-                MessageBox.Show("Deleted traveller");
+                MessageBox.Show("Delete successful");
 
             }
             else if (travellersViewModel != null && travellersViewModel.SelectedTraveller != null)
@@ -69,7 +69,7 @@ namespace TravelEditor.Commands.Delete
                 {
                     travellersViewModel.Travellers.Remove(travellersViewModel.SelectedTraveller);
                 }
-                MessageBox.Show("Removed traveller from selected trip");
+                MessageBox.Show("Delete successful");
             }
         }
     }

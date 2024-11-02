@@ -57,8 +57,8 @@ namespace TravelEditor.Commands.Delete
                bool success = reviewService.Delete(mainViewModel.SelectedReview);
                 if (success)
                 {
+                    MessageBox.Show("Delete successful");
                     Messenger.NotifyDataChanged();
-                    //mainViewModel.Reviews.Remove(mainViewModel.SelectedReview);
                 }
             }
             else if (reviewsViewModel != null && reviewsViewModel.SelectedReview != null)
@@ -66,8 +66,8 @@ namespace TravelEditor.Commands.Delete
                 bool success = reviewService.Delete(reviewsViewModel.SelectedReview);
                 if (success)
                 {
+                    MessageBox.Show("Delete successful");
                     Messenger.NotifyDataChanged();
-                    //reviewsViewModel.Reviews.Remove(reviewsViewModel.SelectedReview);
                 }
             }
         }

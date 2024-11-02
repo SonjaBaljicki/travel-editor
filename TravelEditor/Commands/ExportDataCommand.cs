@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TravelEditor.Database;
 using TravelEditor.Export.Exporters;
@@ -18,16 +19,25 @@ namespace TravelEditor.Commands
     public class ExportDataCommand : ICommand
     {
         public IExportService exportService;
-        public ExportDataCommand(IExportService exportService)
+        public MainViewModel viewModel;
+        public event EventHandler? CanExecuteChanged;
+
+        public ExportDataCommand(IExportService exportService, MainViewModel viewModel)
         {
             this.exportService = exportService;
+            this.viewModel = viewModel;
+            this.viewModel.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(MainViewModel.FileName))
+                {
+                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+                }
+            };
         }
-
-        public event EventHandler? CanExecuteChanged;
 
         public bool CanExecute(object? parameter)
         {
-            return true;
+            return !string.IsNullOrEmpty(viewModel.FileName);
         }
 
         public void Execute(object? parameter)
@@ -35,7 +45,9 @@ namespace TravelEditor.Commands
             //based on what format user chose we create exporter and call ExportToFile
             IDataExporter exporter = new ExcelExporter(exportService);
             DataExportService dataExportService = new DataExportService(exporter);
-            dataExportService.ExportToFile( "../../../Data/exported_data.xlsx");
+            dataExportService.ExportToFile( "../../../Data/"+viewModel.FileName+".xlsx");
+            MessageBox.Show("Data exported");
+
         }
     }
 }

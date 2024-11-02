@@ -87,7 +87,7 @@ namespace TravelEditor.Services
             }
             else
             {
-                MessageBox.Show("Cant delete traveller");
+                MessageBox.Show("Can't delete traveller");
             }
             return false;
         }

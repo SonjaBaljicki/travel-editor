@@ -64,6 +64,7 @@ namespace TravelEditor.ViewModels
                 SelectedTraveller = Review.Traveller;
                 SelectedTrip = tripService.FindTripWithReview(review);
             }
+            Review.Date = DateTime.Now;
         }
         //add and edit review from trips reviews grid
         public ReviewViewModel(Review review,Trip trip, IReviewService reviewService, ITravellerService travellerService, ITripService tripService)
@@ -81,6 +82,8 @@ namespace TravelEditor.ViewModels
             {
                 SelectedTraveller = Review.Traveller;
             }
+            Review.Date = DateTime.Now;
+
         }
 
         private void LoadTravellers()
