@@ -10,6 +10,7 @@ namespace TravelEditor.Services.Interfaces
     public interface IReviewService
     {
         bool Delete(Review selectedReview);
+        List<Review> FindReviews(string searchReviewsText);
         List<Review> LoadAll();
         bool TravellerHasReviews(Traveller? selectedTraveller);
         bool Update(Trip selectedTrip, Review review);

@@ -17,10 +17,14 @@ namespace TravelEditor.Repositories
         {
             _context = context;
         }
+
+        //loading all reviews
         public List<Review> LoadAll()
         {
             return _context.Reviews.ToList();
         }
+
+        //does this traveller have any reviews
         public bool TravellerHasReviews(Traveller? selectedTraveller)
         {
             foreach (Review review in _context.Reviews)
@@ -32,7 +36,8 @@ namespace TravelEditor.Repositories
             }
             return false;
         }
-        //u[dating basic review info
+
+        //upating basic review info
         public bool Update(Review review)
         {
             if (_context.Reviews.Find(review.ReviewId) != null)
@@ -48,6 +53,7 @@ namespace TravelEditor.Repositories
             }
             return false;
         }
+
         //deleting a review
         public bool Delete(Review review)
         {
@@ -55,6 +61,25 @@ namespace TravelEditor.Repositories
             _context.Reviews.Remove(reviewToDelete);
             _context.SaveChanges();
             return true;
+        }
+
+        //method for finding reviews based on search text that user entered
+        public List<Review> FindReviews(string searchReviewsText)
+        {
+            List<Review> allReviews = LoadAll();
+
+            return allReviews
+                .Where(review =>
+                    review.Comment != null && review.Comment.Contains(searchReviewsText, StringComparison.OrdinalIgnoreCase) ||
+                    review.Rating.ToString().Contains(searchReviewsText) ||
+
+                    review.Traveller != null && (
+                        review.Traveller.FirstName.Contains(searchReviewsText, StringComparison.OrdinalIgnoreCase) ||
+                        review.Traveller.LastName.Contains(searchReviewsText, StringComparison.OrdinalIgnoreCase) ||
+                        review.Traveller.Email.Contains(searchReviewsText, StringComparison.OrdinalIgnoreCase)
+                    )
+                )
+                .ToList();
         }
     }
 }

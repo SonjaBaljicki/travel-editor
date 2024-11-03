@@ -13,5 +13,6 @@ namespace TravelEditor.Repositories.Interfaces
         bool Update(Attraction attraction);
         bool Delete(Attraction attraction);
         bool FindOne(Attraction attraction);
+        List<Attraction> FindAttractions(string searchAttractionsText);
     }
 }

@@ -14,5 +14,6 @@ namespace TravelEditor.Repositories.Interfaces
         bool Update(Traveller traveller);
         Traveller FindTravellerByEmail(string email);
         bool Delete(Traveller? selectedTraveller);
+        List<Traveller> FindTravellers(string searchTravellersText);
     }
 }

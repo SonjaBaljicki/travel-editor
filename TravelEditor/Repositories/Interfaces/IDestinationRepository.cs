@@ -17,5 +17,6 @@ namespace TravelEditor.Repositories.Interfaces
         bool AddDestinationAttraction(Destination destination, Attraction attraction);
         Destination FindDestinationWithAttraction(Attraction attraction);
         bool FindOne(Destination destination);
+        List<Destination> FindDestinations(string searchDestinationsText);
     }
 }

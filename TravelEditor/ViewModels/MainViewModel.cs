@@ -53,6 +53,49 @@ namespace TravelEditor.ViewModels
                 OnPropertyChanged(nameof(SearchTripsText));
             }
         }
+        private string _searchDestinationsText = "";
+        public string SearchDestinationsText
+        {
+            get { return _searchDestinationsText; }
+            set
+            {
+                _searchDestinationsText = value;
+                OnPropertyChanged(nameof(SearchDestinationsText));
+            }
+        }
+
+        private string _searchAttractionsText = "";
+        public string SearchAttractionsText
+        {
+            get { return _searchAttractionsText; }
+            set
+            {
+                _searchAttractionsText = value;
+                OnPropertyChanged(nameof(SearchAttractionsText));
+            }
+        }
+
+        private string _searchTravellersText = "";
+        public string SearchTravellersText
+        {
+            get { return _searchTravellersText; }
+            set
+            {
+                _searchTravellersText = value;
+                OnPropertyChanged(nameof(SearchTravellersText));
+            }
+        }
+
+        private string _searchReviewsText = "";
+        public string SearchReviewsText
+        {
+            get { return _searchReviewsText; }
+            set
+            {
+                _searchReviewsText = value;
+                OnPropertyChanged(nameof(SearchReviewsText));
+            }
+        }
 
 
         private Trip? _selectedTrip;
@@ -157,6 +200,10 @@ namespace TravelEditor.ViewModels
 
         //search commands
         public SearchTripsCommand SearchTripsCommand { get; }
+        public SearchDestinationsCommand SearchDestinationsCommand { get; }
+        public SearchAttractionsCommand SearchAttractionsCommand { get; }
+        public SearchTravellersCommand SearchTravellersCommand { get; }
+        public SearchReviewsCommand SearchReviewsCommand { get; }
 
         public MainViewModel(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService,
             IReviewService reviewService, ITravellerService travellerService, IExportService exportService, IImportService importService)
@@ -201,6 +248,10 @@ namespace TravelEditor.ViewModels
             ImportDataCommand = new ImportDataCommand(_importService,this);
 
             SearchTripsCommand = new SearchTripsCommand(this, _tripService);
+            SearchDestinationsCommand = new SearchDestinationsCommand(this, _destinationService);
+            SearchAttractionsCommand = new SearchAttractionsCommand(this, _attractionService);
+            SearchTravellersCommand = new SearchTravellersCommand(this, _travellerService);
+            SearchReviewsCommand = new SearchReviewsCommand(this, _reviewService);
         }
         ~MainViewModel()
         {

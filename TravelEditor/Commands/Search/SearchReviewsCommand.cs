@@ -1,30 +1,27 @@
-﻿using Spire.Xls;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TravelEditor.Models;
+using TravelEditor.Services;
 using TravelEditor.Services.Interfaces;
 using TravelEditor.ViewModels;
 
 namespace TravelEditor.Commands.Search
 {
-    public class SearchTripsCommand : ICommand
+    public class SearchReviewsCommand : ICommand
     {
         private MainViewModel viewModel;
-        private ITripService tripService;
-        public event EventHandler? CanExecuteChanged;
+        private IReviewService reviewService;
 
-
-        public SearchTripsCommand(MainViewModel viewModel, ITripService tripService)
+        public SearchReviewsCommand(MainViewModel viewModel, IReviewService reviewService)
         {
             this.viewModel = viewModel;
-            this.tripService = tripService;
+            this.reviewService = reviewService;
         }
-
+        public event EventHandler? CanExecuteChanged;
 
         public bool CanExecute(object? parameter)
         {
@@ -33,13 +30,15 @@ namespace TravelEditor.Commands.Search
 
         public void Execute(object? parameter)
         {
-            List<Trip> trips = tripService.FindTrips(viewModel.SearchTripsText);
-    
-            viewModel.Trips.Clear();
-            foreach (var trip in trips)
+            List<Review> reviews = reviewService.FindReviews(viewModel.SearchReviewsText);
+
+            viewModel.Reviews.Clear();
+            foreach (var review in reviews)
             {
-                viewModel.Trips.Add(trip);
+                viewModel.Reviews.Add(review);
             }
+
         }
+
     }
 }

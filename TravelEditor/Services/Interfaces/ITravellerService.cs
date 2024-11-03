@@ -13,6 +13,7 @@ namespace TravelEditor.Services.Interfaces
         bool AddTravellerToTrip(Traveller selectedTraveller, Trip trip);
         bool Delete(Traveller? selectedTraveller);
         bool DeleteTravellerFromTrip(Trip trip, Traveller selectedTraveller);
+        List<Traveller> FindTravellers(string searchTravellersText);
         List<Traveller> LoadAll();
         bool Update(Traveller traveller);
     }
