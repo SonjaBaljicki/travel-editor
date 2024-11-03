@@ -45,7 +45,8 @@ namespace TravelEditorTests.Services
         public void Add_ShouldAddTraveller()
         {
             // Arrange
-            var traveller = new Traveller { TravellerId = 1 };
+            var traveller = new Traveller { TravellerId = 1, Email="mika@gmail.com", Age=20 };
+            _mockTravellerRepository.Setup(repo => repo.FindTravellerByEmail("mika@gmail.com")).Returns((Traveller)null);
             _mockTravellerRepository.Setup(repo => repo.Add(traveller)).Returns(true);
 
             // Act
@@ -79,7 +80,7 @@ namespace TravelEditorTests.Services
         public void Update_UpdatesTravellerIfEmailIsUnique()
         {
             // Arrange
-            var traveller = new Traveller { TravellerId = 1, Email = "unique@example.com" };
+            var traveller = new Traveller { TravellerId = 1, Email = "unique@example.com", Age=30 };
             _mockTravellerRepository.Setup(repo => repo.FindTravellerByEmail(traveller.Email)).Returns((Traveller)null);
             _mockTravellerRepository.Setup(repo => repo.Update(traveller)).Returns(true);
 

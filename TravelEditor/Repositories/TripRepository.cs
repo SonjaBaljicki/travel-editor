@@ -74,5 +74,33 @@ namespace TravelEditor.Repositories
                                   .Select(d => d).FirstOrDefault();
             return trip;
         }
+        public List<Trip> FindTrips(string searchTripsText)
+        {
+            var allTrips = LoadAll();
+
+            return allTrips
+                .Where(trip =>
+                    trip.Name.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                    trip.Description.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                    trip.StartDate.ToString("yyyy-MM-dd").Contains(searchTripsText) ||
+                    trip.EndDate.ToString("yyyy-MM-dd").Contains(searchTripsText) ||
+
+                    (trip.Destination != null && (
+                        trip.Destination.City.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                        trip.Destination.Country.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase))) ||
+
+                    trip.Travellers.Any(traveller =>
+                        traveller.FirstName.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                        traveller.LastName.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                        traveller.Email.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase)) ||
+
+                    trip.Reviews.Any(review =>
+                        review.Rating.ToString().Contains(searchTripsText) ||
+                        (review.Comment != null && review.Comment.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase))
+                    )
+                )
+                .ToList();
+        }
+
     }
 }

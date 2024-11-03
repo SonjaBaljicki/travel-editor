@@ -26,6 +26,8 @@
                                     <Button Width="120" Name="addTripButton" Content="Add Trip" Command="{Binding AddTripCommand}"/>
                                     <Button Width="120" Name="editTripButton" Content="Edit Trip" Command="{Binding EditTripCommand}"/>
                                     <Button  Width="120" Name="deleteTripButton" Command="{Binding DeleteTripCommand}" Content="Delete Trip" />
+                                    <Button  Margin="25 5 0 5" Width="120" Name="searchTrisp" Command="{Binding SearchTripsCommand}" Content="Search Trips" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchTripsText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                 </StackPanel>
                                 <DataGrid SelectedItem="{Binding SelectedTrip}" CanUserAddRows="False" AutoGenerateColumns="False" Name="tripsGrid" Background="#EAF4F4" ItemsSource="{Binding Trips}" Height="300">
                                     <DataGrid.Columns>

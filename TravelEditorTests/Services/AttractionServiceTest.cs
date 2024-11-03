@@ -47,7 +47,7 @@ namespace TravelEditorTests.Services
         public void Update_ShouldUpdateAttractionAndTransferToNewDestination()
         {
             // Arrange
-            var attraction = new Attraction { AttractionId = 1 };
+            var attraction = new Attraction { AttractionId = 1, Price=10 };
             var destination = new Destination { DestinationId = 1, Attractions = new List<Attraction>() };
 
             _mockAttractionRepository.Setup(repo => repo.Update(attraction)).Returns(true);
@@ -68,7 +68,7 @@ namespace TravelEditorTests.Services
         public void Update_ShouldNotTransferAttractionIfAlreadyInDestination()
         {
             // Arrange
-            var attraction = new Attraction { AttractionId = 1 };
+            var attraction = new Attraction { AttractionId = 1, Price=10 };
             var destination = new Destination { DestinationId = 1, Attractions = new List<Attraction> { attraction } };
 
             _mockAttractionRepository.Setup(repo => repo.Update(attraction)).Returns(true);

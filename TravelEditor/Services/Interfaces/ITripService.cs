@@ -18,6 +18,6 @@ namespace TravelEditor.Services.Interfaces
         bool ValidateDates(DateTime startDate, DateTime endDate);
         Trip FindTripWithReview(Review review);
         bool HasTripHappened(DateTime startDate, DateTime endDate);
-
+        List<Trip> FindTrips(string searchTripsText);
     }
 }

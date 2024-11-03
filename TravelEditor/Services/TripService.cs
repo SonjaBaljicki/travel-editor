@@ -120,5 +120,10 @@ namespace TravelEditor.Services
         {
             return _tripRepository.FindTripWithReview(review);
         }
+
+        public List<Trip> FindTrips(string searchTripsText)
+        {
+            return _tripRepository.FindTrips(searchTripsText);
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace TravelEditor.Repositories.Interfaces
         bool Add(Trip trip);
         bool Delete(Trip trip);
         List<Trip> FindTravellersTrips(Traveller? selectedTraveller);
+        List<Trip> FindTrips(string searchTripsText);
         Trip FindTripWithReview(Review review);
         List<Trip> LoadAll();
         bool Update(Trip trip);
