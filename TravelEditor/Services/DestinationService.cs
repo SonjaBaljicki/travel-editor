@@ -38,7 +38,15 @@ namespace TravelEditor.Services
         //adds an attractio to an extisting destination
         public bool AddDestinationAttraction(Destination destination, Attraction attraction)
         {
-            return _destinationRepository.AddDestinationAttraction(destination, attraction);
+            if (attraction.Price != 0)
+            {
+                return _destinationRepository.AddDestinationAttraction(destination, attraction);
+            }
+            else
+            {
+                MessageBox.Show("Invalid price input");
+                return false;
+            }
         }
         //delete a destination if it doesnt have trips
         public bool Delete(Destination destination)

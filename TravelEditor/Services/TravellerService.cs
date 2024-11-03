@@ -30,7 +30,23 @@ namespace TravelEditor.Services
         //add new traveller
         public bool Add(Traveller traveller)
         {
-            return _travellerRepository.Add(traveller);
+            Traveller travellerByEmail = _travellerRepository.FindTravellerByEmail(traveller.Email);
+            if (travellerByEmail == null)
+            {
+                if(traveller.Age != 0)
+                {
+                    return _travellerRepository.Add(traveller);
+                }
+                else
+                {
+                    MessageBox.Show("Invalid age input");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Email not unique");
+            }
+            return false;
         }
         //adds a traveller to trip then updates it
         public bool AddTravellerToTrip(Traveller selectedTraveller, Trip trip)
@@ -53,7 +69,14 @@ namespace TravelEditor.Services
             Traveller travellerByEmail = _travellerRepository.FindTravellerByEmail(traveller.Email);
             if (travellerByEmail == null || travellerByEmail.TravellerId == traveller.TravellerId)
             {
-                return _travellerRepository.Update(traveller);
+                if (traveller.Age != 0)
+                {
+                    return _travellerRepository.Update(traveller);
+                }
+                else
+                {
+                    MessageBox.Show("Invalid age input");
+                }
             }
             else
             {
