@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TravelEditor.Models;
 using TravelEditor.Repositories.Interfaces;
 using TravelEditor.Services.Interfaces;
@@ -26,16 +27,25 @@ namespace TravelEditor.Services
         }
         public bool Update(Attraction attraction, Destination destination)
         {
-            //update basic info for the attraction
-            _attractionRepository.Update(attraction);
-
-            //destination has changed, this destination doesnt have this attraction
-            if (!destination.Attractions.Any(a => a.AttractionId == attraction.AttractionId))
+            if(attraction.Price != 0)
             {
-                _attractionRepository.Delete(attraction);
-                _destinationService.AddDestinationAttraction(destination, attraction);
+                //update basic info for the attraction
+                _attractionRepository.Update(attraction);
+
+                //destination has changed, this destination doesnt have this attraction
+                if (!destination.Attractions.Any(a => a.AttractionId == attraction.AttractionId))
+                {
+                    _attractionRepository.Delete(attraction);
+                    _destinationService.AddDestinationAttraction(destination, attraction);
+                }
+                return true;
             }
-            return true;
+            else
+            {
+                MessageBox.Show("Invalid price input");
+                return false;
+            }
+           
         }
         public bool Delete(Attraction attraction)
         {

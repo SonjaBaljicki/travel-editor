@@ -58,8 +58,8 @@ namespace TravelEditor.Commands.Delete
                 if (success)
                 {
                     mainViewModel.Travellers.Remove(mainViewModel.SelectedTraveller);
+                    MessageBox.Show("Delete successful");
                 }
-                MessageBox.Show("Delete successful");
 
             }
             else if (travellersViewModel != null && travellersViewModel.SelectedTraveller != null)
@@ -68,8 +68,8 @@ namespace TravelEditor.Commands.Delete
                 if (success)
                 {
                     travellersViewModel.Travellers.Remove(travellersViewModel.SelectedTraveller);
+                    MessageBox.Show("Delete successful");
                 }
-                MessageBox.Show("Delete successful");
             }
         }
     }
