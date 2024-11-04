@@ -27,11 +27,13 @@ namespace TravelEditor.Services
             return _reviewRepository.LoadAll();
         }
 
+        //method checkes if traveller has any reviews
         public bool TravellerHasReviews(Traveller? selectedTraveller)
         {
             return _reviewRepository.TravellerHasReviews(selectedTraveller);
         }
 
+        //updating a review, different scenarios if trip has changed for the review
         public bool Update(Trip trip, Review review)
         {
             //trip stayed the same
@@ -63,9 +65,17 @@ namespace TravelEditor.Services
             }
             return false;
         }
+
+        //deleting a review
         public bool Delete(Review review)
         {
             return _reviewRepository.Delete(review);
+        }
+
+        //method for finding reviews based on search text that user entered
+        public List<Review> FindReviews(string searchReviewsText)
+        {
+            return _reviewRepository.FindReviews(searchReviewsText);
         }
     }
 }

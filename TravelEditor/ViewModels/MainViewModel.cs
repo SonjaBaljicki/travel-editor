@@ -11,6 +11,7 @@ using TravelEditor.Commands;
 using TravelEditor.Commands.Add;
 using TravelEditor.Commands.Delete;
 using TravelEditor.Commands.Edit;
+using TravelEditor.Commands.Search;
 using TravelEditor.Commands.View;
 using TravelEditor.Database;
 using TravelEditor.Export.Iterfaces;
@@ -42,6 +43,60 @@ namespace TravelEditor.ViewModels
                 OnPropertyChanged(nameof(FileName));
             }
         }
+        private string _searchTripsText = "";
+        public string SearchTripsText
+        {
+            get { return _searchTripsText; }
+            set
+            {
+                _searchTripsText = value;
+                OnPropertyChanged(nameof(SearchTripsText));
+            }
+        }
+        private string _searchDestinationsText = "";
+        public string SearchDestinationsText
+        {
+            get { return _searchDestinationsText; }
+            set
+            {
+                _searchDestinationsText = value;
+                OnPropertyChanged(nameof(SearchDestinationsText));
+            }
+        }
+
+        private string _searchAttractionsText = "";
+        public string SearchAttractionsText
+        {
+            get { return _searchAttractionsText; }
+            set
+            {
+                _searchAttractionsText = value;
+                OnPropertyChanged(nameof(SearchAttractionsText));
+            }
+        }
+
+        private string _searchTravellersText = "";
+        public string SearchTravellersText
+        {
+            get { return _searchTravellersText; }
+            set
+            {
+                _searchTravellersText = value;
+                OnPropertyChanged(nameof(SearchTravellersText));
+            }
+        }
+
+        private string _searchReviewsText = "";
+        public string SearchReviewsText
+        {
+            get { return _searchReviewsText; }
+            set
+            {
+                _searchReviewsText = value;
+                OnPropertyChanged(nameof(SearchReviewsText));
+            }
+        }
+
 
         private Trip? _selectedTrip;
         public Trip? SelectedTrip
@@ -143,6 +198,13 @@ namespace TravelEditor.ViewModels
         public ExportDataCommand ExportDataCommand { get; }
         public ImportDataCommand ImportDataCommand { get; }
 
+        //search commands
+        public SearchTripsCommand SearchTripsCommand { get; }
+        public SearchDestinationsCommand SearchDestinationsCommand { get; }
+        public SearchAttractionsCommand SearchAttractionsCommand { get; }
+        public SearchTravellersCommand SearchTravellersCommand { get; }
+        public SearchReviewsCommand SearchReviewsCommand { get; }
+
         public MainViewModel(ITripService tripService, IDestinationService destinationService, IAttractionService attractionService,
             IReviewService reviewService, ITravellerService travellerService, IExportService exportService, IImportService importService)
         {
@@ -184,6 +246,12 @@ namespace TravelEditor.ViewModels
 
             ExportDataCommand = new ExportDataCommand(_exportService,this);
             ImportDataCommand = new ImportDataCommand(_importService,this);
+
+            SearchTripsCommand = new SearchTripsCommand(this, _tripService);
+            SearchDestinationsCommand = new SearchDestinationsCommand(this, _destinationService);
+            SearchAttractionsCommand = new SearchAttractionsCommand(this, _attractionService);
+            SearchTravellersCommand = new SearchTravellersCommand(this, _travellerService);
+            SearchReviewsCommand = new SearchReviewsCommand(this, _reviewService);
         }
         ~MainViewModel()
         {

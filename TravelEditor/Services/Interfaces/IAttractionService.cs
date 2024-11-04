@@ -12,7 +12,6 @@ namespace TravelEditor.Services.Interfaces
         List<Attraction> LoadAll();
         bool Update(Attraction attraction, Destination destination);
         bool Delete(Attraction attraction);
-
-
+        List<Attraction> FindAttractions(string searchAttractionsText);
     }
 }

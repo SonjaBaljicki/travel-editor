@@ -75,7 +75,7 @@ namespace TravelEditorTests.Services
         {
             // Arrange
             var destination = new Destination { DestinationId = 1 };
-            var attraction = new Attraction { AttractionId = 1 };
+            var attraction = new Attraction { AttractionId = 1, Price=10 };
             _mockDestinationRepository.Setup(repo => repo.AddDestinationAttraction(destination, attraction)).Returns(true);
 
             // Act

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using TravelEditor.Database;
 using TravelEditor.Models;
+using TravelEditor.Repositories;
 using TravelEditor.Repositories.Interfaces;
 using TravelEditor.Services.Interfaces;
 
@@ -19,22 +20,26 @@ namespace TravelEditor.Services
         {
             _destinationRepository = destinationRepository; 
         }
+
         //Loading all destinations
         public List<Destination> LoadAll()
         {
             return _destinationRepository.LoadAll();
         }
+
         //add new destination
         public bool Add(Destination destination)
         {
             return _destinationRepository.Add(destination);
             
         }
+
         //update an existing destianation
         public bool Update(Destination destination)
         {
             return _destinationRepository.Update(destination);   
         }
+
         //adds an attractio to an extisting destination
         public bool AddDestinationAttraction(Destination destination, Attraction attraction)
         {
@@ -48,6 +53,7 @@ namespace TravelEditor.Services
                 return false;
             }
         }
+
         //delete a destination if it doesnt have trips
         public bool Delete(Destination destination)
         {
@@ -64,9 +70,17 @@ namespace TravelEditor.Services
             }
             return false;
         }
+
+        //finding a destination with this attraction
         public Destination FindDestinationWithAttraction(Attraction attraction)
         {
             return _destinationRepository.FindDestinationWithAttraction(attraction);
+        }
+
+        //method for finding destinations based on search text that user entered
+        public List<Destination> FindDestinations(string searchDestinationsText)
+        {
+            return _destinationRepository.FindDestinations(searchDestinationsText);
         }
     }
 }

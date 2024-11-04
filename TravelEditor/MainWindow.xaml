@@ -26,6 +26,8 @@
                                     <Button Width="120" Name="addTripButton" Content="Add Trip" Command="{Binding AddTripCommand}"/>
                                     <Button Width="120" Name="editTripButton" Content="Edit Trip" Command="{Binding EditTripCommand}"/>
                                     <Button  Width="120" Name="deleteTripButton" Command="{Binding DeleteTripCommand}" Content="Delete Trip" />
+                                    <Button  Margin="25 5 0 5" Width="120" Name="searchTrisp" Command="{Binding SearchTripsCommand}" Content="Search Trips" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchTripsText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                 </StackPanel>
                                 <DataGrid SelectedItem="{Binding SelectedTrip}" CanUserAddRows="False" AutoGenerateColumns="False" Name="tripsGrid" Background="#EAF4F4" ItemsSource="{Binding Trips}" Height="300">
                                     <DataGrid.Columns>
@@ -64,6 +66,8 @@
                                     <Button Width="120" Name="addDestinationButton" Content="Add Destination" Command="{Binding AddDestinationCommand}"/>
                                     <Button Width="120" Name="editDestinationButton" Content="Edit Destination" Command="{Binding EditDestinationCommand}"/>
                                     <Button  Width="120" Name="deleteDestinationButton" Command="{Binding DeleteDestinationCommand}" Content="Delete Destination" />
+                                    <Button  Margin="25 5 0 5" Width="120" Command="{Binding SearchDestinationsCommand}" Content="Search Destinations" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchDestinationsText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                 </StackPanel>
                                 <DataGrid SelectedItem="{Binding SelectedDestination}" CanUserAddRows="False" AutoGenerateColumns="False" Name="destinationsGrid" Background="#EAF4F4" ItemsSource="{Binding Destinations}"  Height="300">
                                     <DataGrid.Columns>
@@ -88,6 +92,8 @@
                                     <Button Width="120" Name="addAttractionButton" Content="Add Attration" Command="{Binding AddAttractionCommand}"/>
                                     <Button Width="120" Name="editAttractionButton" Content="Edit Attration" Command="{Binding EditAttractionCommand}"/>
                                     <Button  Width="120" Name="deleteAttractionButton" Command="{Binding DeleteAttractionCommand}" Content="Delete Attration" />
+                                    <Button  Margin="25 5 0 5" Width="120" Command="{Binding SearchAttractionsCommand}" Content="Search Attractions" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchAttractionsText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                 </StackPanel>
                                 <DataGrid  SelectedItem="{Binding SelectedAttraction}" CanUserAddRows="False" AutoGenerateColumns="False" Name="attractionsGrid" Background="#EAF4F4" ItemsSource="{Binding Attractions}" Height="300">
                                     <DataGrid.Columns>
@@ -105,6 +111,8 @@
                                     <Button Width="120" Name="addTravellerButton" Content="Add Traveller" Command="{Binding AddTravellerCommand}"/>
                                     <Button Width="120" Name="editTravellerButton" Content="Edit Traveller" Command="{Binding EditTravellerCommand}"/>
                                     <Button  Width="120" Name="deleteTravellerButton" Command="{Binding DeleteTravellerCommand}" Content="Delete Traveller" />
+                                    <Button  Margin="25 5 0 5" Width="120" Command="{Binding SearchTravellersCommand}" Content="Search Travellers" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchTravellersText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                 </StackPanel>
                                 <DataGrid SelectedItem="{Binding SelectedTraveller}" CanUserAddRows="False" AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}" Height="300">
                                     <DataGrid.Columns>
@@ -123,6 +131,8 @@
                                     <Button Width="120" Name="addReviewButton" Content="Add Review" Command="{Binding AddReviewCommand}"/>
                                     <Button Width="120" Name="editReviewButton" Content="Edit Review" Command="{Binding EditReviewCommand}"/>
                                     <Button  Width="120" Name="deleteReviewButton" Command="{Binding DeleteReviewCommand}" Content="Delete Review" />
+                                    <Button  Margin="25 5 0 5" Width="120" Command="{Binding SearchReviewsCommand}" Content="Search Reviews" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchReviewsText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                 </StackPanel>
                                 <DataGrid SelectedItem="{Binding SelectedReview}" CanUserAddRows="False" AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
                                     <DataGrid.Columns>

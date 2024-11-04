@@ -25,6 +25,8 @@ namespace TravelEditor.Services
         {
             return _attractionRepository.LoadAll();
         }
+
+        //updates an attraction moving an attraction if destination changed
         public bool Update(Attraction attraction, Destination destination)
         {
             if(attraction.Price != 0)
@@ -47,6 +49,8 @@ namespace TravelEditor.Services
             }
            
         }
+
+        //method for deleting an attraction
         public bool Delete(Attraction attraction)
         {
             if (_attractionRepository.FindOne(attraction))
@@ -55,6 +59,10 @@ namespace TravelEditor.Services
             }
             return false;
         }
-
+        //method for finding attractions based on search text that user entered
+        public List<Attraction> FindAttractions(string searchAttractionsText)
+        {
+            return _attractionRepository.FindAttractions(searchAttractionsText);
+        }
     }
 }

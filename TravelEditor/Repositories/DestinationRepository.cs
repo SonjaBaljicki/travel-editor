@@ -19,11 +19,13 @@ namespace TravelEditor.Repositories
         {
             _context = context;
         }
+
         //loads all destinations from the database
         public List<Destination> LoadAll()
         {
             return _context.Destinations.ToList();
         }
+
         //adds a new destination
         public bool Add(Destination destination)
         {
@@ -31,6 +33,7 @@ namespace TravelEditor.Repositories
             _context.SaveChanges();
             return true;
         }
+
         //update a destiantion if it exists
         public bool Update(Destination destination)
         {
@@ -46,6 +49,7 @@ namespace TravelEditor.Repositories
             }
             return false;
         }
+
         //adding an attraction after a destinations has already been added
         public bool AddDestinationAttraction(Destination destination, Attraction attraction)
         {
@@ -58,6 +62,7 @@ namespace TravelEditor.Repositories
             }
             return false;
         }
+
         //does the destination have any associated trips
         public bool HasAssociatedTrips(Destination destination)
         {
@@ -68,6 +73,7 @@ namespace TravelEditor.Repositories
 
             return trips.Count > 0;
         }
+
         //delete a destination
         public bool Delete(Destination destination)
         {
@@ -75,6 +81,7 @@ namespace TravelEditor.Repositories
             _context.SaveChanges();
             return true;
         }
+
         //for an attraction find which destination it belongs to
         public Destination FindDestinationWithAttraction(Attraction attraction)
         {
@@ -84,9 +91,28 @@ namespace TravelEditor.Repositories
             return destination;
         }
 
+        //method for finding one destination based on id
         public bool FindOne(Destination destination)
         {
             return _context.Destinations.Find(destination.DestinationId)!=null;
+        }
+
+        //method for finding destinations based on search text that user entered
+        public List<Destination> FindDestinations(string searchDestinationsText)
+        {
+            List<Destination> allDestinations = LoadAll();
+
+            return allDestinations
+                .Where(destination =>
+                    destination.City.Contains(searchDestinationsText, StringComparison.OrdinalIgnoreCase) ||
+                    destination.Country.Contains(searchDestinationsText, StringComparison.OrdinalIgnoreCase) ||
+                    destination.Description.Contains(searchDestinationsText, StringComparison.OrdinalIgnoreCase) ||
+                    destination.Climate.Contains(searchDestinationsText, StringComparison.OrdinalIgnoreCase) ||
+
+                    destination.Attractions.Any(attraction =>
+                        attraction.Name.Contains(searchDestinationsText, StringComparison.OrdinalIgnoreCase))
+                )
+                .ToList();
         }
     }
 }

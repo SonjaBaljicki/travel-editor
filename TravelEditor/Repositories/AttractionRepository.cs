@@ -18,10 +18,12 @@ namespace TravelEditor.Repositories
         {
             _context = context;
         }
+
         public List<Attraction> LoadAll()
         {
             return _context.Attractions.ToList();
         }
+
         //update an attraction
         public bool Update(Attraction attraction)
         {
@@ -37,6 +39,7 @@ namespace TravelEditor.Repositories
             }
             return false;
         }
+
         //deleting a existing attraction
         public bool Delete(Attraction attraction)
         {
@@ -50,9 +53,26 @@ namespace TravelEditor.Repositories
             return false;
         
         }
+
+        //method for getting one attraction based on id
         public bool FindOne(Attraction attraction)
         {
             return _context.Attractions.Find(attraction.AttractionId) != null;
+        }
+
+        //method for finding attractions based on search text that user entered
+        public List<Attraction> FindAttractions(string searchAttractionsText)
+        {
+            List<Attraction> allAttractions = LoadAll();
+
+            return allAttractions
+                .Where(attraction =>
+                    attraction.Name.Contains(searchAttractionsText, StringComparison.OrdinalIgnoreCase) ||
+                    attraction.Description.Contains(searchAttractionsText, StringComparison.OrdinalIgnoreCase) ||
+                    attraction.Location.Contains(searchAttractionsText, StringComparison.OrdinalIgnoreCase) ||
+                    attraction.Price.ToString().Contains(searchAttractionsText)
+                )
+                .ToList();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace TravelEditor.Repositories.Interfaces
     public interface IReviewRepository
     {
         bool Delete(Review review);
+        List<Review> FindReviews(string searchReviewsText);
         List<Review> LoadAll();
         bool TravellerHasReviews(Traveller? selectedTraveller);
         bool Update(Review review);

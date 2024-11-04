@@ -23,6 +23,7 @@ namespace TravelEditor.Services
         {
             return _tripRepository.LoadAll();
         }
+
         //adding a new trip
         public bool Add(Trip trip)
         {
@@ -37,12 +38,14 @@ namespace TravelEditor.Services
             }
             return false;
         }
+
         //check if dates are in the future
         public bool ValidateDates(DateTime startDate, DateTime endDate)
         {
             DateTime now = DateTime.Now;
             return startDate > now && endDate > now && startDate<endDate;
         }
+
         //update trip after checking dates
         public bool Update(Trip trip)
         {
@@ -56,6 +59,7 @@ namespace TravelEditor.Services
             }
             return false;
         }
+
         //delete a trip
         public bool Delete(Trip trip)
         {
@@ -69,12 +73,14 @@ namespace TravelEditor.Services
             }
             return false;
         }
+
         //is the trip currently in progress
         public bool IsTripNow(DateTime startDate, DateTime endDate)
         {
             DateTime now = DateTime.Now;
             return startDate <= now && endDate >= now;
         }
+
         //does traveller have ongoing trips
         public bool TravellerHasTrips(Traveller? selectedTraveller)
         {
@@ -88,12 +94,14 @@ namespace TravelEditor.Services
             }
             return false;
         }
+
         //check if trip has happened
         public bool HasTripHappened(DateTime startDate, DateTime endDate)
         {
             DateTime now = DateTime.Now;
             return endDate<now && startDate < endDate;
         }
+
         //first check if the trip has happened, then check if the traveller who is leaving a review
         //was on that trip
         public bool AddTripReview(Trip trip, Review review)
@@ -116,9 +124,17 @@ namespace TravelEditor.Services
             }
             return false;
         }
+
+        //method for finding a trip for which this review was left
         public Trip FindTripWithReview(Review review)
         {
             return _tripRepository.FindTripWithReview(review);
+        }
+
+        //method for finding trips based on search text that user entered
+        public List<Trip> FindTrips(string searchTripsText)
+        {
+            return _tripRepository.FindTrips(searchTripsText);
         }
     }
 }

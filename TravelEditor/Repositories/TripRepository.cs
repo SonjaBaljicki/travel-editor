@@ -17,11 +17,13 @@ namespace TravelEditor.Repositories
         {
             _context = context;
         }
+
         //loads all trips from the database
         public List<Trip> LoadAll()
         {
             return _context.Trips.ToList();
         }
+
         //adding a trip to database
         public bool Add(Trip trip)
         {
@@ -29,6 +31,7 @@ namespace TravelEditor.Repositories
             _context.SaveChanges();
             return true;
         }
+
         //update trip basic info
         public bool Update(Trip trip)
         {
@@ -48,6 +51,7 @@ namespace TravelEditor.Repositories
             }
             return false;
         }
+
         //delete a trip
         public bool Delete(Trip trip)
         {
@@ -59,6 +63,8 @@ namespace TravelEditor.Repositories
             }
             return false;
         }
+
+        //finding what trips a traveller has
         public List<Trip> FindTravellersTrips(Traveller? selectedTraveller)
         {
             return _context.Trips
@@ -67,6 +73,7 @@ namespace TravelEditor.Repositories
                 .ToList();
         }
 
+        //finding a trip with this review
         public Trip FindTripWithReview(Review review)
         {
             Trip trip = _context.Trips
@@ -74,5 +81,35 @@ namespace TravelEditor.Repositories
                                   .Select(d => d).FirstOrDefault();
             return trip;
         }
+
+        //method for finding trips based on search text that user entered
+        public List<Trip> FindTrips(string searchTripsText)
+        {
+            List<Trip> allTrips = LoadAll();
+
+            return allTrips
+                .Where(trip =>
+                    trip.Name.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                    trip.Description.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                    trip.StartDate.ToString("dd-MM-yy").Contains(searchTripsText) ||
+                    trip.EndDate.ToString("dd-MM-yy").Contains(searchTripsText) ||
+
+                    (trip.Destination != null && (
+                        trip.Destination.City.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                        trip.Destination.Country.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase))) ||
+
+                    trip.Travellers.Any(traveller =>
+                        traveller.FirstName.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                        traveller.LastName.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase) ||
+                        traveller.Email.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase)) ||
+
+                    trip.Reviews.Any(review =>
+                        review.Rating.ToString().Contains(searchTripsText) ||
+                        (review.Comment != null && review.Comment.Contains(searchTripsText, StringComparison.OrdinalIgnoreCase))
+                    )
+                )
+                .ToList();
+        }
+
     }
 }
