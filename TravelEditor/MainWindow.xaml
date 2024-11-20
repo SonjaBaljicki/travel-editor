@@ -1,0 +1,157 @@
+﻿<Window x:Class="TravelEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelEditor"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1200">
+    <Grid>
+        <StackPanel Name="mainStackPanel"  Background="#A4C3B2" >
+            <Menu>
+                <MenuItem Name="importMenuItem" Header="Import" Command="{Binding ImportDataCommand}"></MenuItem>
+                <MenuItem Name="exportMenuItem" Header="Export" Command="{Binding ExportDataCommand}"></MenuItem>
+            </Menu>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Import/Export file name" Margin="0 10 0 0"></Label>
+                <TextBox Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left" Margin="10 10 0 0"></TextBox>
+            </StackPanel>
+           
+            <StackPanel  Name="tabsStackPanel"  Width="1000" Height="550" Margin="0, 20, 0, 0">
+                <Border BorderBrush="#6B9080" BorderThickness="2" CornerRadius="2">
+                    <TabControl Background="#A4C3B2" Height="500">
+                        <TabItem Header="Trips">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addTripButton" Content="Add Trip" Command="{Binding AddTripCommand}"/>
+                                    <Button Width="120" Name="editTripButton" Content="Edit Trip" Command="{Binding EditTripCommand}"/>
+                                    <Button  Width="120" Name="deleteTripButton" Command="{Binding DeleteTripCommand}" Content="Delete Trip" />
+                                    <Button  Margin="25 5 0 5" Width="120" Name="searchTrisp" Command="{Binding SearchTripsCommand}" Content="Search Trips" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchTripsText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                </StackPanel>
+                                <DataGrid SelectedItem="{Binding SelectedTrip}" CanUserAddRows="False" AutoGenerateColumns="False" Name="tripsGrid" Background="#EAF4F4" ItemsSource="{Binding Trips}" Height="300">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
+                                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="120"/>
+                                        <DataGridTextColumn Header="Start Date" Binding="{Binding StartDate}" Width="200"/>
+                                        <DataGridTextColumn Header="End Date" Binding="{Binding EndDate}" Width="200"/>
+                                        <DataGridTemplateColumn Header="Travellers" Width="200">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Name="viewTravellersButton" Content="View Travellers" Command="{Binding DataContext.ViewTravellersCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="Reviews" Width="200">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Name="viewReviewsButton" Content="View Reviews" Command="{Binding DataContext.ViewReviewsCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Header="Destination" Width="200">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Name="viewDestinationButton" Content="View Destination" Command="{Binding DataContext.ViewDestinationCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Destinations">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addDestinationButton" Content="Add Destination" Command="{Binding AddDestinationCommand}"/>
+                                    <Button Width="120" Name="editDestinationButton" Content="Edit Destination" Command="{Binding EditDestinationCommand}"/>
+                                    <Button  Width="120" Name="deleteDestinationButton" Command="{Binding DeleteDestinationCommand}" Content="Delete Destination" />
+                                    <Button  Margin="25 5 0 5" Width="120" Command="{Binding SearchDestinationsCommand}" Content="Search Destinations" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchDestinationsText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                </StackPanel>
+                                <DataGrid SelectedItem="{Binding SelectedDestination}" CanUserAddRows="False" AutoGenerateColumns="False" Name="destinationsGrid" Background="#EAF4F4" ItemsSource="{Binding Destinations}"  Height="300">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="City" Binding="{Binding City}" Width="120"/>
+                                        <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="120"/>
+                                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="200"/>
+                                        <DataGridTextColumn Header="Climate" Binding="{Binding Climate}" Width="200"/>
+                                        <DataGridTemplateColumn Header="Attractions" Width="200">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Name="viewAttractionsButton" Content="View Attractions" Command="{Binding DataContext.ViewAttractionsCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Attractions">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addAttractionButton" Content="Add Attration" Command="{Binding AddAttractionCommand}"/>
+                                    <Button Width="120" Name="editAttractionButton" Content="Edit Attration" Command="{Binding EditAttractionCommand}"/>
+                                    <Button  Width="120" Name="deleteAttractionButton" Command="{Binding DeleteAttractionCommand}" Content="Delete Attration" />
+                                    <Button  Margin="25 5 0 5" Width="120" Command="{Binding SearchAttractionsCommand}" Content="Search Attractions" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchAttractionsText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                </StackPanel>
+                                <DataGrid  SelectedItem="{Binding SelectedAttraction}" CanUserAddRows="False" AutoGenerateColumns="False" Name="attractionsGrid" Background="#EAF4F4" ItemsSource="{Binding Attractions}" Height="300">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="120"/>
+                                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="120"/>
+                                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="200"/>
+                                        <DataGridTextColumn Header="Location" Binding="{Binding Location}" Width="200"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Travellers">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addTravellerButton" Content="Add Traveller" Command="{Binding AddTravellerCommand}"/>
+                                    <Button Width="120" Name="editTravellerButton" Content="Edit Traveller" Command="{Binding EditTravellerCommand}"/>
+                                    <Button  Width="120" Name="deleteTravellerButton" Command="{Binding DeleteTravellerCommand}" Content="Delete Traveller" />
+                                    <Button  Margin="25 5 0 5" Width="120" Command="{Binding SearchTravellersCommand}" Content="Search Travellers" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchTravellersText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                </StackPanel>
+                                <DataGrid SelectedItem="{Binding SelectedTraveller}" CanUserAddRows="False" AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}" Height="300">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="120"/>
+                                        <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="120"/>
+                                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
+                                        <DataGridTextColumn Header="Phone number" Binding="{Binding PhoneNumber}" Width="200"/>
+                                        <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="200"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header="Reviews">
+                            <StackPanel Margin="0, 5, 0, 0">
+                                <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                                    <Button Width="120" Name="addReviewButton" Content="Add Review" Command="{Binding AddReviewCommand}"/>
+                                    <Button Width="120" Name="editReviewButton" Content="Edit Review" Command="{Binding EditReviewCommand}"/>
+                                    <Button  Width="120" Name="deleteReviewButton" Command="{Binding DeleteReviewCommand}" Content="Delete Review" />
+                                    <Button  Margin="25 5 0 5" Width="120" Command="{Binding SearchReviewsCommand}" Content="Search Reviews" />
+                                    <TextBox Width="150" Margin="5 5 0 5" Text="{Binding SearchReviewsText, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                </StackPanel>
+                                <DataGrid SelectedItem="{Binding SelectedReview}" CanUserAddRows="False" AutoGenerateColumns="False" Name="reviewsGrid" Background="#EAF4F4" ItemsSource="{Binding Reviews}" Height="300">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" Width="120"/>
+                                        <DataGridTextColumn Header="Comment" Binding="{Binding Comment}" Width="120"/>
+                                        <DataGridTemplateColumn Header="Traveller" Width="200">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Name="viewTravellerButton" Content="View Traveller" Command="{Binding DataContext.ViewTravellerCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </TabItem>
+                    </TabControl>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

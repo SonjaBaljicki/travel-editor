@@ -1,0 +1,30 @@
+﻿<Window x:Class="TravelEditor.Views.DestinationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelEditor.Views"
+        mc:Ignorable="d"
+        Title="DestinationView" Height="450" Width="800" Background="#A4C3B2">
+    <Grid>
+        <Border Width="400" Height="400" BorderBrush="#6B9080" BorderThickness="2" CornerRadius="2">
+            <StackPanel Margin="20" HorizontalAlignment="Center">
+                <Label Content="City:"/>
+                <TextBox Name="cityTextBox" Text="{Binding Destination.City}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+
+                <Label Content="Country"/>
+                <TextBox Name="countryTextBox" Text="{Binding Destination.Country}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+
+                <Label Content="Climate:"/>
+                <TextBox Name="climateTextBox" Text="{Binding Destination.Climate}" Width="200" Margin="5,0,0,10" HorizontalAlignment="Left"/>
+
+                <Label Content="Description:"/>
+                <TextBox Name="descriptionTextBox" Text="{Binding Destination.Description}" Width="200" Height="60"  Margin="5,0,0,10" HorizontalAlignment="Left" />
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Name="saveDestinationButton" Command="{Binding SaveDestinationCommand}" Content="Save" Width="100" Margin="5"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

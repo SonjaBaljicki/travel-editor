@@ -1,0 +1,23 @@
+﻿<Window x:Class="TravelEditor.Views.ExistingTravellersGridView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TravelEditor.Views"
+        mc:Ignorable="d"
+        Title="TravellersGridView" Height="350" Width="800"  Background="#A4C3B2">
+    <Grid>
+        <StackPanel Background="#A4C3B2" Margin="20, 10, 20, 0">
+            <StackPanel  Background="#EAF4F4" Orientation="Horizontal" >
+                <Button  Width="120" Name="addTravellerToTrip" Content="Add traveller to trip" Command="{Binding AddTravellerToTripCommand}"/>
+            </StackPanel>
+            <DataGrid  SelectedItem="{Binding SelectedTraveller}" AutoGenerateColumns="False" Name="travellersGrid" Background="#EAF4F4" ItemsSource="{Binding Travellers}" Height="300">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="120"/>
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="120"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>
